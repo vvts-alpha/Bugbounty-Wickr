@@ -1,0 +1,27 @@
+Íimport QtQuick
+import com.wickr.widgets 1.0
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+NavigableItem
+{
+    id: root
+    width: button.width
+    height: button.height
+    property alias styleName: button.styleName
+    property alias mainBackgroundColor: button.mainBackgroundColor
+    property alias innerRectColor: button.innerRectColor
+    property alias showBorder: button.showBorder
+    property alias text: button.text
+    margin: 0
+
+    Accessible.role: Accessible.Button
+    Accessible.name: button.text
+
+    WickrIconTextButton {
+        id: button
+        anchors.centerIn: parent
+        textFont.weight: Font.Normal
+        onClicked: root.keyboardClicked(false)
+    }
+}

@@ -1,0 +1,82 @@
+]import QtQuick
+import QtMultimedia
+import QtCore
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: cameraPreviewContainer
+    anchors.fill: parent
+    color: Branding.palette_cal_p2
+
+    property bool permissionRequested: false
+
+    CameraPermission {
+        id: cameraPermission
+    }
+
+    CaptureSession {
+        camera: Camera {
+            id: camera
+            focusMode: Camera.FocusModeAutoNear
+
+            Component.onCompleted:
+            {
+                cameraDeviceTest.labelText = cameraDevice.description
+                if (cameraPermission.status !== Qt.PermissionStatus.Granted) {
+                    permissionRequested = true;
+                    cameraPermission.request()
+                }
+                else
+                {
+                     camera.start()
+                }
+            }
+        }
+        videoOutput: videoOutput
+    }
+
+    VideoOutput {
+        id: videoOutput
+        anchors.fill: parent
+        fillMode: VideoOutput.PreserveAspectCrop
+        transform: Rotation {
+            id: rotation
+            origin.x: cameraPreviewContainer.width / 2
+            origin.y: cameraPreviewContainer.height / 2
+            axis.x: 0; axis.y: 1; axis.z: 0 // set axis.y to 1 to rotate around y-axis
+            angle: 180}
+    }
+
+    Rectangle
+    {
+        id: privacyBackGround
+        anchors.bottom: parent.bottom
+        height: 32 * ScreenRM.scale
+        width: parent.width
+        color: Branding.palette_cal_p3
+        opacity: 0.4
+    }
+
+    Row
+    {
+        anchors.centerIn: privacyBackGround
+        spacing: 4 * ScreenRM.scale
+
+        LayeredImage
+        {
+            name: "video-lock"
+            color: Branding.palette_cal_p2
+        }
+
+        Text {
+            text: qsTr("Only you can see this preview")
+            color: Branding.palette_cal_p2
+            font.pointSize: 11.8 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            wrapMode: Text.WordWrap
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+}

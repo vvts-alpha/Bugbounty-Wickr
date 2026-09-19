@@ -1,0 +1,102 @@
+Üimport QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.interfaces 1.0
+import com.wickr.widgets 1.0
+import com.wickr.models 1.0
+import QtMultimedia
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    width: 328 * ScreenRM.scale
+    color: Branding.palette_gbl_p8
+    clip: true
+
+    FocusBorder
+    {
+        visible: root.focus
+        width: Math.ceil(root.width)
+        height: Math.ceil(root.height)
+    }
+
+    property bool expanded: false
+    property int headerHeight: 32 * ScreenRM.scale
+    property int contentColumnMargin: 8 * ScreenRM.scale
+    property alias titleText: title.text
+
+    // Place child content such as RegionSelector inside this component:
+    // e.g. CollapsiblePanel { RegionSelector { ... } }
+    default property alias content: contentColumn.data
+
+    height: headerHeight + contentContainer.height
+    Behavior on height { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+
+    Keys.onPressed: {
+        if(root.focus){
+            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                root.expanded = !root.expanded
+            }
+        }
+    }
+
+    Rectangle {
+        id: header
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: 8 * ScreenRM.scale
+        height: headerHeight
+        color: "transparent"   // let the rootâ€™s background show
+
+        Text {
+            id: title
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            font.pointSize: 12 * ScreenRM.fontScale
+            color: Branding.palette_gbl_p1
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.expanded = !root.expanded
+        }
+    }
+
+    LayeredImage
+    {
+        id: stateIcon
+        height: headerHeight
+        anchors.top: parent.top
+        anchors.right: parent.right
+        name: root.expanded ? "dash" : "add"
+        color: Branding.palette_cal_p1
+        anchors.rightMargin: 8 * ScreenRM.scale
+    }
+
+    // Content area (animated collapse/expand)
+    Item {
+        id: contentContainer
+        anchors.top: header.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        clip: true
+        height: root.expanded ? (contentColumn.implicitHeight + contentColumnMargin * 2) : 0
+        Behavior on height { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
+
+        Column {
+            id: contentColumn
+            anchors {
+                fill: parent
+                leftMargin: contentColumnMargin
+                rightMargin: contentColumnMargin
+                topMargin: contentColumnMargin
+                bottomMargin: contentColumnMargin
+            }
+            spacing: 8 * ScreenRM.scale
+        }
+    }
+}

@@ -1,0 +1,138 @@
+Ïimport QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtWebEngine
+import QtQuick.Dialogs
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    property alias url: webView.url
+    anchors.fill: parent
+    property alias webview: webView.webview
+    property bool showURL: true
+    color: Branding.palette_gbl_p2
+    property bool showBackButton: false
+    signal switchToSplash()
+    signal sendOidcRedirectMetric(bool success, string grantRedirectUuid)
+    signal sendOidcRedirectMetricEasy(bool success)
+
+    TextField
+    {
+        visible: showURL
+        id: textField
+        anchors.left: parent.left
+        anchors.leftMargin: showBackButton ? 124 * ScreenRM.scale : 40 * ScreenRM.scale
+        anchors.right: parent.right
+        anchors.rightMargin: 40 * ScreenRM.scale
+        anchors.top: parent.top
+        anchors.topMargin: 20 * ScreenRM.scale
+        font.pointSize: 16 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        font.weight: Font.Normal
+        height: 40 * ScreenRM.scale
+        color: Branding.palette_gbl_p4
+        selectionColor: Branding.palette_rgs_p6
+        readOnly: true
+        background: Rectangle {
+            color: Branding.palette_gbl_p8
+            border.color: Branding.palette_gbl_p6
+            border.width: 1 * ScreenRM.scale
+            radius: 4* ScreenRM.scale
+        }
+        onTextChanged: cursorPosition = 0
+        text: webviewLoader.item ? webviewLoader.item.url : ""
+        selectByMouse: true
+    }
+
+    WebEngineView {
+        id: webView
+        anchors.top: textField.visible ? textField.bottom : root.top
+        anchors.topMargin: textField.visible ? 24 * ScreenRM.scale : 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        url: webviewUrl
+        property var webview
+
+        // this will put the browser into private mode and will not save any cache to disk
+        // https://doc.qt.io/qt-5/qml-qtwebengine-webengineprofile.html#offTheRecord-prop
+        profile.offTheRecord: true
+        profile.persistentCookiesPolicy: WebEngineProfile.NoPersistentCookies
+
+        Component.onCompleted: {
+            console.info("WickrWebEngine (new) created")
+            settings.focusOnNavigationEnabled = true;
+            settings.webGLEnabled = false;
+            forceActiveFocus();
+        }
+
+        Component.onDestruction: {
+            console.info("WickrWebEngine (new) destroying")
+        }
+
+        onCertificateError: function(error) {
+            if (error.type === WebEngineCertificateError.CertificateAuthorityInvalid) {
+                error.defer();
+                sslDialog.enqueue(error);
+            }
+        }
+
+        onSelectClientCertificate: function(selection) {
+            if (selection.certificates.length) {
+                console.info("Host " + selection.host + " requesting client certificate from repo = " + selection.certificates.length + " certificates.")
+                for (var i = 0; i < selection.certificates.length; ++i) {
+                    console.info("Cert #" + i + " : Issuer = " + selection.certificates[i].issuer + ", Subject = " + selection.certificates[i].subject);
+                }
+                webview.certSelection(selection)
+            }
+        }
+
+        onLoadingChanged: function(loadRequest){
+            var schemaRE = new RegExp(wickrSettings.oidcURLProtocol+":","i");
+            if (schemaRE.test(loadRequest.url)) {
+                if (!processedDeepLink) {
+                    if (internalGrantRedirectUrl.length) {
+                        // Redirect deep link
+
+                        var start = loadRequest.url.toString().indexOf("?",0);
+                        var query  = loadRequest.url.toString().slice(start);
+                        var params = new URLSearchParams(query);
+                        var redirectUuidDeepLink = params.get("redirect_uuid");             
+                        console.log("DEEP LINK REQUEST:  " + loadRequest.url + ", redirect: " + internalGrantRedirectUrl + ", query: " + query);
+
+                        // Compare grantRedirectUuid passed from wickrquickmain.cpp with redirect_uuid from parsing query
+                        console.log("grantRedirectUuid: ", grantRedirectUuid);
+                        console.log("redirectUuidDeepLink: ", redirectUuidDeepLink);
+                        if(redirectUuidDeepLink === grantRedirectUuid || (!redirectUuidDeepLink && !grantRedirectUuid)) {
+                            url = internalGrantRedirectUrl + query;
+                            processedDeepLink = true;
+                            root.sendOidcRedirectMetric(true, grantRedirectUuid)
+                        } else {
+                            root.sendOidcRedirectMetric(false, grantRedirectUuid);
+                            root.sendOidcRedirectMetricEasy(false);
+                            if(typeof wickrWindow !== "undefined")
+                            {
+                                wickrWindow.showMessageBox(qsTr("Unable to sign in. Please verify credentials and try again."), qsTr("SSO Sign In Error"));
+                                root.switchToSplash();
+                            }
+                        }
+                    } else {
+                        // Exit out to previous screen
+                        goBackScreen(__backScreen);
+                    }
+                    visible = false;
+                }
+            }
+            if (loadRequest.status === WebEngineView.LoadSucceededStatus) {
+                visible = true;
+            } else if (loadRequest.status === WebEngineView.LoadFailedStatus) {
+                console.info("PAGE LOAD ERROR DOMAIN: " + loadRequest.errorDomain)
+                console.info("PAGE LOAD ERROR CODE  : " + loadRequest.errorCode)
+                console.info("PAGE LOAD ERROR STRING: " + loadRequest.errorString)
+            }
+        }
+    }
+}

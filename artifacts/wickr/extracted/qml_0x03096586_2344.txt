@@ -1,0 +1,75 @@
+	&import QtQuick
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: dropDownRoot
+    height: 48 * ScreenRM.scale
+    color: "transparent"
+    property alias contextMenu: contextMenu
+    property var menuItemsModel: undefined
+    signal itemSelected(string item)
+    signal dropDownClosed()
+    property string label
+    signal aboutToShow()
+
+    property alias labelFontSize: convoNotifyLbl.font.pointSize
+    property alias labelColor: convoNotifyLbl.color
+    property alias labelHorizontalAlignment: convoNotifyLbl.horizontalAlignment
+    property alias labelLeftMargin: convoNotifyLbl.anchors.leftMargin
+    property alias caretDownRightMargin: caretDown.anchors.rightMargin
+    property alias contextMenuWidth: contextMenu.width
+
+    Text {
+        id: convoNotifyLbl
+        color: Branding.palette_cal_p3
+        font.pointSize: 11.8 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        font.weight: Font.Normal
+        text: label
+        anchors.right: parent.right
+        anchors.rightMargin: 42 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        elide: Text.ElideRight
+        horizontalAlignment: Text.AlignRight
+        opacity: enabled ? 1.0 : 0.5
+    }
+
+    LayeredImage
+    {
+        id: caretDown
+        name: "caret-down"
+        color: Branding.palette_cal_p3
+        opacity: enabled ? 1.0 : 0.5
+        anchors.right: parent.right
+        anchors.rightMargin: 22 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        rotation: contextMenu.visible ? 180 : 0
+    }
+
+    Item {
+        id: menuAnchor
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        CompactPopupMenu
+        {
+            id: contextMenu
+            menuItems: menuItemsModel
+            width: 190 * ScreenRM.scale
+            rightMarginFromParent: 0
+            anchorRight: true
+            bottomBounds: typeof wickrWindow === "undefined" ? undefined : wickrWindow.landing
+
+            onMenuItemClicked: {
+                dropDownRoot.itemSelected(item)
+            }
+            onAboutToShow: dropDownRoot.aboutToShow()
+            onClosed: {
+                dropDownRoot.dropDownClosed();
+            }
+        }
+    }
+}

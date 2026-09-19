@@ -1,0 +1,55 @@
+=== RCC data-entry header check (8 bytes before zlib stream) ===
+ zlib@0x00D5ADA8 pre8=[uncomp=25517 comp=103656] actual_uncomp=103656 match=False head=b'<\xb8d\x18\xca\xef\x9c\x95\xcd!\x1c\xbf`\xa1\xbd\xdd\xa7\x00\x00\x00'
+ zlib@0x00D79CD9 pre8=[uncomp=24981 comp=104948] actual_uncomp=104948 match=False head=b'<\xb8d\x18\xca\xef\x9c\x95\xcd!\x1c\xbf`\xa1\xbd\xdd\xa7\x00\x00\x00'
+ zlib@0x00D9D882 pre8=[uncomp=124338 comp=531014] actual_uncomp=531014 match=False head=b'<\xb8d\x18\xca\xef\x9c\x95\xcd!\x1c\xbf`\xa1\xbd\xdd\xa7\x00\x00\x00'
+ zlib@0x00E46F48 pre8=[uncomp=957 comp=6926] actual_uncomp=6926 match=False head=b'<!DOCTYPE html>\n<htm'
+ zlib@0x00E568B7 pre8=[uncomp=934 comp=6704] actual_uncomp=6704 match=False head=b'<!DOCTYPE html>\n<htm'
+ zlib@0x00EFB91D pre8=[uncomp=2836291 comp=1229209940] actual_uncomp=11525824 match=False head=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+ zlib@0x01ACE036 pre8=[uncomp=27981 comp=130477] actual_uncomp=130477 match=False head=b'._visuallyHidden_fk6'
+ zlib@0x01BC77D2 pre8=[uncomp=98423 comp=426012] actual_uncomp=426012 match=False head=b'{"version":3,"file":'
+
+=== ALL small zlib streams (>=32 dec) that look like JS/code ===
+small JS-like streams: 129
+  @0x030978A4 hdr_uncomp=308 dec=1105 | import QtQuick import "../Commons/" import QtQuick.Controls.Basic  Rectangle
+  @0x03071437 hdr_uncomp=478 dec=1909 | import QtQuick import "Commons/" import QtQuick.Controls.Basic  /*   to use
+  @0x03066267 hdr_uncomp=603 dec=2043 | import QtQuick import "widgets/" import "Commons/" import QtQuick.Controls.Ba
+  @0x030A894B hdr_uncomp=469 dec=2054 | import QtQml import QtQuick import QtQuick.Window import "../Commons/" impor
+  @0x01CDC316 hdr_uncomp=553 dec=2150 | ._container_v5eq3_1{width:100%;height:100%;overflow:auto;-webkit-user-select:non
+  @0x0308956E hdr_uncomp=632 dec=2155 | import QtQuick import onboardStatus 1.0 import "../Commons/" import "../widge
+  @0x030A4C4A hdr_uncomp=608 dec=2443 | pragma Singleton import QtQuick import QtQuick.Controls.Basic  /*   This si
+  @0x03099021 hdr_uncomp=605 dec=2648 | import QtQuick import "../Commons/" import QtQuick.Controls.Basic  Item { 
+  @0x030664C6 hdr_uncomp=762 dec=2681 | import QtQuick import QtQuick.Layouts import QtQuick.Controls import "widgets
+  @0x03074EC1 hdr_uncomp=787 dec=2734 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import com.wick
+  @0x03086137 hdr_uncomp=750 dec=2857 | import QtQuick import onboardStatus 1.0 import "../widgets/" import "../Commo
+  @0x030A40B2 hdr_uncomp=840 dec=3057 | import QtQuick import QtQuick.Controls import QtQuick.Layouts  import "../"
+  @0x0309DDBC hdr_uncomp=912 dec=3125 | import QtQuick import QtQuick.Layouts import QtQuick.Controls import "../Comm
+  @0x030AF2F0 hdr_uncomp=771 dec=3131 | import QtQuick import "../widgets/"  import com.wickr.widgets 1.0 import "..
+  @0x0306CC76 hdr_uncomp=825 dec=3146 | import QtQuick import "widgets/" import "Commons/" import QtQuick.Controls.Ba
+  @0x0307AD19 hdr_uncomp=727 dec=3224 | import QtQuick import QtQuick.Controls import QtQuick.Layouts  import com.wi
+  @0x03099BD0 hdr_uncomp=620 dec=3232 | import QtQuick import "../Commons/" import QtQuick.Controls.Basic  Rectangle
+  @0x030AD00A hdr_uncomp=778 dec=3508 | import QtQuick import com.wickr.widgets 1.0 import "../widgets/" import "../C
+  @0x0307727B hdr_uncomp=926 dec=3527 | import QtQuick import "../widgets" import "../Commons/" import QtQuick.Contro
+  @0x030AEF68 hdr_uncomp=900 dec=3727 | import QtQuick import QtQuick.Controls import com.wickr.interfaces 1.0 import
+  @0x0307C59E hdr_uncomp=1109 dec=3879 | import QtQuick import QtQuick.Controls import com.wickr.interfaces 1.0 import
+  @0x030AEB66 hdr_uncomp=1022 dec=3898 | import QtQuick import QtQuick.Controls import com.wickr.interfaces 1.0 import
+  @0x030AE709 hdr_uncomp=1113 dec=3901 | import QtQuick import com.wickr.interfaces 1.0 import com.wickr.widgets 1.0 i
+  @0x03088929 hdr_uncomp=1103 dec=4133 | import QtQuick import onboardStatus 1.0 import WickrLoginMode 1.0 import com.
+  @0x03076F2B hdr_uncomp=844 dec=4281 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import com.wick
+  @0x0307109E hdr_uncomp=917 dec=4414 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import "widgets
+  @0x0309FF32 hdr_uncomp=1200 dec=4454 | import QtQuick import QtQuick.Controls  import "../style.js" as WickrStyle i
+  @0x0308839C hdr_uncomp=1189 dec=4455 | import QtQuick import onboardStatus 1.0 import "../widgets/" import "../Commo
+  @0x030AF5F7 hdr_uncomp=1055 dec=4524 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import com.wick
+  @0x03095139 hdr_uncomp=1071 dec=4538 | import QtQuick import QtQuick.Controls  import QtQuick.Layouts import "../Co
+  @0x03095A76 hdr_uncomp=1203 dec=4564 | import QtQuick import QtQuick.Controls import "../Commons/" import QtQuick.Co
+  @0x03087E93 hdr_uncomp=1285 dec=4571 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import com.wick
+  @0x030979DC hdr_uncomp=1325 dec=4590 | import QtQuick import com.wickr.widgets 1.0 import "../Commons/" import QtQui
+  @0x0309CE24 hdr_uncomp=1249 dec=4647 | import QtQuick import QtQuick.Controls import "../Commons/" import QtQuick.Co
+  @0x0307E3D6 hdr_uncomp=1135 dec=4650 | import QtQuick import QtQuick.Controls import QtQuick.Layouts  import "../wi
+  @0x03099E40 hdr_uncomp=1108 dec=4668 | import QtQuick import "../" import com.wickr.interfaces 1.0 import com.wickr.
+  @0x0309E150 hdr_uncomp=1053 dec=4917 | import QtQuick import "../" import com.wickr.interfaces 1.0 import com.wickr.
+  @0x030981DE hdr_uncomp=1089 dec=4926 | import QtQuick  import com.wickr.widgets 1.0 import "../Commons/" import QtQ
+  @0x03090A90 hdr_uncomp=1395 dec=4951 | import QtQuick import onboardStatus 1.0 import "../widgets/" import "../Commo
+  @0x03082506 hdr_uncomp=1305 dec=4982 | import QtQuick import QtQuick.Controls import QtQuick.Layouts import com.wick
+
+=== names blob region 0x31FA100..0x31FA400 (hex) ===
+00 74 00 66 00 12 00 c0 10 26 00 4f 00 70 00 65 00 6e 00 53 00 61 00 6e 00 73 00 2d 00 4c 00 69 00 67 00 68 00 74 00 2e 00 74 00 74 00 66 00 11 09 f4 28 66 00 4f 00 70 00 65 00 6e 00 53 00 61 00 6e 00 73 00 2d 00 42 00 6f 00 6c 00 64 00 2e 00 74 00 74 00 66 00 14 05 aa 09 26 00 49 00 6e 00 63 00 6f 00 6e 00 73 00 6f 00 6c 00 61 00 74 00 61 00 2d 00 42 00 6f 00 6c 00 64 00 2e 00 74 00 74 00 66 00 17 01 02 a8 06 00 4f 00 70 00 65 00 6e 00 53 00 61 00 6e 00 73 00 2d 00 42 00 6f 00 6c 00 64 00 49 00 74 00 61 00 6c 00 69 00 63 00 2e 00 74 00 74 00 66 00 16 05 aa 3e e6 00 4f 00 70 00 65 00 6e 00 53 00 61 00 6e 00 73 00 2d 00 45 00 78 00 74 00 72 00 61 00 42 00 6f 00 6c 00 64 00 2e 00 74 00 74 00 66 00 0b 0a b8 56 7f 00 66 00 61 00 76 00 69 00 63 00 6f 00 6e 00 2e 00 69 00 63 00 6f 00 0a 02 5b 44 7c 00 77 00 69 00 63 00 6b 00 72 00 2e 00 68 00 74 00 6d 00 6c 00 0b 05 94 7d 73 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 0e 0e 3a d6 33 00 71 00 77 00 65 00 62 00 63 00 68 00 61 00 6e 00 6e 00 65 00 6c 00 2e 00 6a 00 73 00 08 08 01 5a 5c 00 6d 00 61 00 69 00 6e 00 2e 00 71 00 6d 00 6c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02 00 00 00 06 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 34 00 02 00 00 00 07 00 00 02 c7 00 00 00 00 00 00 00 00 00 00 00 28 00 02 00 00 00 45 00 00 01 fa 00 00 00 00 00 00 00 00 00 00 00 18 00 02 00 00 00 0c 00 00 01 ee 00 00 00 00 00 00 00 00 00 00 00 56 00 02 00 00 01 63 00 00 00 6f 00 00 00 00 00 00 00 00 00 00 00 00 00 02 00 00 00 05 00 00 00 6a 00 00 00 00 00 00 00 00 00 00 00 40 00 02 00 00 00 0e 00 00 00 07 00 00 00 00 00 00 00 00 00 00 40 84 00 02 00 00 00 01 00 00 00 69 00 00 00 00 00 00 00 00 00 00 40 fa 00 02 00 00 00 01 00 00 00 68 00 00 00 00 00 00 00 00 00 00 42 0a 00 02 00 00 00 01 00 00 00 67 00 00 00 00 00 00 00 00 00 00 41 44 00 02 00 00 00 01 00 00 00 66 00 00 00 00 00 00 00 00 00 00 41 de 00 02 00 00 00 01 00 00 00 65 00 00 00 00 00 00 00 00 00 00 40 60 00 02 00 00 00 0c 00 00 00 59 00 00 00 00 00 00 00 00 00 00 41 94 00 02 00 00 00 01 00 00 00 58 00 00 00 00 00 00 00 00 00 00 41 c0 00 02 00 00 00 01 00 00 00 57 00 00 00 00 00 00 00 00 00 00 40 ae 00 02 00 00 00 01 00 00 00 56 00 00 00 00 00 00 00 00 00 00 40 d4 00 02 00 00 00 01 00 00 00 55 00 00 00 00 00 00 00 00 00 00 41 28 00 02 00 00 00 15

@@ -1,0 +1,1 @@
+import{r as f}from"./file-preview-ee8ec7f1.js";const t=()=>{},A=m(f.useEffect);function m(u,p){function i(a,e,o){let n=t;typeof e=="function"?n=e:o=e;const r=f.useRef();u(()=>{const c=new AbortController,{signal:l}=c,s=Promise.resolve(a({signal:l,previous:r.current}));return r.current=s.then(t,t),()=>{c.abort(),n(s)}},o)}return i}export{A as u};

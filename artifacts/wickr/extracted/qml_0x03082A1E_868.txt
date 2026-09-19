@@ -1,0 +1,37 @@
+cimport QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import "../style.js" as WickrStyle
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    width: parent.width
+    height: 30 * ScreenRM.scale
+    color: Branding.palette_gbl_p2
+
+    property alias text: heading.text
+
+    Text {
+        id: heading
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 30 * ScreenRM.scale
+
+        font.pointSize: 14 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        color: Branding.palette_gbl_p4
+
+        text: section
+    }
+
+    Rectangle {
+        width: root.width
+        height: 1 * ScreenRM.scale
+        color: Branding.palette_gbl_p7
+        anchors.bottom: parent.bottom
+    }
+}

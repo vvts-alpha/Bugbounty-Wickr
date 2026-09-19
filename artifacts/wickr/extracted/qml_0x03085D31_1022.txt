@@ -1,0 +1,41 @@
+ýimport QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: headerRoot
+    width: parent.width
+    height: 70 * ScreenRM.scale
+    color: Branding.palette_gbl_p8
+    property string titleText: ""
+    signal closeBtnClicked()
+    property bool backButtonStyle: false
+    property bool showButton: true
+
+    Title
+    {
+        id: headerTitle
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        titleText: headerRoot.titleText
+        backButtonStyle: headerRoot.backButtonStyle
+        onCloseBtnClicked: headerRoot.closeBtnClicked()
+        showButton: headerRoot.showButton
+    }
+
+    Rectangle
+    {
+        height: 1 * ScreenRM.scale
+        width: parent.width
+        anchors.bottom: parent.bottom
+        color: Branding.palette_gbl_p7
+    }
+}

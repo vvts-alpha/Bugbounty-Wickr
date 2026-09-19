@@ -1,0 +1,152 @@
+:/*
+ * This script will provide common styles and determine the OS to make any
+ * needed adjustments such as font name and font size
+ *
+ */
+.pragma library
+var os = Qt.platform.os; //options are linux, windows, or osx
+var zoomLevel = 1.0
+
+// colors:
+var keywords="";
+
+var veryDarkGray = "#181818";
+var blackBackground="#0d0000";
+
+//add a new method to String to replace all occu.
+String.prototype.replaceAll = function(substring, replacement) {
+    var result = '';
+    var lastIndex = 0;
+
+    while(true) {
+        var index = this.indexOf(substring, lastIndex);
+        if(index === -1) break;
+        result += this.substring(lastIndex, index) + replacement;
+        lastIndex = index + substring.length;
+    }
+
+    return result + this.substring(lastIndex);
+};
+
+function decorateText(messageText)
+{
+    var rv;
+    if(keywords.length > 0)
+    {
+        var regex = new RegExp("(" + keywords + ")", "gi");
+        rv=messageText.replace(regex, "<b>$1</b>");
+    }
+    else
+        rv=messageText;
+
+    return rv;
+}
+
+function setSearchWords(words)
+{
+    keywords=words;
+}
+
+function ttlToString(secs)
+{
+    if (!secs)
+        return "disabled";
+
+    var s = secs;
+
+    // the ~~ combination is a faster way of doing a floor function
+    var m = (~~(s/60));
+    s -= m*60;
+
+    var h = (~~(m/60));
+    m -= h*60;
+
+    var d = (~~(h/24));
+    h -= d*24;
+
+    //var w = (~~(d/7));
+    //d -= w*7;
+
+    var timeStr = "";
+    if (d)
+        timeStr += (d === 1) ? qsTr("%1 day ").arg(1) : qsTr("%1 days").arg(d);
+    if (h)
+        timeStr += (h === 1) ? qsTr("%1 hour ").arg(1) : qsTr("%1 hours").arg(h);
+    if (m)
+        timeStr += (m === 1) ? qsTr("%1 minute ").arg(1) : qsTr("%1 minutes").arg(m);
+    if (s)
+        timeStr += (s === 1) ? qsTr("%1 second ").arg(1) : qsTr("%1 seconds").arg(s);
+    return timeStr;
+}
+
+
+// this function returns a human readable string from a convo's ttl (in seconds)
+// this should match the options in the ttl drop down menu
+function borToDestructOptions(insecs)
+{
+    // in case, the 'insecs' contains a space
+    var secs = parseInt(insecs, 10);
+
+    if(secs <= 0) {
+        return "disabled";
+    }
+    else if(secs < 60) {
+        return "set to %1 seconds".arg(secs);
+    }
+    else if(secs < 3600) {
+        return secs > 60 ? "set to %1 minutes".arg(secs/60) : "set to 1 minute";
+    }
+    else if(secs < 86400) {
+        return secs > 3600 ? "set to %1 hours".arg(secs/3600) : "set to 1 hour";
+    }
+    else {
+        return secs > 86400 ? "set to %1 days".arg(secs/86400) : "set to 1 day";
+    }
+}
+
+function ttlToDestructOptions(insecs)
+{
+    // in case, the 'insecs' contains a space
+    var secs = parseInt(insecs, 10);
+    if(secs <= 0) {
+        return "disabled";
+    }
+    else if(secs < 60) {
+        return "set to %1 seconds".arg(secs);
+    }
+    else if(secs < 3600) {
+        return secs > 60 ? "set to %1 minutes".arg(secs/60) : "set to 1 minute";
+    }
+    else if(secs < 86400) {
+        return secs > 3600 ? "set to %1 hours".arg(secs/3600) : "set to 1 hour";
+    }
+    else {
+        return secs > 86400 ? "set to %1 days".arg(secs/86400) : "set to 1 day";
+    }
+}
+
+function scaleImage(scaledImg, maxH, maxW)
+{
+    //this assumes that scaledImg's "fillMode" is set to "Image.PreserveAspectFit"
+    var originalHeight = scaledImg.sourceSize.height;
+    var originalWidth = scaledImg.sourceSize.width;
+
+    if(maxH > originalHeight && maxW > originalWidth)
+    {
+        return;
+    }
+
+    var ratioW = maxW / originalWidth;  // Width ratio
+    var ratioH = maxH / originalHeight;  // Height ratio
+
+    if(ratioH > ratioW)
+    {
+        // height ratio is bigger
+        scaledImg.width = maxW
+    }
+    else
+    {
+        // otherwise scale width
+        scaledImg.height = maxH
+    }
+}

@@ -1,0 +1,54 @@
+õimport QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: title
+    color: "transparent"
+    width: parent.width
+    height: 70 * ScreenRM.scale
+    property bool showCloseChevron: true
+    signal closeBtnClicked()
+    property bool backButtonStyle: false
+    property string titleText: ""
+    property bool showButton: true
+
+    LayeredImage {
+        id: backButton
+        anchors.left: parent.left
+        anchors.leftMargin: 15 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        name: backButtonStyle ? "ic_back" : "ic-close"
+        color: Branding.palette_gbl_p5
+        fillMode: Image.PreserveAspectFit
+        visible: showButton
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: closeBtnClicked();
+        }
+
+    }
+
+    Text {
+        id: drawerTitle
+        anchors.left: parent.left
+        anchors.leftMargin: 48 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 20 * ScreenRM.scale
+        font.family: fonts.osSemiBold
+        font.weight: Font.DemiBold
+        font.pointSize: 19.6 * ScreenRM.fontScale
+        color: Branding.palette_gbl_p1
+        text: titleText
+        elide: Text.ElideRight
+        textFormat: Text.PlainText
+    }
+}

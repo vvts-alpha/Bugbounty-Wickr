@@ -1,0 +1,1 @@
+window.top.__RCE__="EXT_SELF_SCRIPT_RAN_but_this_is_app_code_not_attacker";try{window.top.postMessage({type:"openLink",url:"https://selfscript.example/ran"},"*")}catch(e){}

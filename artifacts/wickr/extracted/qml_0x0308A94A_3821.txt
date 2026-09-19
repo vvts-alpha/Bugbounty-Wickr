@@ -1,0 +1,104 @@
+ìimport QtQuick
+import onboardStatus 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Layouts
+import QtQuick.Controls.Basic
+
+BaseComponent {
+    id: root
+
+    function resetPasswrd() {        
+        if(stateHelper.userVerificationFlow === 1) {
+            stateHelper.onBoardState = OnboardStatus.NONSSOInviteCodeRecovery
+        } else {
+            userSelfProvisioningHelper.forgotPasswordBegin(stateHelper.email);
+        }
+    }
+
+    headerText: stateHelper.fromDeeplinkWhileLoggedIn() 
+        ? qsTr("You are currently signed in on this device")
+        : qsTr("Password reset & account recovery")
+
+    onBackButtonReturnPressed: {
+        stateHelper.backClicked();
+    }
+
+    onBackButtonBackTabPressed: {
+        resetPasswordBtn.forceActiveFocus()
+    }
+
+    onBackButtonTabPressed: {
+        resetPasswordBtn.forceActiveFocus()
+    }
+
+    Component.onCompleted: resetPasswordBtn.forceActiveFocus()
+    
+    Column {
+        id: contentColumn
+        anchors {
+            top: parent.top
+            topMargin: 88 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        width: 420 * ScreenRM.scale
+        spacing: 30 * ScreenRM.scale
+
+        Text {
+            id: textItem
+            width: parent.width
+            
+            text: stateHelper.fromDeeplinkWhileLoggedIn() 
+                ? qsTr("If you continue with the password reset, you will be signed out of this device.") + "<br>" +
+                  "<b>" + qsTr("For your protection, resetting your password will delete your contacts and content in rooms and conversations across all devices associated with your account.") + "</b><br>" +
+                  "<b>" + qsTr("Rooms where you are the only moderator will no longer have a moderator.") + "</b>"
+                : (stateHelper.userVerificationFlow === 1 
+                    ? qsTr("For your protection, resetting your password will delete your contacts and content in rooms and conversations across all your devices associated with your account.") + "<br><br>" + qsTr("You'll lose access to rooms where you are the only moderator, and you risk being removed from other rooms and conversations.")
+                    : qsTr("For your protection, resetting your password will delete your contacts and content in rooms and conversations across all your devices associated with your account.") + "<br><br>" + qsTr("You'll lose access to rooms where you are the only moderator."))
+
+            font.pointSize: 18 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            color: Branding.palette_gbl_p11
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
+
+        Image {
+            id: warningIcon
+            visible: stateHelper.fromDeeplinkWhileLoggedIn()
+            source: "qrc:/images/ic_warning_red.svg"
+            width: 80 * ScreenRM.scale
+            height: 80 * ScreenRM.scale
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    WickrIconTextButton {
+        id: resetPasswordBtn
+
+        anchors {
+            bottom: root.bottom
+            bottomMargin: 100 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        width: standardWidth
+        height: 40
+        text: stateHelper.fromDeeplinkWhileLoggedIn() || stateHelper.userVerificationFlow === 1 
+            ? qsTr("Continue") 
+            : qsTr("Reset password")
+        styleName: "standardLargePrimary"
+
+        onClicked: {
+            resetPasswrd();
+        }
+
+        Keys.onTabPressed: backButton.forceActiveFocus()
+
+        Keys.onReturnPressed: {
+            resetPasswrd();
+        }
+    }
+
+}

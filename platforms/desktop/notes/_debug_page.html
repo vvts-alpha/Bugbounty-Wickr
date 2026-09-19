@@ -1,0 +1,361 @@
+         log(`Users to manage count changed`);
+            //logObj(users);
+          });
+
+          wickrBridge.switchedToCode.connect(function (deviceSyncVerifyKey, supportBackup) {
+            log(`Switched to code during device sync ${deviceSyncVerifyKey} ${supportBackup}`);
+          });
+
+          wickrBridge.showDeviceSyncingScreen.connect(function (show) {
+            log(`Show device syncing screen: ${show}`);
+          });
+
+          wickrBridge.showNewDeviceBanner.connect(function () {
+            log(`Show new device banner`);
+          });
+
+          wickrBridge.atoDeviceAddRequest.connect(function (show, code) {
+            log(`ATO device add request received: ${show} ${code}`);
+          });
+
+          wickrBridge.errorCodeEmitted.connect(function(errorInfo) {
+            log("Error code info:", JSON.stringify(errorInfo));
+          });
+        });
+        log("wickrBridge loaded");
+      };
+
+      function log(...args) {
+        console.log(...args);
+        const pre = document.createElement("pre");
+        pre.innerText = args.join(" ");
+        document.body.append(pre);
+      }
+
+      function logObj(obj) {
+        console.log(JSON.stringify(obj, null, 2));
+      }
+
+      const messageBase = `wickrweb://message/`;
+      const convoBase = `wickrweb://convo/`;
+      const convolistBase = `wickrweb://convolist/`;
+
+      const mainVgroupId = `S7eeabb9610e56a82d1e30b3f99e9124350377a18c887ca502d197fa7797c3b6`;
+
+      const userbase = `wickrweb://users/`;
+      const userId = `nemo@mailinator.com`;
+      const userhash = `01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44`;
+
+      function getSomeUsers(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        userIds = ["user1@mailinator.com", "user2@mailinator.com"];
+        userHashes = ["01afb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44"];
+        xhr.setRequestHeader("userIds", userIds);
+        xhr.setRequestHeader("userHashes", userHashes);
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function run(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runWithHeaders(url, headers) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        for (const property in headers) {
+          xhr.setRequestHeader(property, headers[property]);
+        }
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runJson(url, headers) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        for (const property in headers) {
+          xhr.setRequestHeader(property, headers[property]);
+        }
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          logObj(xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runGetActiveDevices(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          const deviceArray = xhr.response;
+          for (let i = 0; i < deviceArray.length; i++) {
+            let obj = deviceArray[i];
+            log(obj.appId);
+            log(obj.description);
+            log(obj.type);
+            log(obj.lastLoginTime);
+            log(obj.thisDevice);
+            log("----");
+          }
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runGetChimeToken(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          const deviceArray = xhr.response;
+          logObj(deviceArray);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runPut(url) {
+        //console.log("action:", action)
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", url, true);
+        // xhr.setRequestHeader("action", action)
+
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          console.log("error status", JSON.stringify(xhr), xhr.status);
+          log("xhr error!");
+        };
+        xhr.onloadend = function () {
+          console.log("error status", xhr, xhr.status);
+          if (xhr.status == 404) throw new Error(url + " replied 404");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runPost(url, msg) {
+        console.log("msg:", msg);
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("newmessage", encodeURI(msg));
+
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          console.log("error status", JSON.stringify(xhr), xhr.status);
+          log("xhr error!");
+        };
+        xhr.onloadend = function () {
+          console.log("error status", xhr, xhr.status);
+          if (xhr.status == 404) throw new Error(url + " replied 404");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function uiAction(action) {
+        log(`sending action ${action}`);
+        let a = {
+          action: action,
+        };
+
+        if (action === "imagePreview" || action === "openFile" || action === "saveFile" || action === "locationPopup" || action === "joinCall" || action === "messageHistory" || action === "reactionPopup" || action === "deleteMessage" || action == "showMessageError") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "";
+          a["messageId"] = "";
+          a["savedImage"] = "7219f5ae-b34d-4092-bf52-6a50a809f4cb";
+        }
+
+        if (action === "locationPopup") {
+          a["vgroupId"] = "Sff079cb05843ff0dfc3f13a413a7885336849addcee2a46fe52d18336ed30d0";
+          a["messageId"] = "aadb921041fa11eebdc5ab82cbd66ba5";
+        }
+
+        if (action === "openLink") {
+          // this must be extracted from a link preview or detected by the UI when hovering over a link
+          a["link"] = "https://www.amazon.com";
+          a["showConfirmation"] = false;
+        }
+
+        if (action === "viewContactDetails" || action === "reportUser") {
+          a["userId"] = "dory34@mailinator.com";
+        }
+
+        if (action === "showMessageDialog") {
+          a["message"] = "This is a message";
+          a["title"] = "This is a title";
+        }
+
+        if (action === "securityVerification") {
+          a["userId"] = "nemo@mailinator.com";
+        }
+
+        if (action === "toggleFileDropArea") {
+          a["active"] = false;
+        }
+
+        wickrUiBridge.sendAction(a);
+      }
+
+      function msgAction(action) {
+        log(`sending action ${action}`);
+        let a = {
+          action: action,
+        };
+
+        if (action === "starMessage" || action === "unstarMessage" || action === "saveFileToRoom" || action === "saveLinkToRoom" || action === "emojiReact" || action === "translateMessage") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "Sf5c03eed1179410ba8d74bdf9fa74ee79e574173fe1ab21db735ed12d346490";
+          a["messageId"] = "9293de60d1c911eeae51e9c9efa35df6";
+        }
+
+        if (action === "clearMessageTempId") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "b3923c46516d17daba218857c5bee6b33331e2dced5df3d6041c4cf61748a322";
+          a["tempMessageId"] = "ca4e7a2f4cdce1bfddbfaa6fca37d01ea8fb3e8b854e28500de2fd79bd7e83ee";
+
+          wickrBridge.clearMessageTempId(a, function (success) {
+            log("Server message id:", success["serverMessageId"]);
+          });
+        }
+
+        if (action === "saveFileToRoom") {
+          a["vgroupId"] = "S400073b7ecff52357a9b253ed247c9477e152f4d185aa9d04ab85cd8fedad4a";
+          a["messageId"] = "339cd430439811eeb1fd959bbab42d8f";
+
+          wickrBridge.saveFileToRoom(a);
+        }
+
+        if (action === "saveLinkToRoom") {
+          // this must be extracted from a link preview or detected by the UI when hovering over a link
+          a["vgroupId"] = "S400073b7ecff52357a9b253ed247c9477e152f4d185aa9d04ab85cd8fedad4a";
+          a["messageId"] = "555a1100439811eeb1fd959bbab42d8f";
+
+          a["link"] = "https://www.amazon.com";
+          wickrBridge.saveLinkToRoom(a);
+        }
+
+        if (action === "starMessage") {
+          a["star"] = true;
+          wickrBridge.starMessage(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "getAwsCredentials") {
+          // Please set keys here to test translate
+          a["accessKeyId"] = "";
+          a["secretKey"] = "";
+          wickrBridge.getAwsCredentials(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "translateMessage") {
+          wickrBridge.translateMessage(a, function (success) {
+            log(success);
+          });
+        }
+        if (action === "showTranslationSettings") {
+          wickrBridge.showTranslationSettings(function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "emojiReact") {
+          a["emoji"] = "😊";
+          //a["remove"] = true;
+          wickrBridge.emojiReact(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "unstarMessage") {
+          a["star"] = false;
+          wickrBridge.starMessage(a, function (success) {
+            log(success);
+          });
+        }
+      }
+
+      function convoChanged(convoId) {
+        console.log("convo changed", convoId);
+        run(`${messageBase}${convoId}`);
+      }
+
+      function getClock() {
+        wickrBridge.getAppClock(fu

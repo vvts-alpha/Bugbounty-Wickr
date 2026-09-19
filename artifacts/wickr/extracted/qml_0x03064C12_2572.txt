@@ -1,0 +1,81 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQml.Models
+import QtQuick.Layouts
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    color: "transparent"
+    property bool ssoVerify: false
+    property string email: ""
+    signal manualInviteEntry(string email)
+
+    function show(emailEntry,isSSOVerify) {
+        reset();
+        email = emailEntry;
+        ssoVerify = isSSOVerify;
+        root.visible = true
+        if (ssoVerify) {
+            // SSO verify email
+            checkEmailPanel.popupBodySecondaryText = qsTr("We have sent you a verification email.") + "\n" + qsTr("Please follow the instructions provided in the email.");
+        } else {
+            // Claim network verify email
+            checkEmailPanel.popupBodySecondaryText = qsTr("Click on the link in the email to claim your network. It expires soon!");
+        }
+
+        checkEmailPanel.focus = true
+    }
+
+    function clear() {
+        email = "";
+        ssoVerify = false;
+    }
+
+    function reset() {
+        clear();
+        root.visible = false;
+    }
+
+    WrappedImage {
+        id: backgroundImg
+        fillMode: Image.PreserveAspectCrop
+        anchors.fill: parent
+        source: Branding.images_background
+    }
+
+    WickrPopupPanelWL {
+        id: checkEmailPanel
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        panelOpacity: 1.0
+        panelBorderWidth: 1
+        headerText: qsTr("Check Your Email!")
+        headerImageResource: "ic-email"
+        headerImageColorResource: Branding.palette_rgs_s1
+        popupHeaderFontWeight: Font.Light
+        popupSubjectText: qsTr("Verification email was sent to")
+        popupBodyMainTopMargin: 19 * ScreenRM.scale
+        popupBodyMainText: email
+        popupBodyMainHeight: 24 * ScreenRM.scale
+        popupBodyMainUnderline: true
+        popupBodySecondaryTopMargin: 51 * ScreenRM.scale
+        popupBodySecondaryText: qsTr("Click on the link in the email to claim your network. It expires soon!")
+        popupBodySecondaryHeight: 0
+        btnLabelText: (!ssoVerify) ? qsTr("Enter Code Manually") : ""
+        btnVisible: (!ssoVerify) ? true : false
+        btnPrimary: false
+        btnStyle: "standard"
+        btnWt: "sm"
+        visible: true
+        onPrimaryPressed: {
+            if (!ssoVerify) {
+                manualInviteEntry(email);
+            }
+        }
+    }
+}

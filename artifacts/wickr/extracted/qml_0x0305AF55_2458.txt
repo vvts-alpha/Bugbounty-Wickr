@@ -1,0 +1,82 @@
+	˜import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQml.Models
+import QtQuick.Layouts
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    color: "transparent"
+
+    property var callback: undefined
+
+    property string appName: wickrSettings.isPro ? "Pro" : ""
+    property string useOrSerivce: wickrSettings.isPro ? "Use" : ""
+
+    function close() {
+        // check if callback function exists before trying to call it
+        if (callback) {
+            if (typeof(callback) === "function") {
+                callback();
+            }
+        }
+    }
+
+    function show(callback) {
+        agreeAndContPanel.submitSpinner.running = false;
+        if (callback) {
+            root.callback = callback;
+        } else {
+            root.callback = undefined;
+        }
+
+        // Acquire the focus so keyboard navigation works
+        agreeAndContPanel.focus = true;
+    }
+
+    WrappedImage {
+        id: backgroundImg
+        fillMode: Image.PreserveAspectCrop
+        anchors.fill: parent
+        source: Branding.images_background
+    }
+
+    WickrPopupPanelWL {
+        id: agreeAndContPanel
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        panelOpacity: 1.0
+        panelBorderWidth: 1
+        headerText: Branding.copy_welcomeToStringAgree
+        headerImageResource: Branding.images_ic_start
+        headerImageColorResource: Branding.palette_rgs_s1
+        popupHeaderFontWeight: Font.Light
+        popupSubjectText: Branding.copy_privateByDesign
+        popupBodyMainText: qsTr("Click \"Agree & Continue\" to accept Wickr's %1Terms of Service%2 and %3Privacy Notice.%4")
+        .arg("<a href=\"" + Branding.links_termsOfUseURL + "\">")
+        .arg("</a>")
+        .arg("<a href=\"" + Branding.links_privacyPolicyURL + "\">")
+        .arg("</a>")
+        popupBodyMainHeight: 144 * ScreenRM.scale
+        popupBodySecondaryText: ""
+        popupBodySecondaryHeight: 0
+        btnLabelText: qsTr("AGREE AND CONTINUE")
+        btnSpinnerEnabled: true
+        visible: true
+        focus: true
+
+        onLinkClicked: {
+            wickrWindow.hyperlinkClicked(url);
+        }
+
+        onPrimaryPressed: {
+            analyticsManager.addEvent("GDPR Agree & Continue")
+            close();
+        }
+    }
+}

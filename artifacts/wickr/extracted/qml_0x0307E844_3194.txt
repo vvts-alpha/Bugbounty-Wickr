@@ -1,0 +1,114 @@
+yimport QtQuick
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import QtQuick.Controls
+
+import "../widgets/"
+import "../"
+import "../SideNav/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+/* This is the "fixed" version of the ConvoMembersList.qml
+   It removes the scroll bar and sets interactive: false to prevent scrolling
+   Used to show a short list of <10 users in the room but has better performance
+   than repeaters
+  */
+
+Column
+{
+    id: roomMembersCol
+    anchors.left: parent.left
+    anchors.right: parent.right
+    property int maxNumberOfItems : 10
+    property bool trashMode: false
+    property var membersModel: undefined
+    property alias convoUsersLV: convoUsersLV
+    property bool capped: convoUsersLV.count > maxNumberOfItems
+    signal inviteOpening()
+
+    function cancelTrashMode()
+    {
+        if(trashMode)
+        {
+            rootCCM.membersModel.sourceModel.clearSelected()
+            trashMode = false;
+        }
+    }
+
+    Rectangle
+    {
+        height: 1 * ScreenRM.scale
+        width: parent.width
+        color: Branding.palette_gbl_p7
+    }
+
+    SideNavMenuItem
+    {
+        id: menuItemAddToConvo
+        color: Branding.palette_gbl_p2
+        width: parent.width
+        iconName: "ic-contacts"
+        label: qsTr("Add Members")
+        onClicked: {
+            inviteOpening()
+            rootCCM.inviteToConvo.openDrawer()
+        }
+
+        showNavigationButton: true
+        showSeparator: false
+        visible: rootCCM.editMode
+
+        Rectangle
+        {
+            // show a full line rather than a partial separator
+            anchors.bottom: parent.bottom
+            height: 1 * ScreenRM.scale
+            width: parent.width
+            color: Branding.palette_gbl_p7
+        }
+    }
+
+    Rectangle
+    {
+        color: Branding.palette_gbl_p2
+        height: Math.min(convoUsersLV.count, maxNumberOfItems) * 56 * ScreenRM.scale
+        width: parent.width
+
+        ListView
+        {
+            id: convoUsersLV
+            clip: true
+            model: membersModel
+
+            anchors.fill: parent
+            interactive: false
+            delegate: ContactListItem {
+                showIButton: false
+                showPlusButton: false
+                selectable: true
+                showCrown: rootCCM.moderation
+                canToggleCrown: rootCCM.editMode
+
+                checkedMode: roomMembersCol.trashMode
+                onCheckedToggle:
+                {
+                    // this value represents the user set value, so
+                    // checked must be passed to the model
+                    if(isChecked)
+                    {
+                        membersModel.sourceModel.selectMember(hash)
+                    }
+                    else
+                    {
+                        membersModel.sourceModel.unselectMember(hash)
+                    }
+                }
+                onModeratorToggled: {
+                    rootCCM.dirty = true;
+                    convoMembersModel.toggleModeratorOfRoom(hash);
+                }
+            }
+        }
+    }
+}

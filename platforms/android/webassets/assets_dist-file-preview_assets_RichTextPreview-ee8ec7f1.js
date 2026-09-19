@@ -1,0 +1,31 @@
+import{j as x}from"./file-preview-ee8ec7f1.js";import v from"./index-ee8ec7f15.js";import"./index-ee8ec7f18.js";import"./useChangeEffect-ee8ec7f1.js";import"./useAsyncEffect-ee8ec7f1.js";/*!
+MIT License
+
+Copyright (c) 2023 Michael Long
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+https://github.com/ClankDev/RTF-Converter
+*/function P(i){for(var h=/\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)|[\u2022]/gi,b=new Set(["aftncn","aftnsep","aftnsepc","annotation","atnauthor","atndate","atnicn","atnid","atnparent","atnref","atntime","atrfend","atrfstart","author","background","bkmkend","bkmkstart","blipuid","buptim","category","colorschememapping","colortbl","comment","company","creatim","datafield","datastore","defchp","defpap","do","doccomm","docvar","dptxbxtext","ebcend","ebcstart","factoidname","falt","fchars","ffdeftext","ffentrymcr","ffexitmcr","ffformat","ffhelptext","ffl","ffname","ffstattext","field","file","filetbl","fldinst","fldrslt","fldtype","fname","fontemb","fontfile","fonttbl","footer","footerf","footerl","footerr","footnote","formfield","ftncn","ftnsep","ftnsepc","g","generator","gridtbl","header","headerf","headerl","headerr","hl","hlfr","hlinkbase","hlloc","hlsrc","hsv","htmltag","info","keycode","keywords","latentstyles","lchars","levelnumbers","leveltext","lfolevel","linkval","list","listlevel","listname","listoverride","listoverridetable","listpicture","liststylename","listtable","listtext","lsdlockedexcept","macc","maccPr","mailmerge","maln","malnScr","manager","margPr","mbar","mbarPr","mbaseJc","mbegChr","mborderBox","mborderBoxPr","mbox","mboxPr","mchr","mcount","mctrlPr","md","mdeg","mdegHide","mden","mdiff","mdPr","me","mendChr","meqArr","meqArrPr","mf","mfName","mfPr","mfunc","mfuncPr","mgroupChr","mgroupChrPr","mgrow","mhideBot","mhideLeft","mhideRight","mhideTop","mhtmltag","mlim","mlimloc","mlimlow","mlimlowPr","mlimupp","mlimuppPr","mm","mmaddfieldname","mmath","mmathPict","mmathPr","mmaxdist","mmc","mmcJc","mmconnectstr","mmconnectstrdata","mmcPr","mmcs","mmdatasource","mmheadersource","mmmailsubject","mmodso","mmodsofilter","mmodsofldmpdata","mmodsomappedname","mmodsoname","mmodsorecipdata","mmodsosort","mmodsosrc","mmodsotable","mmodsoudl","mmodsoudldata","mmodsouniquetag","mmPr","mmquery","mmr","mnary","mnaryPr","mnoBreak","mnum","mobjDist","moMath","moMathPara","moMathParaPr","mopEmu","mphant","mphantPr","mplcHide","mpos","mr","mrad","mradPr","mrPr","msepChr","mshow","mshp","msPre","msPrePr","msSub","msSubPr","msSubSup","msSubSupPr","msSup","msSupPr","mstrikeBLTR","mstrikeH","mstrikeTLBR","mstrikeV","msub","msubHide","msup","msupHide","mtransp","mtype","mvertJc","mvfmf","mvfml","mvtof","mvtol","mzeroAsc","mzeroDesc","mzeroWid","nesttableprops","nextfile","nonesttables","objalias","objclass","objdata","object","objname","objsect","objtime","oldcprops","oldpprops","oldsprops","oldtprops","oleclsid","operator","panose","password","passwordhash","pgp","pgptbl","picprop","pict","pn","pnseclvl","pntext","pntxta","pntxtb","printim","private","propname","protend","protstart","protusertbl","pxe","result","revtbl","revtim","rsidtbl","rxe","shp","shpgrp","shpinst","shppict","shprslt","shptxt","sn","sp","staticval","stylesheet","subject","sv","svb","tc","template","themedata","title","txe","ud","upr","userprops","wgrffmtfilter","windowcaption","writereservation","writereservhash","xe","xform","xmlattrname","xmlattrvalue","xmlclose","xmlname","xmlnstbl","xmlopen"]),d={par:`
+`,sect:`
+
+`,page:`
+
+`,line:`
+`,tab:"	",emdash:"—",endash:"–",emspace:" ",enspace:" ",qmspace:" ",bullet:"•",lquote:"‘",rquote:"’",ldblquote:"“",rdblquote:"”"},c=[],e=!1,o=1,r=0,t=[],u,a,p,n,s,l,f;u=h.exec(i);)if([a,p,n,s,l,f]=u.slice(1),l)r=0,l==="{"?c.push([o,e]):l==="}"&&([o,e]=c.pop());else if(s)r=0,s==="~"&&!e?t.push(" "):"{}\\".indexOf(s)!==-1&&!e?t.push(s):s==="*"&&(e=!0);else if(a){if(r=0,b.has(a))e=!0;else if(!e){if(a in d)t.push(d[a]);else if(a==="uc")o=parseInt(p);else if(a==="u"){var m=parseInt(p);m<0&&(m+=65536),m>127,t.push(String.fromCharCode(m)),r=o}}}else if(n){if(r>0)r-=1;else if(!e){var m=parseInt(n,16);m>127,t.push(String.fromCharCode(m))}}else f&&(r>0?r-=1:e||t.push(f));return t.join("")}const S=({url:i})=>x.jsx(v,{url:i,transformText:P});export{S as default};

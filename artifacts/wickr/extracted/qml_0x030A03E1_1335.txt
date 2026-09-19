@@ -1,0 +1,28 @@
+6import QtQuick
+import ".."
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+WrappedImage {
+    id: root
+    property string name
+    property string color // set to "nochange" if you don't want to recolor
+    property string backgroundName  // optional
+    property string backgroundColor: Branding.palette_gbl_p1
+    property bool enableHighDpiImage: true
+    property string resRatio: ScreenRM.imageScaleStr // either "3", "2", or ""
+    property string resRatioParam: enableHighDpiImage && resRatio.length ? (":" + resRatio) : ""
+    width: sourceSize.width / ScreenRM.imageScale * ScreenRM.scale
+    height: sourceSize.height / ScreenRM.imageScale * ScreenRM.scale
+    source: backgroundName ? ("image://standardiconprovider/" + backgroundName + ':' + backgroundColor + resRatioParam)
+                           : (name && name.length > 0 ? "image://standardiconprovider/" + name + ':' + color + resRatioParam : "")
+    fillMode: Image.PreserveAspectFit
+
+    WrappedImage {
+        anchors.centerIn: parent
+        visible: backgroundName
+        source: name.length > 0 ? "image://standardiconprovider/" + name + ':' + color + resRatioParam : ""
+        width: sourceSize.width / ScreenRM.imageScale * ScreenRM.scale
+        height: sourceSize.height / ScreenRM.imageScale * ScreenRM.scale
+    }
+}

@@ -1,0 +1,76 @@
+	Oimport QtQuick
+import QtQuick.Controls
+import com.wickr.interfaces 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: memberItem
+    height: 28 * ScreenRM.scale
+    width: row.width
+    radius: 4 * ScreenRM.scale
+    color: Branding.palette_gbl_p2
+
+    property bool isSecureRoom: false;
+    property bool canCancel: false;
+    property bool selfUser: wickrDashboardData.myUserId === userName
+
+    signal memberCanceled(string username, string hash);
+
+    function remove()
+    {
+        memberCanceled(userName, hashKey)
+    }
+
+    Row {
+        id: row
+        leftPadding: 9 * ScreenRM.scale
+        rightPadding: 4 * ScreenRM.scale
+        spacing: 5 * ScreenRM.scale
+
+        height: parent.height
+        width: (17 * ScreenRM.scale) + text.width + (cancelMember.visible ? cancelMember.width + row.spacing : 0)
+
+        Text {
+            id: text
+            anchors.verticalCenter: parent.verticalCenter
+            width: Math.min(implicitWidth, 170 * ScreenRM.scale)
+            text: firstName.length > 0 ? firstName : displayName
+            elide: Text.ElideRight
+            font.pointSize: 12 * ScreenRM.fontScale
+            font.family: fonts.osSemiBold
+            font.weight: Font.DemiBold
+            color: Branding.palette_gbl_p4
+            textFormat: Text.PlainText
+        }
+
+        FramedImage {
+            id: cancelMember
+            visible: canCancel
+            anchors.verticalCenter: parent.verticalCenter
+            smooth: true
+            property bool hoverState: false
+
+            name: Branding.images_ic_art_close_white_8x8
+            foregroundColor: removeMa.containsMouse ? Branding.palette_gbl_p2 : Branding.palette_gbl_p2
+            backgroundColor: removeMa.containsMouse ? Branding.palette_gbl_s1 : Branding.palette_gbl_p5
+
+            width: Math.ceil(16 * ScreenRM.scale)
+            height: width
+            radius: width / 2.0
+
+            MouseArea {
+                id: removeMa
+                anchors.fill: parent
+                hoverEnabled: true
+                onPressed: {
+                    if (canCancel) {
+                        parent.forceActiveFocus();
+                        memberCanceled(userName, hashKey);
+                    }
+                }
+            }
+        }
+    }
+}

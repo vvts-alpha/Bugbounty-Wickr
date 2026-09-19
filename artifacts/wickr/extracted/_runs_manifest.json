@@ -1,0 +1,1118 @@
+[
+ {
+  "category": "text",
+  "offset": "0x01B7DE79",
+  "length": 301393,
+  "file": "text_0x01B7DE79_301393.txt",
+  "name": null,
+  "sha256": "5ebcc5a80879aca8",
+  "preview": "Sh33tJ5\")){W=W.replace(/[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7E-\\xFF]/g,function(we){return\"_x\"+we.charCodeAt(0).toString(16)+\"_"
+ },
+ {
+  "category": "text",
+  "offset": "0x01C60B8D",
+  "length": 124519,
+  "file": "text_0x01C60B8D_124519.txt",
+  "name": null,
+  "sha256": "be99589ebf43d349",
+  "preview": "\",o.DATA_DESCRIPTOR=\"PK\\x07\\b\"},{}],24:[function(e,u,o){var r=e(\"./GenericWorker\"),l=e(\"../utils\");function i(s){r.call("
+ },
+ {
+  "category": "html",
+  "offset": "0x031D664B",
+  "length": 97649,
+  "file": "html_0x031D664B_97649.txt",
+  "name": null,
+  "sha256": "e3406a8a4b666fb0",
+  "preview": "}o<!DOCTYPE html>\r <html>\r   <head>\r     <title>Page Title</title>\r     <script type=\"text/javascript\" src=\"qwebchannel."
+ },
+ {
+  "category": "text",
+  "offset": "0x01B6FD7E",
+  "length": 39151,
+  "file": "text_0x01B6FD7E_39151.txt",
+  "name": null,
+  "sha256": "2fa48847764c96ea",
+  "preview": "zJimport{j as er,c as St,J as Un,b as da,fy as Ni,B as Pi,cr as bi,dT as Li,aa as Bi,ab as Mi}from\"./app-DOUtVdma.js\";im"
+ },
+ {
+  "category": "text",
+  "offset": "0x01C7F2E9",
+  "length": 24646,
+  "file": "text_0x01C7F2E9_24646.txt",
+  "name": null,
+  "sha256": "0f1340325a19395a",
+  "preview": "`Dimport{J as $t,b as F,e$ as qt,p as Vt,aB as Kt,cr as Zt,oQ as Qt,d2 as Jt,dT as en,j as C,H as tn,bF as nn,c as on}fr"
+ },
+ {
+  "category": "js",
+  "offset": "0x01C5B5BB",
+  "length": 21827,
+  "file": "js_0x01C5B5BB_21827.txt",
+  "name": null,
+  "sha256": "b667485c171b6303",
+  "preview": "<7(function(){\"use strict\";var Bt=typeof globalThis<\"u\"?globalThis:typeof window<\"u\"?window:typeof global<\"u\"?global:typ"
+ },
+ {
+  "category": "text",
+  "offset": "0x01758BA3",
+  "length": 18599,
+  "file": "text_0x01758BA3_18599.txt",
+  "name": null,
+  "sha256": "c5cc4054809ecf8f",
+  "preview": "H\ufffd{\"version\":3,\"file\":\"app-C0XHz-PJ.js\",\"sources\":[\"../../src/components/CoachMarks/CoachMarkMarker.tsx\",\"../../src/comp"
+ },
+ {
+  "category": "text",
+  "offset": "0x01BE8204",
+  "length": 18239,
+  "file": "text_0x01BE8204_18239.txt",
+  "name": null,
+  "sha256": "9602ee27da2bf148",
+  "preview": "G=import{fw as m,gy as C,gK as u,kP as M,gL as A,kQ as S,i_ as g,fK as p,ja as I,au as b,kR as f,at as y,kS as h,kT as _"
+ },
+ {
+  "category": "text",
+  "offset": "0x01B7966E",
+  "length": 14201,
+  "file": "text_0x01B7966E_14201.txt",
+  "name": null,
+  "sha256": "54dcd986076aa131",
+  "preview": "Sh33tJ5\";if(!Ie.find(g,\"/\"+A)){var T=qe(4);T[0]=55,T[1]=T[3]=50,T[2]=54,g.FileIndex.push({name:A,type:2,content:T,size:4"
+ },
+ {
+  "category": "text",
+  "offset": "0x01CDEEF0",
+  "length": 12889,
+  "file": "text_0x01CDEEF0_12889.txt",
+  "name": null,
+  "sha256": "b7eb3e340ad05c2b",
+  "preview": "2W{\"version\":3,\"file\":\"app-C_6lLNXi.js\",\"sources\":[\"../../src/file-preview/components/XmlPreview/index.tsx\"],\"sourcesCon"
+ },
+ {
+  "category": "text",
+  "offset": "0x019011F6",
+  "length": 11077,
+  "file": "text_0x019011F6_11077.txt",
+  "name": null,
+  "sha256": "b1278ad4144476cf",
+  "preview": "+C{\"version\":3,\"file\":\"app-ocAAmkBD.js\",\"sources\":[\"../../src/file-preview/components/TextPreview/rtf_converter.js\",\"../"
+ },
+ {
+  "category": "text",
+  "offset": "0x01CE35A5",
+  "length": 9728,
+  "file": "text_0x01CE35A5_9728.txt",
+  "name": null,
+  "sha256": "bb032ac25b8dfa5c",
+  "preview": "%\ufffd{\"version\":3,\"file\":\"app-DnackNSU.js\",\"sources\":[\"../../src/componentlibrary/icons/ZoomIn/index.tsx\",\"../../src/compon"
+ },
+ {
+  "category": "text",
+  "offset": "0x01C592BA",
+  "length": 8959,
+  "file": "text_0x01C592BA_8959.txt",
+  "name": null,
+  "sha256": "4dc8ebe629e7f21f",
+  "preview": "\"\ufffd{\"version\":3,\"file\":\"file-preview-4vkBugtX.js\",\"sources\":[\"../../src/file-preview/components/withLinkHandler.tsx\",\"../"
+ },
+ {
+  "category": "text",
+  "offset": "0x029CDAB7",
+  "length": 6987,
+  "file": "text_0x029CDAB7_6987.txt",
+  "name": null,
+  "sha256": "7b55810bb5059480",
+  "preview": "J<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"100\" viewBox=\"0 0 240 100\">\r     <g fill=\"#FFF\" fill-rule=\""
+ },
+ {
+  "category": "qml",
+  "offset": "0x0306CFAE",
+  "length": 6096,
+  "file": "qml_0x0306CFAE_6096.txt",
+  "name": null,
+  "sha256": "fe944f01f991341c",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Layouts\r import QtQuick.Controls\r import QtWebEngine\r import QtQuick.Dialogs\r import \"wi"
+ },
+ {
+  "category": "text",
+  "offset": "0x00E47343",
+  "length": 5412,
+  "file": "text_0x00E47343_5412.txt",
+  "name": null,
+  "sha256": "98c27f5c1492fc5f",
+  "preview": "#@aws-crypto/crc32,5.2.0 @aws-crypto/sha256-browser,5.2.0 @aws-crypto/sha256-js,5.2.0 @aws-crypto/supports-web-crypto,5."
+ },
+ {
+  "category": "text",
+  "offset": "0x01CE214C",
+  "length": 5207,
+  "file": "text_0x01CE214C_5207.txt",
+  "name": null,
+  "sha256": "f24e64081acfa2ae",
+  "preview": "Vimport{j as x}from\"./app-DOUtVdma.js\";import v from\"./app-Bq1ctq_L.js\";/*! MIT License  Copyright (c) 2023 Michael Long"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030811B1",
+  "length": 4941,
+  "file": "qml_0x030811B1_4941.txt",
+  "name": null,
+  "sha256": "60943ded7d314e78",
+  "preview": "Limport QtQuick\r import QtQuick.Controls\r \r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A1A04",
+  "length": 4576,
+  "file": "qml_0x030A1A04_4576.txt",
+  "name": null,
+  "sha256": "dd0c4d6fff08699b",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtWebChannel\r import QtWebEngine\r import com.wickr.interfaces 1.0\r impo"
+ },
+ {
+  "category": "js",
+  "offset": "0x0186502A",
+  "length": 4363,
+  "file": "js__app-C0XHz-PJ.js.txt",
+  "name": "app-C0XHz-PJ.js",
+  "sha256": "33ac12198d5e6164",
+  "preview": " import{b as r,j as e,c as b,kK as K,kL as $,J as U,Q as O,kM as Y,cu as q,em as J,en as Q,e as V,kN as W,kO as G,B as j"
+ },
+ {
+  "category": "text",
+  "offset": "0x01B7CDE8",
+  "length": 4240,
+  "file": "text_0x01B7CDE8_4240.txt",
+  "name": null,
+  "sha256": "1f10c72cec8dd817",
+  "preview": "Sh33tJ5\")){var He=V,Ge=qe(fe.length);for(H=0;H<fe.length;++H)Ge.write_shift(1,fe.charCodeAt(H)&127);Ge=Ge.slice(0,Ge.l),"
+ },
+ {
+  "category": "text",
+  "offset": "0x01CDC53E",
+  "length": 4218,
+  "file": "text_0x01CDC53E_4218.txt",
+  "name": null,
+  "sha256": "180bfb9c8720cf0c",
+  "preview": "y{\"version\":3,\"file\":\"app-DG-tBHkr.js\",\"sources\":[\"../../src/file-preview/FilePreviewProvider.tsx\"],\"sourcesContent\":[\"i"
+ },
+ {
+  "category": "js",
+  "offset": "0x0198BDB3",
+  "length": 4085,
+  "file": "js__app-DnackNSU.js.txt",
+  "name": "app-DnackNSU.js",
+  "sha256": "e06d8c527739c8c5",
+  "preview": "\ufffdimport{j as e,S as N,J as q,b as d,eh as Z,H as _,i1 as w,oM as B,I as o,C as j,io as L,oN as E,j1 as F,bh as k}from\"./"
+ },
+ {
+  "category": "text",
+  "offset": "0x0305554B",
+  "length": 3899,
+  "file": "text_0x0305554B_3899.txt",
+  "name": null,
+  "sha256": "084ec828d029d4ac",
+  "preview": ":/*\r  * This script will provide common styles and determine the OS to make any\r  * needed adjustments such as font name"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308A94A",
+  "length": 3821,
+  "file": "qml_0x0308A94A_3821.txt",
+  "name": null,
+  "sha256": "1f743ed8b6645e03",
+  "preview": "\ufffdimport QtQuick\r import onboardStatus 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Layouts\r import Qt"
+ },
+ {
+  "category": "js",
+  "offset": "0x01903D3D",
+  "length": 3478,
+  "file": "js__app-C_6lLNXi.js.txt",
+  "name": "app-C_6lLNXi.js",
+  "sha256": "deaa7e78c0edd858",
+  "preview": "\r\ufffdimport{b as p,cr as D,p as v,oI as S,j as t,oO as M,eP as N,c as f,B as w}from\"./app-DOUtVdma.js\";import{F as A}from\"."
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308D87A",
+  "length": 3250,
+  "file": "qml_0x0308D87A_3250.txt",
+  "name": null,
+  "sha256": "a0d7ff3e9aa790d3",
+  "preview": "\ufffdimport QtQuick\r import onboardStatus 1.0\r import \"../Commons/\"\r import \"../widgets/\"\r import QtQuick.Controls.Basic\r \r "
+ },
+ {
+  "category": "qml",
+  "offset": "0x0307E844",
+  "length": 3194,
+  "file": "qml_0x0307E844_3194.txt",
+  "name": null,
+  "sha256": "ec1726ffcb99e723",
+  "preview": "yimport QtQuick\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import QtQuick.Controls\r \r import \"../widgets/\"\r i"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308F2D5",
+  "length": 3172,
+  "file": "qml_0x0308F2D5_3172.txt",
+  "name": null,
+  "sha256": "8b8ae3b02c55ec2c",
+  "preview": "cimport QtQuick\r \r import \"../widgets/\"\r import \"../Commons/\"\r import \"../\"\r import onboardStatus 1.0\r import QtQuick.Co"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03058026",
+  "length": 3128,
+  "file": "qml_0x03058026_3128.txt",
+  "name": null,
+  "sha256": "0f6f8645ef13c768",
+  "preview": "7import QtQuick\r import QtQuick.Controls\r import \"widgets/\"\r import \"Commons/\"\r import QtQuick.Controls.Basic\r \r Rectang"
+ },
+ {
+  "category": "text",
+  "offset": "0x0225778A",
+  "length": 3108,
+  "file": "text_0x0225778A_3108.txt",
+  "name": null,
+  "sha256": "0f60e45b4c50035e",
+  "preview": "#<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"100\" viewBox=\"0 0 240 100\">\r     <g fill=\"#FFF\" fill-rule=\""
+ },
+ {
+  "category": "qml",
+  "offset": "0x0307B973",
+  "length": 3107,
+  "file": "qml_0x0307B973_3107.txt",
+  "name": null,
+  "sha256": "6af77727be72a103",
+  "preview": "\"import QtQuick\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import QtQuick.Controls\r \r import \"../widgets/\"\r i"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308B83A",
+  "length": 3037,
+  "file": "qml_0x0308B83A_3037.txt",
+  "name": null,
+  "sha256": "4f424a250d062ab7",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.interfaces 1.0\r import com.wickr.widg"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305498D",
+  "length": 3003,
+  "file": "qml_0x0305498D_3003.txt",
+  "name": null,
+  "sha256": "39099098bb61f469",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import QtQ"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308FF3C",
+  "length": 2892,
+  "file": "qml_0x0308FF3C_2892.txt",
+  "name": null,
+  "sha256": "ed1012622a239eb9",
+  "preview": "Kimport QtQuick\r import onboardStatus 1.0\r import \"../Commons/\"\r import \"../widgets/\"\r import QtQuick.Controls.Basic\r \r "
+ },
+ {
+  "category": "text",
+  "offset": "0x01BE7746",
+  "length": 2748,
+  "file": "text_0x01BE7746_2748.txt",
+  "name": null,
+  "sha256": "f20217c966bb670c",
+  "preview": " \ufffd{\"version\":3,\"file\":\"app-Bq1ctq_L.js\",\"sources\":[\"../../src/file-preview/components/TextPreview/index.tsx\"],\"sourcesCo"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305B8F1",
+  "length": 2665,
+  "file": "qml_0x0305B8F1_2665.txt",
+  "name": null,
+  "sha256": "a747cb0af097c4d2",
+  "preview": " gimport QtQuick\r import \"Commons/\"\r import QtQuick.Controls.Basic\r \r Rectangle {\r     id: tooltip\r \r     property alias"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03064C12",
+  "length": 2572,
+  "file": "qml_0x03064C12_2572.txt",
+  "name": null,
+  "sha256": "95200a42f51bd537",
+  "preview": "import QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import QtQu"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A9611",
+  "length": 2490,
+  "file": "qml_0x030A9611_2490.txt",
+  "name": null,
+  "sha256": "60b599a5f6333d7f",
+  "preview": "\t\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import QtMultimedia\r import com.wickr.interfaces 1.0\r"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305AF55",
+  "length": 2458,
+  "file": "qml_0x0305AF55_2458.txt",
+  "name": null,
+  "sha256": "3f7ade0f9f6ee9bd",
+  "preview": "\t\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import Qt"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03089FB8",
+  "length": 2447,
+  "file": "qml_0x03089FB8_2447.txt",
+  "name": null,
+  "sha256": "477b2d3cb508afb2",
+  "preview": "\t\ufffdimport QtQuick\r import onboardStatus 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Layouts\r import Q"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03078EAE",
+  "length": 2385,
+  "file": "qml_0x03078EAE_2385.txt",
+  "name": null,
+  "sha256": "10d093d2ec2a2cb6",
+  "preview": "\tOimport QtQuick\r import QtQuick.Controls\r import com.wickr.interfaces 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r "
+ },
+ {
+  "category": "qml",
+  "offset": "0x030701C6",
+  "length": 2351,
+  "file": "qml_0x030701C6_2351.txt",
+  "name": null,
+  "sha256": "24347f6b065f073b",
+  "preview": "\t-import QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import Qt"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03096586",
+  "length": 2344,
+  "file": "qml_0x03096586_2344.txt",
+  "name": null,
+  "sha256": "c5d209a124be68e2",
+  "preview": "\t&import QtQuick\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r Rectangle\r {\r     id: dropDownRoot\r     height:"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03094018",
+  "length": 2316,
+  "file": "qml_0x03094018_2316.txt",
+  "name": null,
+  "sha256": "4044276718eb9a39",
+  "preview": "\t import QtQuick\r import onboardStatus 1.0\r import com.wickr.interfaces 1.0\r import \"../Commons/\"\r import \"../widgets/\"\r"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030AB607",
+  "length": 2269,
+  "file": "qml_0x030AB607_2269.txt",
+  "name": null,
+  "sha256": "7a301ed1c672d32e",
+  "preview": "\ufffdimport QtQuick\r import com.wickr.interfaces 1.0\r import com.wickr.widgets 1.0\r import \"../widgets/\"\r import \"../ConvoMa"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030AADA6",
+  "length": 2142,
+  "file": "qml_0x030AADA6_2142.txt",
+  "name": null,
+  "sha256": "843158536cb22c1b",
+  "preview": "]import QtQuick\r import QtMultimedia\r import QtCore\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Controls"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A566A",
+  "length": 2113,
+  "file": "qml_0x030A566A_2113.txt",
+  "name": null,
+  "sha256": "af9861914d0d99ca",
+  "preview": "@import QtQuick\r import QtQuick.Controls\r import com.wickr.interfaces 1.0\r import com.wickr.widgets 1.0\r import \"../\"\r i"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309F1C5",
+  "length": 2096,
+  "file": "qml_0x0309F1C5_2096.txt",
+  "name": null,
+  "sha256": "84f49d7e5e654e9a",
+  "preview": "/import QtQuick\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r Item {\r     id: root\r     anchors.fill: parent\r "
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305780C",
+  "length": 2071,
+  "file": "qml_0x0305780C_2071.txt",
+  "name": null,
+  "sha256": "e28efd935f70a620",
+  "preview": "import QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import QtQu"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030AC807",
+  "length": 2043,
+  "file": "qml_0x030AC807_2043.txt",
+  "name": null,
+  "sha256": "989859b571d04000",
+  "preview": "\ufffdimport QtQuick\r import com.wickr.widgets 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Controls.Basic"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03066EA3",
+  "length": 1995,
+  "file": "qml_0x03066EA3_1995.txt",
+  "name": null,
+  "sha256": "b89150339196bbcb",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQml.Models\r import QtQ"
+ },
+ {
+  "category": "js",
+  "offset": "0x018DD72E",
+  "length": 1989,
+  "file": "js__file-preview-4vkBugtX.js.txt",
+  "name": "file-preview-4vkBugtX.js",
+  "sha256": "cf1213e9465baebd",
+  "preview": "\ufffdimport{b as a,cu as u,j as r,J as f,c as m,cs as g,H as x,kH as w,p as l,kx as y,kI as v,kJ as h,kE as j,dT as k,kF as "
+ },
+ {
+  "category": "js",
+  "offset": "0x01ACD892",
+  "length": 1948,
+  "file": "js__app-BLAoUoDS.js.txt",
+  "name": "app-BLAoUoDS.js",
+  "sha256": "4cb18f7bb6a204e2",
+  "preview": "\ufffdimport{oZ as w,o_ as T,o$ as y,p0 as g}from\"./app-DOUtVdma.js\";const D=[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\""
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305343F",
+  "length": 1878,
+  "file": "qml_0x0305343F_1878.txt",
+  "name": null,
+  "sha256": "4dd18334832e1acd",
+  "preview": "Uimport QtQuick\r import QtQuick.Controls\r import \"widgets/\"\r import \"Commons/\"\r import QtQuick.Controls.Basic\r \r Rectang"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309C79D",
+  "length": 1663,
+  "file": "qml_0x0309C79D_1663.txt",
+  "name": null,
+  "sha256": "7ce55729c3ef21cb",
+  "preview": "~import QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305F0AC",
+  "length": 1647,
+  "file": "qml_0x0305F0AC_1647.txt",
+  "name": null,
+  "sha256": "9079007967a081d7",
+  "preview": "nimport QtQuick\r import onboardStatus 1.0\r import \"Commons/\"\r import \"widgets/\"\r import \"AWSWickrProOnBoarding/\"\r import"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030AD313",
+  "length": 1605,
+  "file": "qml_0x030AD313_1605.txt",
+  "name": null,
+  "sha256": "40d39433723c74fd",
+  "preview": "Dimport QtQuick\r import com.wickr.widgets 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Controls.Basic"
+ },
+ {
+  "category": "css",
+  "offset": "0x01CE8B41",
+  "length": 1592,
+  "file": "css_0x01CE8B41_1592.txt",
+  "name": null,
+  "sha256": "a1cc437534e53891",
+  "preview": "7._container_1uj9u_1{color:var(--on-surface-variant);display:flex;flex-direction:column;width:100%;height:100%;--body-ba"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0307F4C1",
+  "length": 1526,
+  "file": "qml_0x0307F4C1_1526.txt",
+  "name": null,
+  "sha256": "e04b261d1b9c824f",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as W"
+ },
+ {
+  "category": "css",
+  "offset": "0x01AE53F2",
+  "length": 1438,
+  "file": "css_0x01AE53F2_1438.txt",
+  "name": null,
+  "sha256": "2cefc89a24cb7290",
+  "preview": "\ufffd._coachMark_xawlz_1{background:var(--surface);color:var(--on-surface);border:1px solid var(--outline-variant);border-ra"
+ },
+ {
+  "category": "text",
+  "offset": "0x0323C930",
+  "length": 1413,
+  "file": "text_0x0323C930_1413.txt",
+  "name": null,
+  "sha256": "55c5d30f442a7b76",
+  "preview": "CREATE TABLE Wickr_User (_id INTEGER PRIMARY KEY, userIDHash TEXT UNIQUE, userIDSec BLOB, userAliasHash TEXT, userAlias "
+ },
+ {
+  "category": "qml",
+  "offset": "0x0308C41A",
+  "length": 1404,
+  "file": "qml_0x0308C41A_1404.txt",
+  "name": null,
+  "sha256": "f75fd437e4938ed9",
+  "preview": "{import QtQuick\r import onboardStatus 1.0\r import \"../Commons/\"\r import \"../widgets/\"\r import QtQuick.Controls.Basic\r \r "
+ },
+ {
+  "category": "text",
+  "offset": "0x0323BA10",
+  "length": 1365,
+  "file": "text_0x0323BA10_1365.txt",
+  "name": null,
+  "sha256": "92a4d110900e53e0",
+  "preview": "CREATE TABLE Wickr_Account (_id INTEGER PRIMARY KEY, userName BLOB, appID BLOB, nextLoginTime BIGINT, failedLoginCount I"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A03E1",
+  "length": 1335,
+  "file": "qml_0x030A03E1_1335.txt",
+  "name": null,
+  "sha256": "615ee3db0fa6b403",
+  "preview": "6import QtQuick\r import \"..\"\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r WrappedImage {\r     id: root\r     p"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309F9F8",
+  "length": 1330,
+  "file": "qml_0x0309F9F8_1330.txt",
+  "name": null,
+  "sha256": "7a8a50589a4842cf",
+  "preview": "1import QtQuick\r import QtQuick.Layouts\r import QtQuick.Controls\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03087265",
+  "length": 1296,
+  "file": "qml_0x03087265_1296.txt",
+  "name": null,
+  "sha256": "7ee9107aaa49ef21",
+  "preview": "import QtQuick\r import \"../\"\r import com.wickr.interfaces 1.0\r import com.wickr.widgets 1.0\r import onboardStatus 1.0\r i"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03095568",
+  "length": 1286,
+  "file": "qml_0x03095568_1286.txt",
+  "name": null,
+  "sha256": "026181c3681afe00",
+  "preview": "import QtQuick\r import QtQuick.Layouts\r import QtQuick.Controls\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r "
+ },
+ {
+  "category": "text",
+  "offset": "0x02209D74",
+  "length": 1202,
+  "file": "text_0x02209D74_1202.txt",
+  "name": null,
+  "sha256": "34fc500e396f9f4e",
+  "preview": "\ufffd<svg width=\"143\" height=\"143\" viewBox=\"0 0 143 143\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r <path d=\"M71.9499 "
+ },
+ {
+  "category": "text",
+  "offset": "0x0321EC40",
+  "length": 1193,
+  "file": "text_0x0321EC40_1193.txt",
+  "name": null,
+  "sha256": "aa8e7aa5ddcdc23d",
+  "preview": "bool __cdecl crashpad::CrashpadClient::StartHandler(const class base::FilePath &,const class base::FilePath &,const clas"
+ },
+ {
+  "category": "text",
+  "offset": "0x0323BF70",
+  "length": 1162,
+  "file": "text_0x0323BF70_1162.txt",
+  "name": null,
+  "sha256": "aaf019a350a3f2d6",
+  "preview": "CREATE TABLE Wickr_Convo (_id INTEGER PRIMARY KEY, vGroupID TEXT UNIQUE, unreadMessages INTEGER, lastUser INTEGER, lastT"
+ },
+ {
+  "category": "xml",
+  "offset": "0x0352F9A4",
+  "length": 1116,
+  "file": "xml_0x0352F9A4_1116.txt",
+  "name": null,
+  "sha256": "766903a6e34aed78",
+  "preview": "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\r <assembly xmlns='urn:schemas-microsoft-com:asm.v1' manifestVers"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03072929",
+  "length": 1105,
+  "file": "qml_0x03072929_1105.txt",
+  "name": null,
+  "sha256": "13a732f88350da06",
+  "preview": "Pimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as W"
+ },
+ {
+  "category": "text",
+  "offset": "0x0328FDB0",
+  "length": 1068,
+  "file": "text_0x0328FDB0_1068.txt",
+  "name": null,
+  "sha256": "7b1547fde43f3688",
+  "preview": "^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C"
+ },
+ {
+  "category": "text",
+  "offset": "0x0323C400",
+  "length": 1040,
+  "file": "text_0x0323C400_1040.txt",
+  "name": null,
+  "sha256": "84ab3172a3c615e0",
+  "preview": "CREATE TABLE Wickr_Message (_id INTEGER PRIMARY KEY, state INTEGER DEFAULT 0, msgID text, vGroupID TEXT, class INTEGER, "
+ },
+ {
+  "category": "qml",
+  "offset": "0x030934E0",
+  "length": 1025,
+  "file": "qml_0x030934E0_1025.txt",
+  "name": null,
+  "sha256": "f0c1dd3ef138c6c8",
+  "preview": "import QtQuick\r import onboardStatus 1.0\r import \"../Commons/\"\r import \"../widgets/\"\r import QtQuick.Controls.Basic\r \r N"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03085D31",
+  "length": 1022,
+  "file": "qml_0x03085D31_1022.txt",
+  "name": null,
+  "sha256": "c1a9c9e7fdad8aff",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as W"
+ },
+ {
+  "category": "text",
+  "offset": "0x030C6FAB",
+  "length": 971,
+  "file": "text_0x030C6FAB_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x030DEA4F",
+  "length": 971,
+  "file": "text_0x030DEA4F_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x030F53BF",
+  "length": 971,
+  "file": "text_0x030F53BF_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x03144B7B",
+  "length": 971,
+  "file": "text_0x03144B7B_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x0315B3CB",
+  "length": 971,
+  "file": "text_0x0315B3CB_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x0317410F",
+  "length": 971,
+  "file": "text_0x0317410F_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x0318D7AB",
+  "length": 971,
+  "file": "text_0x0318D7AB_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x031BC17F",
+  "length": 971,
+  "file": "text_0x031BC17F_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "text",
+  "offset": "0x031D5017",
+  "length": 971,
+  "file": "text_0x031D5017_971.txt",
+  "name": null,
+  "sha256": "a6bbb89a56afd8e3",
+  "preview": "upsilontonos omegatonos\tafii10023\tafii10051\tafii10052\tafii10053\tafii10054\rafii10055.alt\rafii10056.alt\tafii10057\tafii1005"
+ },
+ {
+  "category": "js",
+  "offset": "0x0198B3B7",
+  "length": 962,
+  "file": "js__app-DG-tBHkr.js.txt",
+  "name": "app-DG-tBHkr.js",
+  "sha256": "94329f6815c4023e",
+  "preview": "\ufffdimport{b as n,j as g,cq as h,oK as v,eg as m}from\"./app-DOUtVdma.js\";const f=n.createContext({vgroupId:\"\",msgId:\"\",file"
+ },
+ {
+  "category": "css",
+  "offset": "0x0198B77C",
+  "length": 940,
+  "file": "css_0x0198B77C_940.txt",
+  "name": null,
+  "sha256": "d50c1e17dbd3b911",
+  "preview": "\ufffd._header_1qtib_1{background:var(--surface-container);color:var(--on-surface-variant);border-bottom:1px solid var(--outl"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03076B77",
+  "length": 940,
+  "file": "qml_0x03076B77_940.txt",
+  "name": null,
+  "sha256": "ba38539a2ee03403",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as W"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309983F",
+  "length": 905,
+  "file": "qml_0x0309983F_905.txt",
+  "name": null,
+  "sha256": "69fd37e89edf92e8",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../Commons/\"\r imp"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03097528",
+  "length": 884,
+  "file": "qml_0x03097528_884.txt",
+  "name": null,
+  "sha256": "d37a551b797544fd",
+  "preview": "simport QtQuick\r import \"..\"\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r Rectangle {\r     id: root\r     prop"
+ },
+ {
+  "category": "text",
+  "offset": "0x021716D1",
+  "length": 882,
+  "file": "text_0x021716D1_882.txt",
+  "name": null,
+  "sha256": "7c798e39229e4b76",
+  "preview": "q<svg width=\"125\" height=\"125\" viewBox=\"0 0 125 125\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r <g id=\"Icon/ic_Hel"
+ },
+ {
+  "category": "text",
+  "offset": "0x034BA600",
+  "length": 874,
+  "file": "text_0x034BA600_874.txt",
+  "name": null,
+  "sha256": "195260a92d3f33ef",
+  "preview": ".?AU?$DelegateInvokeHelper@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotifica"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03082A1E",
+  "length": 868,
+  "file": "qml_0x03082A1E_868.txt",
+  "name": null,
+  "sha256": "73b0c0c780473beb",
+  "preview": "cimport QtQuick\r import QtQuick.Controls\r import QtQuick.Window\r import QtQuick.Dialogs\r import QtQuick.Layouts\r import "
+ },
+ {
+  "category": "css",
+  "offset": "0x01CED6DF",
+  "length": 860,
+  "file": "css_0x01CED6DF_860.txt",
+  "name": null,
+  "sha256": "a49ebf2e8ca35b5f",
+  "preview": "[._container_1l1mb_1{background-color:var(--surface);color:var(--on-surface);width:100%;height:100%;overflow:auto;paddin"
+ },
+ {
+  "category": "text",
+  "offset": "0x034BB1F0",
+  "length": 859,
+  "file": "text_0x034BB1F0_859.txt",
+  "name": null,
+  "sha256": "1e8012790906576c",
+  "preview": ".?AU?$DelegateInvokeHelper@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotifica"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A5EAE",
+  "length": 829,
+  "file": "qml_0x030A5EAE_829.txt",
+  "name": null,
+  "sha256": "ceeba8339976d3fc",
+  "preview": "<import QtQuick\r import QtQuick.Window\r import com.wickr.widgets 1.0\r import \"../Commons/\"\r import QtQuick.Controls.Basi"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309D999",
+  "length": 827,
+  "file": "qml_0x0309D999_827.txt",
+  "name": null,
+  "sha256": "0daaac6a5fcd6083",
+  "preview": ":import QtQuick\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r // catch any mouse events and emit a signal to t"
+ },
+ {
+  "category": "css",
+  "offset": "0x0329F190",
+  "length": 799,
+  "file": "css_0x0329F190_799.txt",
+  "name": null,
+  "sha256": "4da47ea47d2a72dd",
+  "preview": "-----BEGIN PUBLIC KEY----- MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvvZnra9kwUlviNmaHrh2 J0UyPiRL8pJmu3R14AxCTCPakBPy"
+ },
+ {
+  "category": "css",
+  "offset": "0x0329F4B0",
+  "length": 799,
+  "file": "css_0x0329F4B0_799.txt",
+  "name": null,
+  "sha256": "34e18eeba7a32f06",
+  "preview": "-----BEGIN PUBLIC KEY----- MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxBA4dSgm0CZQ/bnBqt2q MRi5FcBOXafpXpg7y6xnqbImXF4G"
+ },
+ {
+  "category": "css",
+  "offset": "0x0329F7D0",
+  "length": 799,
+  "file": "css_0x0329F7D0_799.txt",
+  "name": null,
+  "sha256": "10104b1cb6d20dae",
+  "preview": "-----BEGIN PUBLIC KEY----- MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAzny4bTcZmXqpt6EZX1+t U8me7mWRLk9s7RFLCi9DOQ0YGzir"
+ },
+ {
+  "category": "xml",
+  "offset": "0x01904B3B",
+  "length": 790,
+  "file": "xml_0x01904B3B_790.txt",
+  "name": null,
+  "sha256": "efda11e24cfa4c84",
+  "preview": "<?xpacket begin=\"\ufeff\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c067"
+ },
+ {
+  "category": "xml",
+  "offset": "0x021727D8",
+  "length": 790,
+  "file": "xml_0x021727D8_790.txt",
+  "name": null,
+  "sha256": "73719249566c31b2",
+  "preview": "<?xpacket begin=\"\ufeff\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c111"
+ },
+ {
+  "category": "xml",
+  "offset": "0x021C9EF5",
+  "length": 790,
+  "file": "xml_0x021C9EF5_790.txt",
+  "name": null,
+  "sha256": "79a6f7f75857e129",
+  "preview": "<?xpacket begin=\"\ufeff\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c067"
+ },
+ {
+  "category": "js",
+  "offset": "0x0175E6D6",
+  "length": 770,
+  "file": "js__app-Bq1ctq_L.js.txt",
+  "name": "app-Bq1ctq_L.js",
+  "sha256": "d2dfe007f3f02f65",
+  "preview": "import{b as v,cr as _,oP as m,j as s,fm as p}from\"./app-DOUtVdma.js\";const u=\"_container_88bvg_1\",g=\"_text_88bvg_13\",h=\""
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309861E",
+  "length": 728,
+  "file": "qml_0x0309861E_728.txt",
+  "name": null,
+  "sha256": "69b119c75e4c0d02",
+  "preview": "\ufffdimport QtQuick\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r Rectangle\r {\r     anchors.centerIn: parent\r     "
+ },
+ {
+  "category": "text",
+  "offset": "0x034B9AF0",
+  "length": 720,
+  "file": "text_0x034B9AF0_720.txt",
+  "name": null,
+  "sha256": "af01b4e840707187",
+  "preview": ".?AU?$DelegateInvokeHelper@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotifica"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0309320D",
+  "length": 719,
+  "file": "qml_0x0309320D_719.txt",
+  "name": null,
+  "sha256": "3113591ca0375280",
+  "preview": "\ufffdimport QtQuick\r import onboardStatus 1.0\r import \"../widgets/\"\r import \"../Commons/\"\r import QtQuick.Layouts\r import Qt"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03097F08",
+  "length": 718,
+  "file": "qml_0x03097F08_718.txt",
+  "name": null,
+  "sha256": "8b288004fb414d89",
+  "preview": "\ufffdimport QtQuick\r import com.wickr.widgets 1.0\r import \"../Commons/\"\r import QtQuick.Controls.Basic\r \r NavigableItem\r {\r "
+ },
+ {
+  "category": "text",
+  "offset": "0x032BEF20",
+  "length": 668,
+  "file": "text_0x032BEF20_668.txt",
+  "name": null,
+  "sha256": "360263f814c82373",
+  "preview": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+ },
+ {
+  "category": "text",
+  "offset": "0x032255D0",
+  "length": 666,
+  "file": "text_0x032255D0_666.txt",
+  "name": null,
+  "sha256": "db5081e476656f33",
+  "preview": "REINDEXEDESCAPEACHECKEYBEFOREIGNOREGEXPLAINSTEADDATABASELECTABLEFTHENDEFERRABLELSEXCLUDELETEMPORARYISNULLSAVEPOINTERSECT"
+ },
+ {
+  "category": "qml",
+  "offset": "0x03085AA4",
+  "length": 650,
+  "file": "qml_0x03085AA4_650.txt",
+  "name": null,
+  "sha256": "153fa30444e91aca",
+  "preview": "\ufffdimport QtQuick\r import QtQuick.Controls\r import QtQuick.Layouts\r import com.wickr.models 1.0\r import \"../style.js\" as W"
+ },
+ {
+  "category": "css",
+  "offset": "0x0198BB2B",
+  "length": 645,
+  "file": "css_0x0198BB2B_645.txt",
+  "name": null,
+  "sha256": "99f137f26f532765",
+  "preview": "\ufffd{\"version\":3,\"file\":\"app-JV20_LD0.js\",\"sources\":[\"../../src/file-preview/components/FileLoading/index.tsx\"],\"sourcesCon"
+ },
+ {
+  "category": "qml",
+  "offset": "0x030A7D0C",
+  "length": 600,
+  "file": "qml_0x030A7D0C_600.txt",
+  "name": null,
+  "sha256": "462bf7a9f0baaaba",
+  "preview": "Wimport QtQuick\r import QtQuick.Window\r import com.wickr.widgets 1.0\r import \"../Commons/\"\r import QtQuick.Controls.Basi"
+ },
+ {
+  "category": "text",
+  "offset": "0x032C2350",
+  "length": 594,
+  "file": "text_0x032C2350_594.txt",
+  "name": null,
+  "sha256": "f8c3c1d6bd831323",
+  "preview": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b"
+ },
+ {
+  "category": "qml",
+  "offset": "0x0305FCBF",
+  "length": 570,
+  "file": "qml_0x0305FCBF_570.txt",
+  "name": null,
+  "sha256": "9328e1ed1aba8ac4",
+  "preview": "9import QtQml\r import \"Commons/\"\r import QtQuick.Controls.Basic\r \r NewModalMessageBox\r {\r     id: root\r \r     function s"
+ },
+ {
+  "category": "text",
+  "offset": "0x01AE5A86",
+  "length": 567,
+  "file": "text_0x01AE5A86_567.txt",
+  "name": null,
+  "sha256": "e459ff03aee7f3fe",
+  "preview": "6{\"version\":3,\"file\":\"app-fDcXFD7N.js\",\"sources\":[\"../../src/componentlibrary/Flex/Centered.tsx\"],\"sourcesContent\":[\"imp"
+ },
+ {
+  "category": "text",
+  "offset": "0x0324A120",
+  "length": 551,
+  "file": "text_0x0324A120_551.txt",
+  "name": null,
+  "sha256": "24c3e067516356ea",
+  "preview": "INSERT INTO Wickr_Account(   %1,  %2,  %3,  %4,  %5,  %6,  %7,  %8,  %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %1"
+ },
+ {
+  "category": "text",
+  "offset": "0x034BAD30",
+  "length": 551,
+  "file": "text_0x034BAD30_551.txt",
+  "name": null,
+  "sha256": "8a00b6799c1f6222",
+  "preview": ".?AU?$Selector@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotification@Notific"
+ },
+ {
+  "category": "text",
+  "offset": "0x034BB910",
+  "length": 545,
+  "file": "text_0x034BB910_545.txt",
+  "name": null,
+  "sha256": "ea24a6def39f180a",
+  "preview": ".?AU?$Selector@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotification@Notific"
+ },
+ {
+  "category": "text",
+  "offset": "0x03239D30",
+  "length": 533,
+  "file": "text_0x03239D30_533.txt",
+  "name": null,
+  "sha256": "8cb2b3797d92c1c1",
+  "preview": "SELECT * FROM ( SELECT * FROM Wickr_Message INDEXED BY wickr_message_time_index LEFT JOIN Wickr_Message_Translation B on"
+ },
+ {
+  "category": "text",
+  "offset": "0x034BA170",
+  "length": 521,
+  "file": "text_0x034BA170_521.txt",
+  "name": null,
+  "sha256": "25f044d38db095d6",
+  "preview": ".?AU?$Selector@U?$Implements@U?$RuntimeClassFlags@$01@WRL@Microsoft@@U?$ITypedEventHandler@PEAVToastNotification@Notific"
+ },
+ {
+  "category": "text",
+  "offset": "0x02DBF5B1",
+  "length": 512,
+  "file": "text_0x02DBF5B1_512.txt",
+  "name": null,
+  "sha256": "5d66e51fd8505183",
+  "preview": "\ufffd{\r \t\"_version\": \"0.2.0\",\r     \"canStartCall\": false,\r \t\"maxAutoDownloadSize\": 5000000,\r     \"maxUploadSize\": 5000000,\r "
+ },
+ {
+  "category": "text",
+  "offset": "0x0324B350",
+  "length": 512,
+  "file": "text_0x0324B350_512.txt",
+  "name": null,
+  "sha256": "27926268140f17b4",
+  "preview": "INSERT INTO Wickr_User( %1,  %2,  %3,  %4,  %5,  %6,  %7,  %8,  %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %2"
+ }
+]

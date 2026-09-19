@@ -1,0 +1,23 @@
+SOURCEMAP sourcemap_0x0175E9E0_5349022.bin :
+   ../../src/apis/webChannel/OnboardingWebChannel.ts
+
+=== qwebchannel.js (misclass css_0x031EE446) first 800 chars ===
+/****************************************************************************
+**
+** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Milian Wolff <milian.wolff@kdab.com>
+** Contact: https://www.qt.io/licensing/
+**
+** This file is part of the QtWebChannel module of the Qt Toolkit.
+**
+** $QT_BEGIN_LICENSE:LGPL$
+** Commercial License Usage
+** Licensees holding valid commercial Qt licenses may use this file in
+** accordance with the commercial license agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and The Qt Company. For licensing terms
+** and conditions see https://www.qt.io/terms-conditions. For further
+
+
+=== small JS-like candidates for preloads.js (score>=3) ===
+  1989 js__file-preview-4vkBugtX.js.txt               �import{b as a,cu as u,j as r,J as f,c as m,cs as g,H as x,kH as w,p as l,kx as y,kI as v,

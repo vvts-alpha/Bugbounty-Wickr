@@ -1,0 +1,89 @@
+{
+  "schema": "wickr-artifact-manifest/v1",
+  "phase": "1-extraction-inventory",
+  "analysis_mode": "static-only (application not executed)",
+  "binary": {
+    "path": "E:\\tmp\\wickr\\main\\WickrPro.exe",
+    "size_bytes": 55890344,
+    "sha256": "eccafde833d34386c859d6548e922649c2f58cd15f82998c8bd2966219341dbd",
+    "md5": "8a373885ee70fc97b493e00a3cb6678e",
+    "product_version": "6.72.20.0",
+    "pe": { "machine": "0x8664 (x64)", "subsystem": 2, "magic": "0x20B (PE32+)" },
+    "sections": [".text", ".rdata", ".data", ".pdata", "CPADinfo", ".rsrc", ".reloc"],
+    "rsrc_size_bytes": 5120,
+    "overlay": { "bytes": 10664, "type": "Authenticode", "covers_trailing_data_exactly": true },
+    "framework": "Qt6 + QtWebEngine + QtWebChannel (not Electron)"
+  },
+  "project_notes_dir": "E:\\wickr",
+  "extracted_root": "E:\\wickr\\extracted",
+  "decompressed_root": "E:\\wickr\\extracted\\decompressed",
+  "sources_root": "E:\\wickr\\extracted\\sources\\src",
+  "counts": {
+    "decompressed_meaningful_text_assets": 167,
+    "decompressed_total_entries": 4002,
+    "decompressed_by_category": { "css": 5, "html": 2, "js": 6, "json": 9, "qml": 134, "sourcemap": 11, "text": 3822, "xml": 12 },
+    "plaintext_runs": 124,
+    "recovered_application_sources_src": 831,
+    "recovered_sources_total_incl_node_modules": 2196,
+    "sourcemaps": 11,
+    "sourcemaps_total_bytes": 26310146
+  },
+  "extraction_methods": [
+    "manual PE parsing (headers, data dirs, overlay, Authenticode)",
+    "plaintext text-run extraction (>=512B printable) -> extracted/",
+    "zlib/RCC decompression sweep over .rdata -> extracted/decompressed/",
+    "source-map sourcesContent recovery -> extracted/sources/",
+    "binary + source string index (Phase 4 terms)"
+  ],
+  "csp": {
+    "found_in": [
+      "extracted/decompressed/html_0x00E46F48_6926.bin (file-preview entry HTML)",
+      "extracted/decompressed/html_0x00E568B7_6704.bin (main app entry HTML)"
+    ],
+    "delivery": "meta http-equiv Content-Security-Policy (zlib-compressed in RCC; not present as raw string in .exe)",
+    "directives_present": ["default-src", "style-src", "script-src", "connect-src", "img-src", "font-src", "media-src", "frame-src", "worker-src", "child-src", "object-src"],
+    "directives_absent": ["base-uri", "form-action", "frame-ancestors", "trusted-types", "require-trusted-types-for"],
+    "verbatim_entity_encoded": "default-src &#39;self&#39; qrc://* wickrweb://* ; style-src &#39;self&#39; &#39;unsafe-inline&#39; ; script-src &#39;self&#39; qrc://* ; connect-src &#39;self&#39; wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src &#39;self&#39; https://tile.googleapis.com wickrweb://* blob: data: ; font-src &#39;self&#39; data: ; media-src &#39;self&#39; wickrweb://* data: blob: ; frame-src &#39;self&#39; blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src &#39;self&#39; blob: ; child-src &#39;self&#39; blob: ; object-src &#39;self&#39;",
+    "decoded": "default-src 'self' qrc://* wickrweb://* ; style-src 'self' 'unsafe-inline' ; script-src 'self' qrc://* ; connect-src 'self' wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src 'self' https://tile.googleapis.com wickrweb://* blob: data: ; font-src 'self' data: ; media-src 'self' wickrweb://* data: blob: ; frame-src 'self' blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src 'self' blob: ; child-src 'self' blob: ; object-src 'self'"
+  },
+  "qrc_and_schemes": {
+    "qrc_resources": ["qrc:///webengine/preloads.js", "qrc:///qtwebchannel/qwebchannel.js", "qrc:///images/*", "qrc:/qml/*"],
+    "custom_scheme": "wickrweb:// (message/, convo/, convolist/, users/, image/savedlink/)"
+  },
+  "candidate_sources": {
+    "dom_insertion_sinks": [
+      "src/file-preview/components/PowerPointPreview/index.tsx:201 (dangerouslySetInnerHTML <- DOMPurify svg+html)",
+      "src/file-preview/components/XmlPreview/index.tsx:197 (DOMParser)",
+      "src/file-preview/components/DocPreview/index.tsx (docx-preview)",
+      "src/utils/dom.ts:341 (sanitizeHTML via DOMParser)",
+      "src/components/Convo/ConvoMessageContextMenuItems.tsx:139 (innerHTML read)",
+      "src/components/CopyHandler/copyTextSelection.tsx:35 (outerHTML read)"
+    ],
+    "iframe_messaging": [
+      "src/components/Modals/FilePreviewModal/index.tsx:134 (iframe, no sandbox)",
+      "src/components/Modals/FilePreviewModal/index.tsx:99-114 (message handler, origin gate :101)",
+      "src/file-preview/components/withLinkHandler.tsx:17 (postMessage openLink)"
+    ],
+    "webchannel_native_bridge": [
+      "src/apis/webChannel/utils.ts:38 (qt.webChannelTransport)",
+      "src/apis/webChannel/*.ts (Bridge/UIBridge/Env/Onboarding/ServerModel/FileManager adapters)"
+    ],
+    "preview_workers": [
+      "src/lib/pptx2html/pptx2html.worker.js (PPTX->HTML, JSZip)",
+      "src/apis/webFetch/fetch.worker.ts (network worker)"
+    ]
+  },
+  "qml_security_observations": {
+    "source": "extracted/decompressed/qml_0x030A2BEC_7847.bin",
+    "cert_error_handling": "onCertificateError: error.ignoreCertificateError() (errors ignored on main webview)",
+    "feature_permissions": "grantFeaturePermission(securityOrigin, feature, true) for any origin",
+    "clipboard": "javascriptCanAccessClipboard=true, javascriptCanPaste=true"
+  },
+  "failed_or_partial": {
+    "preloads_js_content": "NOT FOUND (reference confirmed at qrc:///webengine/preloads.js; body not recoverable)",
+    "app-CSWYqNVr.js.map": "PARTIALLY EXTRACTED (decompressed; is a JS bundle misnamed .map)",
+    "qt_webengine_version": "INSUFFICIENT EVIDENCE (runtime-injected value)"
+  },
+  "recommended_next_file": "src/file-preview/components/PowerPointPreview/index.tsx",
+  "string_index_ref": "E:\\wickr\\string_index_src.txt"
+}

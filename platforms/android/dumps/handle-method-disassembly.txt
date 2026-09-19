@@ -1,0 +1,65 @@
+
+
+## Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$Companion; [classes3.dex]
+super=Ljava/lang/Object; interfaces=[]
+
+### <init>()V
+access=0x10002
+0000: invoke-direct             v0, Ljava/lang/Object;-><init>()V
+0006: return-void               
+
+### <init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+access=0x11001
+0000: invoke-direct             v0, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$Companion;-><init>()V
+0006: return-void               
+
+
+## Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1; [classes3.dex]
+super=Ljava/lang/Object; interfaces=['Landroidx/webkit/WebViewAssetLoader$PathHandler;']
+FIELD this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient; access=0x1010
+
+### <init>(Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;)V
+access=0x10000
+0000: iput-object               v1, v0, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1;->this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;
+0004: invoke-direct             v0, Ljava/lang/Object;-><init>()V
+000a: return-void               
+
+### handle(Ljava/lang/String;)Landroid/webkit/WebResourceResponse;
+access=0x1
+0000: const-string              v0, "path"
+0004: invoke-static             v5, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: iget-object               v5, v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1;->this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;
+000e: invoke-static             v5, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;->access$getFileUri$p(Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;)Landroid/net/Uri;
+0014: move-result-object        v5
+0016: iget-object               v0, v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1;->this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;
+001a: invoke-static             v0, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;->access$getContext$p(Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;)Landroid/content/Context;
+0020: move-result-object        v0
+0022: invoke-virtual            v0, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+0028: move-result-object        v0
+002a: invoke-virtual            v0, v5, Landroid/content/ContentResolver;->openInputStream(Landroid/net/Uri;)Ljava/io/InputStream;
+0030: move-result-object        v5
+0032: new-instance              v0, Landroid/webkit/WebResourceResponse;
+0036: iget-object               v1, v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1;->this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;
+003a: invoke-static             v1, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;->access$getFileUri$p(Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;)Landroid/net/Uri;
+0040: move-result-object        v2
+0042: iget-object               v4, v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient$assetLoader$1;->this$0 Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;
+0046: invoke-static             v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;->access$getContext$p(Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;)Landroid/content/Context;
+004c: move-result-object        v4
+004e: invoke-virtual            v4, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+0054: move-result-object        v4
+0056: const-string              v3, "context.contentResolver"
+005a: invoke-static             v4, v3, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object; Ljava/lang/String;)V
+0060: invoke-virtual            v1, v2, v4, Lcom/amazon/wickr/filepreview/webclient/FilePreviewWebViewClient;->getMimeType(Landroid/net/Uri; Landroid/content/ContentResolver;)Ljava/lang/String;
+0066: move-result-object        v4
+0068: const-string              v1, "UTF-8"
+006c: invoke-direct             v0, v4, v1, v5, Landroid/webkit/WebResourceResponse;-><init>(Ljava/lang/String; Ljava/lang/String; Ljava/io/InputStream;)V
+0072: const-string              v4, "Access-Control-Allow-Origin"
+0076: const-string              v5, "*"
+007a: invoke-static             v4, v5, Lkotlin/TuplesKt;->to(Ljava/lang/Object; Ljava/lang/Object;)Lkotlin/Pair;
+0080: move-result-object        v4
+0082: invoke-static             v4, Lkotlin/collections/MapsKt;->mapOf(Lkotlin/Pair;)Ljava/util/Map;
+0088: move-result-object        v4
+008a: invoke-virtual            v0, v4, Landroid/webkit/WebResourceResponse;->setResponseHeaders(Ljava/util/Map;)V
+0090: return-object             v0
+0092: const/4                   v4, 0
+0094: return-object             v4

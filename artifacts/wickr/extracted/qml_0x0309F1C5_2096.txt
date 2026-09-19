@@ -1,0 +1,80 @@
+/import QtQuick
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+    anchors.fill: parent
+    property int xPos: 0
+    property int yPos: 0
+    property string textToCopy: ""
+    property string copyItemLabel: qsTr("Copy")
+    property var bottomBounds: typeof wickrWindow === "undefined" ? undefined : wickrWindow.landing
+    property bool menuVisible: cpmLoader.sourceComponent !== undefined
+    property alias cursorShape: mouseArea.cursorShape
+
+    MouseArea
+    {
+        id: mouseArea
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: function(mouse){
+            if(root.textToCopy.length)
+            {
+                root.xPos = mouse.x
+                root.yPos = mouse.y
+                cpmLoader.sourceComponent = cpmComp
+                mouse.accepted = true
+            }
+        }
+    }
+
+    Loader
+    {
+        id: cpmLoader
+        sourceComponent: undefined
+        onLoaded: {
+            item.x = root.xPos
+            item.y = root.yPos
+            item.visible = true
+        }
+    }
+
+    Connections {
+        target: cpmLoader.item
+        function onClosed() { cpmLoader.sourceComponent = undefined }
+    }
+
+    Component
+    {
+        id: cpmComp
+        CompactPopupMenu
+        {
+            id: contextMenu
+            menuItems: menuItemsModel
+            manualPosition: true
+            width: 0
+            bottomBounds: root.bottomBounds
+
+            ListModel {
+                id: menuItemsModel
+                Component.onCompleted: contextMenu.buildMenuItems()
+            }
+
+            function buildMenuItems()
+            {
+                menuItemsModel.clear()
+
+                var item = {'description': copyItemLabel, menuItemId: "copy"};
+                menuItemsModel.append(item);
+            }
+
+            onMenuItemClicked: function(item) {
+                if(item === "copy")
+                {
+                    clipboard.setText(root.textToCopy)
+                }
+            }
+        }
+    }
+}

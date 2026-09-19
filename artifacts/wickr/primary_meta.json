@@ -1,0 +1,37 @@
+[
+  {
+    "name": "PowerPointPreview",
+    "path": "E:\\wickr\\extracted\\sources\\src\\file-preview\\components\\PowerPointPreview\\index.tsx",
+    "size": 8615,
+    "sha256": "b5b79318c9e0de74562345e64b7be620ea5ce7c9b01509657f81c0d73c14a9b9",
+    "lines": 286
+  },
+  {
+    "name": "pptx2html.worker",
+    "path": "E:\\wickr\\extracted\\sources\\src\\lib\\pptx2html\\pptx2html.worker.js",
+    "size": 61021,
+    "sha256": "e94c4c53194118da9ee7d0bdb03f5925ac72c3961636e7f43f604a7c479bb2d0",
+    "lines": 2079
+  },
+  {
+    "name": "FilePreviewModal",
+    "path": "E:\\wickr\\extracted\\sources\\src\\components\\Modals\\FilePreviewModal\\index.tsx",
+    "size": 4961,
+    "sha256": "71e5588a04c86245883a37122c6b4b5b6a0d6f8fb37937f56f3370d7190d899c",
+    "lines": 141
+  },
+  {
+    "name": "withLinkHandler",
+    "path": "E:\\wickr\\extracted\\sources\\src\\file-preview\\components\\withLinkHandler.tsx",
+    "size": 841,
+    "sha256": "829e00588354ebef462c9f8f516a8bcb817dad84f4d543ed54c775b417388fbe",
+    "lines": 29
+  },
+  {
+    "name": "webChannel/utils",
+    "path": "E:\\wickr\\extracted\\sources\\src\\apis\\webChannel\\utils.ts",
+    "size": 1244,
+    "sha256": "fdcf59825e25649cde76a2b6b554e1faf932c9f819c859391dc977281933063b",
+    "lines": 41
+  }
+]

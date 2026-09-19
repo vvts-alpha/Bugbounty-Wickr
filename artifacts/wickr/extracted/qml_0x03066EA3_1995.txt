@@ -1,0 +1,77 @@
+Êimport QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQml.Models
+import QtQuick.Layouts
+import "style.js" as WickrStyle
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    color: "transparent"
+    signal abortSync();
+
+    function show() {
+        clear();
+        root.visible = true;
+    }
+
+    function clear() {
+    }
+
+    function reset() {
+        clear();
+        root.visible = false;
+    }
+
+    MouseArea
+    {
+        anchors.fill: parent
+        hoverEnabled: true
+        onEntered:
+        {
+            syncMessagesPanel.focus=true
+        }
+    }
+
+    Rectangle {
+        id: overlayRect
+        anchors.fill: parent
+        color: WickrStyle.blackBackground
+        border.width: 0
+        opacity: 0.6
+    }
+
+    WickrPopupPanelWL {
+        id: syncMessagesPanel
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        panelOpacity: 1.0
+        panelBorderWidth: 1
+        headerText: qsTr("Uploadingâ€¦")
+        headerImageResource: "ic-syncing"
+        headerImageColorResource: Branding.palette_rgs_s1
+        popupHeaderFontWeight: Font.Light
+        popupSubjectTopMargin: 39 * ScreenRM.scale
+        popupSubjectText: qsTr("Initializing New Device.")
+        popupSubjectFontWeight: Font.Bold
+        popupBodyMainTopMargin: 12 * ScreenRM.scale
+        popupBodyMainText: qsTr("Securely syncing your rooms, messages and contacts. Please keep Wickr open until uploading is complete..")
+        popupBodyMainHeight: 48 * ScreenRM.scale
+        btnBottomMargin: 26 * ScreenRM.scale
+        btnLabelText: qsTr("ABORT SYNC")
+        btnVisible: true
+        btnPrimary: false
+        btnStyle: "standard"
+        btnBorderStyle: "none"
+        btnWt: "med"
+        visible: true
+        onPrimaryPressed: {
+            abortSync();
+        }
+    }
+}
+

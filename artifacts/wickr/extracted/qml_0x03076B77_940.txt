@@ -1,0 +1,44 @@
+«import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+WickrDrawer
+{
+    id: roomMembersRoot
+
+    leftSide: false
+    useOverlays: false
+
+    Component.onCompleted:
+    {
+        keyboardShortcutHelper.registerTopLevelItem(roomMembersRoot)
+    }
+
+    onDrawerClosing: {
+        keyboardShortcutHelper.unregisterTopLevelItem(roomMembersRoot)
+    }
+
+    Connections
+    {
+        target: keyboardShortcutHelper
+        enabled: roomMembersRoot.visible
+        function onHideWindow() {
+            if(keyboardShortcutHelper.isTopLevel(roomMembersRoot))
+            {
+                closeDrawer()
+            }
+        }
+    }
+
+    RoomMembersPanel
+    {
+        id: roomMembersContent
+        onClose: roomMembersRoot.closeDrawer()
+    }
+}

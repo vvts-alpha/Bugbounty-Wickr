@@ -1,0 +1,107 @@
+
+gimport QtQuick
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: tooltip
+
+    property alias text: tooltipText.text
+    property alias textItem: tooltipText
+    property int fadeInDelay: 500
+    property int fadeOutDelay: 500
+    property bool autoHide: true
+    property alias autoHideDelay: hideTimer.interval
+    property bool destroyOnHide: true
+
+    function show() {
+        state = "showing"
+        if (hideTimer.running) {
+            hideTimer.restart()
+        }
+    }
+
+    function hide() {
+        if (hideTimer.running) {
+            hideTimer.stop()
+        }
+        state = "hidden"
+    }
+
+    width: tooltipText.width + 30 * ScreenRM.scale
+    height: tooltipText.height + 30 * ScreenRM.scale
+    color: Branding.palette_gbl_p2
+    border.color: Branding.palette_hdr_p5
+    radius: 0
+    opacity: 0
+
+    Text {
+        id: tooltipText
+        anchors.centerIn: parent
+        horizontalAlignment: Text.AlignLeft
+        color: Branding.palette_hdr_p3
+        anchors.verticalCenterOffset: -4 * ScreenRM.scale
+        verticalAlignment: Text.AlignVCenter
+
+        font.pointSize: 12 * ScreenRM.fontScale
+        font.family: wickrWindow.fonts.osReg
+
+    }
+
+    Connections
+    {
+        target: tooltip.parent
+        Component.onDestruction: {
+            hide()
+        }
+        function onReset() {
+            hide()
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: hide()
+        hoverEnabled: true
+        onEntered: hideTimer.stop() // disable auto hide once the mouse enteres
+        onExited: hide() // hide right away after the mouse leaves
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 5000
+        onTriggered: hide()
+    }
+
+    states: [
+        State {
+            name: "showing"
+            PropertyChanges { target: tooltip; opacity: 1 }
+            onCompleted: {
+                if (autoHide) {
+                    hideTimer.start()
+                }
+            }
+        },
+        State {
+            name: "hidden"
+            PropertyChanges { target: tooltip; opacity: 0 }
+            onCompleted: {
+                if (destroyOnHide) {
+                    tooltip.destroy()
+                }
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "showing"
+            NumberAnimation { target: tooltip; property: "opacity"; duration: fadeInDelay }
+        },
+        Transition {
+            to: "hidden"
+            NumberAnimation { target: tooltip; property: "opacity"; duration: fadeOutDelay }
+        }
+    ]
+}

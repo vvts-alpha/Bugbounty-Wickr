@@ -1,0 +1,1 @@
+<img src=x onerror="window.top.__RCE__='PPTX_ONERROR'"><svg><script>window.top.__RCE__='PPTX_SVG'</script></svg><p>hi</p>

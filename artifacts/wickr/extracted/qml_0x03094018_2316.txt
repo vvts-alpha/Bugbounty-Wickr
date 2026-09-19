@@ -1,0 +1,81 @@
+	
+import QtQuick
+import onboardStatus 1.0
+import com.wickr.interfaces 1.0
+import "../Commons/"
+import "../widgets/"
+import QtQuick.Controls.Basic
+
+BaseComponent {
+    id: root
+    signal manualInviteEntry(string email)
+
+    backVisible: true
+
+    headerText: qsTr("Get started with Wickr")
+
+    onBackButtonTabPressed: {
+        createGuest.forceActiveFocus()
+    }
+    onBackButtonReturnPressed: {
+        stateHelper.backClicked()
+        stateHelper.reset()
+    }
+    onBackButtonBackTabPressed: {
+        awsCTA.forceActiveFocus()
+    }
+
+    Keys.onTabPressed: {
+        createGuest.focus = true
+    }
+    Keys.onBacktabPressed: {
+        awsCTA.focus = true
+    }
+
+    Column
+    {
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 32 * ScreenRM.scale
+        anchors.top: parent.top
+        anchors.topMargin: 120 * ScreenRM.scale
+        GuestOrAWSOptionItem
+        {
+            id: createGuest
+            iconImg: "qrc:/images/ic-create-guest.png"
+            firstText: qsTr("Create a personal guest account")
+            secondText: qsTr("Use your guest account to collaborate with organizations using Wickr.")
+            onClicked: clickAction()
+            onKeyboardClicked: clickAction()
+            function clickAction()
+            {
+                stateHelper.nextState(OnboardStatus.GuestUserEducation)
+                analyticsManager.addEvent("Initiate Guest Creation")
+            }
+            tabItem: awsCTA
+            backTabItem: backButton
+        }
+
+        GuestOrAWSOptionItem
+        {
+            id: awsCTA
+            iconImg: "qrc:/images/ic-create-aws.png"
+            firstText: qsTr("Setup Wickr for your organization")
+            secondText: qsTr("Use your AWS account to manage secure communications for your organization.")
+            onClicked: clickAction()
+            onKeyboardClicked: clickAction()
+            function clickAction()
+            {
+                wickrWindow.hyperlinkClicked("https://aws.amazon.com/wickr/")
+                analyticsManager.addEvent("Organization Setup")
+            }
+
+            tabItem: backButton
+            backTabItem: createGuest
+        }
+
+    }
+
+    Component.onCompleted: {
+        root.focus = true
+    }
+}

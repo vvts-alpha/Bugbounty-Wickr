@@ -1,0 +1,21 @@
+'window.URL = class QURL' occurrences: ['0x31EE3C0']
+debug-HTML-extract contains 'QURL': False
+raw body bytes (0x31EE3BF..0x31EE43E) = 127
+stripped body len=125
+32 bytes before 0x31EE3BF: 69 6f 3e 20 2d 2d 3e 0d 0a 20 20 3c 2f 62 6f 64 79 3e 0d 0a 3c 2f 68 74 6d 6c 3e 0d 0a 00 00 00
+PRELOADS.JS BODY (with leading ~):
+~window.URL = class QURL extends URL {
+  constructor(url, base) {
+    super(url, base === 'qrc:' ? 'qrc:/' : base);
+  }
+}
+
+Body without leading '~':
+window.URL = class QURL extends URL {
+  constructor(url, base) {
+    super(url, base === 'qrc:' ? 'qrc:/' : base);
+  }
+}
+
+SAVED -> E:\wickr\extracted\rcc\preloads.js  (125 bytes)
+SHA-256: 093925b2c0ceaef06763fffe4f26bdb1b7fda863bb3a2b2d1ff634e5ca0f2249

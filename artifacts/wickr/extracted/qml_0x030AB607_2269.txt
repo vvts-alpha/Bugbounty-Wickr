@@ -1,0 +1,89 @@
+Üimport QtQuick
+import com.wickr.interfaces 1.0
+import com.wickr.widgets 1.0
+import "../widgets/"
+import "../ConvoManagement/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: root
+    anchors.centerIn: parent
+    width: cavt.width
+    height: title.height + cavt.height
+    radius: 4 * ScreenRM.scale
+    color: Branding.palette_cal_p2
+
+    Component.onCompleted: {
+        console.log("[AV UI] pre-call test popup created")
+        keyboardShortcutHelper.registerTopLevelItem(root)
+        root.forceActiveFocus();
+        if(root.focus){
+            title.buttonMA.forceActiveFocus();
+        }
+    }
+
+    Component.onDestruction:  {
+        console.log("[AV UI] pre-call test popup destroying")
+        keyboardShortcutHelper.unregisterTopLevelItem(root)
+    }
+
+    Connections
+    {
+        target: keyboardShortcutHelper
+        enabled: root.visible
+        function onHideWindow() {
+            if(keyboardShortcutHelper.isTopLevel(root))
+            {
+                root.close()
+            }
+        }
+    }
+
+    function close()
+    {
+        avDeviceSelectionHelper.avTestWindowVisible = false
+        avDeviceSelectionHelper.dismiss()
+        wickrDashboardData.inCall = false
+    }
+
+    Title
+    {
+        id: title
+        width: cavt.width
+        titleText: avDeviceSelectionHelper.avTestWindowTitle
+        subtitleText: avDeviceSelectionHelper.avTestWindowSubtitle
+        onCloseBtnClicked: {
+            root.close()
+        }
+        onFocusExitTitle: {
+            if(cavt.selectBroadcast.visible){
+                cavt.selectBroadcast.focus = true
+            }
+            else{
+                cavt.cameraDeviceTest.focus = true
+            }
+        }
+        onCloseBtnBacktabbed: {
+            cavt.joinMeetingButton.focus = true;
+        }
+
+        state: "none"
+    }
+
+    CallAVTest
+    {
+        id: cavt
+        focus: true
+        anchors.left: parent.left
+        anchors.top: title.bottom
+        width: 720 * ScreenRM.scale
+        onSetFocusToCloseButton: {
+            title.buttonMA.forceActiveFocus();
+        }
+        onSetFocusToTitle: {
+            title.drawerSubtitle.forceActiveFocus();
+        }
+    }
+}

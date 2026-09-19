@@ -1,0 +1,101 @@
+Kimport QtQuick
+import onboardStatus 1.0
+import "../Commons/"
+import "../widgets/"
+import QtQuick.Controls.Basic
+
+BaseComponent {
+    id: root
+    signal manualInviteEntry(string email)
+
+    backVisible: false
+
+    headerText: qsTr("Check your email")
+
+    onBackButtonTabPressed: {
+        if (sendButton.visible)
+            sendButton.focus = true
+    }
+    onBackButtonReturnPressed: {
+        stateHelper.backClicked()
+    }
+    onBackButtonBackTabPressed: {
+        if (sendButton.visible)
+            sendButton.focus = true
+    }
+
+    function sendPressed() {
+        analyticsManager.onboardingEvent("NAWS:inviteCode",true)
+        stateHelper.onBoardState = OnboardStatus.NONSSOInviteCode;
+    }
+
+    Item {
+        id: textItem1
+
+        anchors {
+            top: parent.top
+            topMargin: 88 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        height: 144 * ScreenRM.scale
+        width: 420 * ScreenRM.scale
+
+        Text {
+            id: txt1
+            anchors.fill: parent
+            text: qsTr("Check the invite email sent to %1 and click the link in Step 2 to verify your account. It may take a few minutes to arrive. ").arg("<b>" + stateHelper.email + "</b>") + "<br><br>" +
+                  qsTr("If it doesn’t arrive within 30 minutes, contact your administrator")
+            font.pointSize: 18 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            color: Branding.palette_gbl_p11
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            textFormat: Text.RichText
+        }
+    }
+
+    WrappedImage {
+        id: emailLargeImage
+
+        anchors {
+            top: textItem1.bottom
+            topMargin: 52 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        height: 141 * ScreenRM.scale
+        width: 141 * ScreenRM.scale
+        source: "qrc:/images/ic_email.png"
+    }
+
+    WickrIconTextButton {
+        id: sendButton
+
+        anchors {
+            top: emailLargeImage.bottom
+            topMargin: 30 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        styleName: "standardLarge"
+        text: qsTr("Continue with invite code")
+        textFont.weight: Font.Normal
+        width: standardWidth
+        height: standardHeight
+        focus: true
+        mainBackgroundColor: "transparent"
+        innerRectColor: "transparent"
+
+        onClicked: {
+            sendPressed();
+        }
+
+        onMouseReleased: stateHelper.nextState(OnboardStatus.CheckYourEmail)
+        Keys.onReturnPressed: {
+            sendPressed();
+        }
+    }
+    Component.onCompleted: {
+        sendButton.focus = true
+        sendButton.forceActiveFocus()
+    }
+}

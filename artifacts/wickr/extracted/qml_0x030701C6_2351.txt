@@ -1,0 +1,80 @@
+	-import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQml.Models
+import QtQuick.Layouts
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    color: "transparent"
+
+    function close() {
+        noNetworkAccessPanel.visible = false;
+        showSplashScreen();
+    }
+
+    function show() {
+        // Acquire the focus so keyboard navigation works
+        noNetworkAccessPanel.visible = true;
+        noNetworkAccessPanel.focus = true;
+    }
+
+    WrappedImage {
+        id: backgroundImg
+        fillMode: Image.PreserveAspectCrop
+        anchors.fill: parent
+        source: Branding.images_background
+    }
+
+    WickrPopupPanelWL {
+        id: noNetworkAccessPanel
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        panelOpacity: 1.0
+        panelBorderWidth: 1
+        headerText: qsTr("AWS Wickr")
+        headerImageResource: Branding.images_ic_start
+        headerImageColorResource: Branding.palette_rgs_s1
+        popupHeaderFontWeight: Font.Light
+        popupSubjectText: ""
+        popupBodyMainText: {
+            var platform;
+            if (wickrSettings.isMac)
+                platform = "(MacOS)";
+            else if (wickrSettings.isWindows)
+                platform = "(Windows)";
+            else if (wickrSettings.isLinux)
+                platform = "(Linux)";
+            else
+                platform = "";
+
+            return qsTr("You do not have access to create an AWS Wickr network. " +
+                 "Please go back and join with you network invite. Contact " +
+                 "your admin or email %1wickrfeedback@amazon.com%2 for more info.")
+                .arg("<a href=\"mailto:wickrfeedback@amazon.com?subject=AWS Wickr App Feedback " + platform + "\">")
+                .arg("</a>");
+        }
+
+        popupBodyMainHeight: 144 * ScreenRM.scale
+        popupBodySecondaryText: ""
+        popupBodySecondaryHeight: 0
+        visible: true
+        focus: true
+        btnVisible: false
+        backButtonEnabled: true
+
+        onLinkClicked: {
+            wickrWindow.hyperlinkClicked(url);
+        }
+
+        onBackButtonPressed: {
+            root.close();
+        }
+
+    }
+}

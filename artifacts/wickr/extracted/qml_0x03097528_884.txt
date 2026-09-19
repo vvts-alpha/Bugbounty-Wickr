@@ -1,0 +1,22 @@
+simport QtQuick
+import ".."
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    property string name
+    property string backgroundColor: Branding.palette_gbl_p1
+    property string foregroundColor: Branding.palette_gbl_p2
+    property bool enableHighDpiImage: true
+    property string resRatio: ScreenRM.imageScaleStr // either "3", "2", or ""
+    property string resRatioParam: enableHighDpiImage && resRatio > 1 ? (":" + resRatio) : ""
+    color: backgroundColor ? backgroundColor : Branding.palette_gbl_p2
+
+    WrappedImage {
+        anchors.centerIn: parent
+        source: name.length > 0 ? "image://standardiconprovider/" + name + ':' + foregroundColor + resRatioParam : ""
+        width: sourceSize.width / ScreenRM.imageScale * ScreenRM.scale
+        height: sourceSize.height / ScreenRM.imageScale * ScreenRM.scale
+    }
+}

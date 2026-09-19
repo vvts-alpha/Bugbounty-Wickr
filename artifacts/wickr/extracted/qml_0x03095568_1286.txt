@@ -1,0 +1,51 @@
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+
+    height: backButton.height
+    width: toolButton.width + 10 * ScreenRM.scale
+    border.width: (root.focus ? 1 : 0)
+    border.color: "black"
+    color: "transparent"
+
+    property string accessibilityName: qsTr("Network status")
+    property string accessibilityDesc: qsTr("Some description")
+    property string imageName: "ic_netsettings"
+
+    property bool hoverState: false
+
+    signal clicked()
+
+    LayeredImage {
+        id: toolButton
+        name: imageName
+        color: (root.focus || hoverState) ? Branding.palette_rgs_s1 : Branding.palette_rgs_p6
+        fillMode: Image.PreserveAspectFit
+        anchors.centerIn: parent
+    }
+
+    MouseArea {
+        hoverEnabled: true
+        anchors.fill: parent
+        cursorShape : Qt.PointingHandCursor
+        onEntered: root.hoverState = true
+        onExited: root.hoverState = false
+        onClicked: {
+            root.clicked()
+        }
+    }
+
+    Keys.onReturnPressed: {
+        clicked();
+    }
+
+    Accessible.role: Accessible.Button
+    Accessible.name: accessibilityName
+    //Accessible.description: accessibilityDesc
+}
+

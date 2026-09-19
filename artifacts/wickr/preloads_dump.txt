@@ -1,0 +1,236 @@
+=== decoded window 0x31EA43E..0x31EE43E (preloads.js candidate) ===
+GetChimeToken(`wickrweb://chimetoken`)">Get Chime Token</button>
+      <button onclick="runJson(`wickrweb://verification/fingerprints/nightwing@mailinator.com`, {})">Get Fingerprints</button>
+      <button onclick="runJson(`wickrweb://myaccount/password`, {'oldPassword' : '', 'newPassword' : ''})">Change Password</button>
+      <button onclick="runJson(`wickrweb://myaccount/leavenetwork`, {'password' : ''})">Leave Network</button>
+      <button onclick="runJson(`wickrweb://contacts/convertdirectoryuser`, {'userId' : '', 'userHash' : ''})">Convert Directory User to Contact</button>
+      <button onclick="runJson(`wickrweb://admin/controls`, {})">Open Admin Console</button>
+      <button onclick="runJson(`wickrweb://admin/inviteuser`, {'email' : 'bena@mailinator.com'})">Invite to Team</button>
+      <button onclick="runJson(`wickrweb://contacts/checkuser`, {'searchQuery' : 'jakobtag@mailinator.com'})">Check User</button>
+      <button onclick="run(`wickrweb://file/message/S0a5a987e3bb19b17b389da2d6b7a10cc0c2901c496f5024d100c4af839b804d/0221c980be2911ef99f04b222c50cd5c`)">Download Message File Data</button>
+      <button onclick="run(`wickrweb://file/savedfile/d110b16f-5e56-4b02-bbbd-877c25bf7ca8`)">Download Saved File Data</button>
+      <button onclick="run(`wickrweb://filemanager/S9e4c071792eb9b2226cd3a46721ceed6dce915ff786f799417d3c9a3292968b/`)">Load Files</button>
+      <button onclick="run(`wickrweb://filemanager/S9e4c071792eb9b2226cd3a46721ceed6dce915ff786f799417d3c9a3292968b/saveditems`)">Saved Files</button>
+      <button onclick="runJson(`wickrweb://awscredentials`, {})">AWS Credentials</button>
+      <button onclick="runJson(`wickrweb://convo/getTdfTags`, {'description' : 'SECRET relto FAKE'})">TDF Tags</button>
+    </div>
+
+    <p onclick="headerClicked('uiBridgeButtons')">Wickr UI Bridge (Hide/Show)</p>
+    <div id="uiBridgeButtons">
+      <button onclick="uiAction('test')">UI Action (test)</button>
+      <button onclick="uiAction('uploadFile')">UI Action (uploadFile)</button>
+      <button onclick="uiAction('shareLocation')">UI Action (shareLocation)</button>
+      <button onclick="uiAction('imagePreview')">Image preview window</button>
+      <button onclick="uiAction('openFile')">Open File</button>
+      <button onclick="uiAction('saveFile')">Save File</button>
+      <button onclick="uiAction('locationPopup')">Location Window</button>
+      <button onclick="uiAction('joinCall')">Join Call</button>
+      <button onclick="uiAction('declineCall')">Decline Call</button>
+      <button onclick="uiAction('messageHistory')">Message History</button>
+      <button onclick="uiAction('viewContactDetails')">View Contact Details</button>
+      <button onclick="uiAction('openLink')">Open Link</button>
+      <button onclick="uiAction('reactionPopup')">Reaction Popup</button>
+      <button onclick="uiAction('showMessageDialog')">Show message dialog</button>
+      <button onclick="uiAction('deleteMessage')">Delete message</button>
+      <button onclick="uiAction('reportUser')">Report User</button>
+      <button onclick="uiAction('pasteImage')">UI Action (pasteImage)</button>
+      <button onclick="uiAction('openHamburgerMenu')">Open Hamburger Menu</button>
+      <button onclick="uiAction('showMessageError')">Show message error</button>
+      <button onclick="uiAction('viewRoomDetails')">Show Convo Details</button>
+      <button onclick="uiAction('openSearchPopout')">Show Search Popout</button>
+      <button onclick="uiAction('openSavedItems')">Show Saved Items</button>
+      <button onclick="uiAction('addMods')">Add Mods</button>
+      <button onclick="uiAction('manageUsers')">Manage Users</button>
+      <button onclick="uiAction('verifyContact')">Verify Contact</button>
+      <button onclick="uiAction('createGroup')">Create Group</button>
+      <button onclick="uiAction('createRoom')">Create Room</button>
+      <button onclick="uiAction('createDM')">Create DM</button>
+      <button onclick="uiAction('referAFriend')">Refer a Friend</button>
+      <button onclick="uiAction('limitedGuestAccess')">Limited Guest Access</button>
+      <button onclick="uiAction('myAccount')">My Account</button>
+      <button onclick="uiAction('addDevice')">Add or Sync Device</button>
+      <button onclick="uiAction('securityVerification')">Security Verification</button>
+      <button onclick="uiAction('openSettingsPanel')">Open Settings Panel</button>
+      <button onclick="uiAction('toggleFileDropArea')">Toggle File Drop Area</button>
+      <button onclick="uiAction('openContactsPanel')">Open Contacts Panel</button>
+    </div>
+
+    <p onclick="headerClicked('onboardingBridgeButtons')">Wickr Onboarding Bridge (Hide/Show)</p>
+    <div id="onboardingBridgeButtons">
+      <button onclick="testCheckUserExists()">Test Check User Exists</button>
+      <button onclick="testVerifyInviteCode()">Test Verify Invite Code</button>
+      <button onclick="testVerifyInviteCode_emailExists()">Test Verify Invite Code - Email Exists</button>
+      <button onclick="testRegisterWithPassword()">Test Register With Password</button>
+      <button onclick="testInitiateLogin()">Test Initiate Login</button>
+      <button onclick="testResetPassword()">Test Reset Password</button>
+      <button onclick="testVerifyMasterRecoveryKey()">Test VerifyMasterRecoveryKey</button>
+      <button onclick="testLogout()">Test Log out</button>
+      <button onclick="testSSOProvision()">Test SSO Provision</button>
+      <button onclick="testShowSaveFileDialog()">Test Show Save File Dialog</button>
+      <button onclick="testStartGuestSignUpFlow()">Test startGuestSignUpFlow API</button>
+    </div>
+
+
+    <p onclick="headerClicked('bridgeButtons')">Wickr Bridge (Hide/Show)</p>
+    <div id="bridgeButtons">
+      <button onclick="getClock()">Get Clock</button>
+      <button onclick="setAppState()">Set App State</button>
+      <button onclick="msgAction('starMessage')">Star (WebChannel)</button>
+      <button onclick="msgAction('getAwsCredentials')">getAwsCredentials (WebChannel)</button>
+      <button onclick="msgAction('translateMessage')">Translate Message (WebChannel)</button>
+      <button onclick="msgAction('showTranslationSettings')">Show Translation Settings (WebChannel)</button>
+      <button onclick="msgAction('unstarMessage')">Unstar (WebChannel)</button>
+      <button onclick="benchmark(sendTextMessage, [`${mainVgroupId}`, `hello world 
+
+
+
+ https://www.amazon.com https://www.google.com`])">Send message (Web Channel)</button>
+      <button onclick="markMessageRead(`${mainVgroupId}`, 'ed3eb5c0402d11ee93b73bdbbc7c910b')">Mark message read</button>
+      <button onclick="msgAction('saveFileToRoom')">Save File to room</button>
+      <button onclick="msgAction('saveLinkToRoom')">Save Link to room</button>
+      <button onclick="clipboard()">Clipboard</button>
+      <button onclick="getQuickResponses()">Quick Responses</button>
+      <button onclick="msgAction('emojiReact')">Emoji React</button>
+      <button onclick="benchmark(getBoundaryIds, [])">Get Boundary IDs</button>
+      <button onclick="checkIfClipboardHasImage()">Check if Clipboard has Image</button>
+      <button onclick="sendVoiceMemo(`S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e`)">Send voice memo</button>
+      <button onclick="allowGuestUser()">Check for Allow Guest User</button>
+      <button onclick="convoDetails()">Convo Details</button>
+      <button onclick="botNewDM()">Bot Button for New DM</button>
+      <button onclick="sendSelfTyping()">Send Self Typing</button>
+      <button onclick="googleMapsApi()">Get the Google Maps API key and token</button>
+      <button onclick="getVgroupIdBeforeDmCreation()">Get vgroupId from server hash</button>
+      <button onclick="resendMessage()">Retry a message send</button>
+      <button onclick="clearAll()">Clear All Unreads</button>
+      <button onclick="pinConvo()">Pin Convo</button>
+      <button onclick="unpinConvo()">Unpin Convo</button>
+      <button onclick="leaveConvo()">Leave Convo</button>
+      <button onclick="deleteConvo()">Delete Convo</button>
+      <button onclick="msgAction('clearMessageTempId')">Clear message temp ID</button>
+      <button onclick="startCall()">Start Call</button>
+      <button onclick="getSelfCallStatus()">Get Self Call Status</button>
+      <button onclick="ackMsgSendFailure()">Acknowledge Message Send Failure</button>
+      <button onclick="getAnalyticsCapabilities()">Analytics capabilities</button>
+      <button onclick="sendAnalyticsEvent()">Send Analytics Events</button>
+      <button onclick="cancelFile()">Cancel file</button>
+      <button onclick="clearFile()">Clear file</button>
+      <button onclick="getActiveConvoInfo()">Active Convo Info</button>
+      <button onclick="getWindowStatus()">Window Status</button>
+      <button onclick="sendRetryWOAProxy()">Send Retry WOA Proxy</button>
+      <button onclick="clearBotWarning()">Clear Bot Warning</button>
+      <button onclick="notNowVerify()">Not Now Verify</button>
+      <button onclick="createRoom()">Create Room</button>
+      <button onclick="createGroup()">Create Group</button>
+      <button onclick="setActiveConvo('S35222b6ff8057250938ffe3648bb4da205f4ab9708a53a219a71d8236806139')">Activate Convo</button>
+      <button onclick="setActiveConvo('')">Deactivate Convo</button>
+      <button onclick="sendEmail()">Send Email</button>
+      <button onclick="sendErrorReport()">Error Report</button>
+      <button onclick="sendSystemNotification()">System Notification</button>
+      <button onclick="setConvoNotification()">Set Convo Notification</button>
+      <button onclick="setIsFavorite()">Set Is Favorite</button>
+      <button onclick="setIsBlocked()">Set Is Blocked</button>
+      <button onclick="setCustomName()">Set Custom Name</button>
+      <button onclick="suspendDevice()">Suspend Device</button>
+      <button onclick="getAccountAttributes()">Get Account Attributes</button>
+      <button onclick="startShredder()">Start Shredder</button>
+      <button onclick="stopShredder()">Stop Shredder</button>
+      <button onclick="shredderStatus()">Shredder Status</button>
+      <button onclick="saveLogs()">Save Logs</button>
+      <button onclick="clearLogs()">Clear Logs</button>
+      <button onclick="editConvo()">Edit Convo</button>
+      <button onclick="viewOpenSource()">View Open Source</button>
+      <button onclick="quitApp()">Quit App</button>
+      <button onclick="signOut()">Sign Out</button>
+      <button onclick="getAppVersion()">Get App Version</button>
+      <button onclick="checkForUpdates()">Check For Updates</button>
+      <button onclick="resetApp()">Reset App</button>
+      <button onclick="uninstallApp()">Uninstall App</button>
+      <button onclick="validatePassword()">Validate Password</button>
+      <button onclick="requestChimeRegisterProfile()">Request Chime Handoff Token</button>
+      <button onclick="messageUnreadCount()">Message Unread Count</button>
+      <button onclick="verifyUser()">Verify/Unverify User</button>
+      <button onclick="validateQRCode()">Validate QR Code</button>
+      <button onclick="changeProfilePicture()">Change Profile Picture</button>
+      <button onclick="clearProfilePicture()">Clear Profile Picture</button>
+      <button onclick="changePresence()">Change Presence</button>
+      <button onclick="isGuardEnabled()">Guard Enabled Status</button>
+      <button onclick="resetDirectory()">Reset Directory</button>
+      <button onclick="getUserStatus()">Get User Status</button>
+      <button onclick="sendLocationMessage()">Send Location Message</button>
+      <button onclick="activateHyperlink()">Activate Hyperlink</button>
+      <button onclick="updateRecentSearchQueries()">Update Recent Search Queries</button>
+      <button onclick="isDBCorrupted()">Is DB Corrupted</button>
+      <button onclick="showDBError()">Show DB Error</button>
+      <button onclick="getProcessMetrics()">Get Process Metrics</button>
+      <button onclick="resetProcessMetrics()">Reset Process Metrics</button>
+      <button onclick="closeAccount()">Close Account</button>
+      <button onclick="messageDeleteMessage()">Message Delete Message</button>
+      <button onclick="setIsWebViewLoaded()">Set Is Web View Loaded</button>
+      <button onclick="setSupportedErrors()">Set Supported Errors</button>
+      <button onclick="getUsersToManage()">Get Users to Manage</button>
+      <button onclick="userActionRemove()">User Action Remove</button>
+      <button onclick="pushDeviceQRScan()">Push Device QR Scan</button>
+      <button onclick="switchToCode()">Switch to Code</button>
+      <button onclick="pushDeviceCode()">Push Device Code</button>
+      <button onclick="updateApp()">Update App</button>
+      <button onclick="ignoreUpdate()">Ignore Update</button>
+      <button onclick="blockATORequest()">Block ATO Request</button>
+      <button onclick="use12HourFormat()">Use 12 Hour Format</button>
+      <button onclick="loadLinks()">Load Branding Links</button>
+      <button onclick="manageNotifications()">Manage Notifications</button>
+      <button onclick="testCrashReporting()">Test Crash Reporting</button>
+      <button onclick="testNetworkBanner()">Test Network Banner</button>
+      <button onclick="forwardMessage()">Forward Message</button>
+    </div>
+
+    <p onclick="headerClicked('fileManagerButtons')">File Manager (Hide/Show)</p>
+    <div id="fileManagerButtons">
+      <button onclick="pinNewFile()">Pin new file</button>
+      <button onclick="cancelPinNewFile()">Cancel pin new file</button>
+      <button onclick="unpinFile()">Unpin file</button>
+      <button onclick="renameFile()">Rename file</button>
+      <button onclick="createFolder()">Create Folder</button>
+      <button onclick="renameFolder()">Rename Folder</button>
+      <button onclick="removeFolder()">Remove Folder</button>
+      <button onclick="moveFolder()">Move Folder</button>
+      <button onclick="moveFile()">Move File</button>
+      <button onclick="checkNames()">Check names</button>
+      <button onclick="downloadPinnedFile()">Download Pinned File</button>
+      <button onclick="openPinnedFile()">Open Pinned File</button>
+      <button onclick="cancelDownload()">Cancel download</button>
+      <button onclick="getBranding()">Get Branding</button>
+      <button onclick="unPinLink()">Unpin link</button>
+      <button onclick="unPinItems()">Unpin items</button>
+
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/a2b6b24a-92a9-4ec1-91e9-b0bd4d9d3513`)">Get folders (Specific Folder)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/saveditems`)">Get folders (saved items)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId)">Get folders (Root Folder)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/file/0e9575f1-6042-4cb9-bb87-b6f7ecf408af`)">Get folder from file</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/legacysaveditems`)">Get legacy saved items</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/savedlinks`)">Get Links</button>
+    </div>
+
+    <!-- <div id="linkImages"></div> -->
+    <!-- <img src="wickrweb://image/userId/nemo@mailinator.com" height="200" />
+    <img src="wickrweb://image/user/01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44" height="200" /> -->
+    <!-- <img src="wickrweb://image/savedfile/7219f5ae-b34d-4092-bf52-6a50a809f4cb" height="200" /> -->
+    <!--    Alternative way to test self typing indicator via a textbox, uncomment below-->
+    <!--    <input id="input" name ="input" onchange="sendSelfTyping()" />-->
+    <!--     <img src="wickrweb://image/message/S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e/35e4bb305c6c11eeaeddb71725aa058d" height="200" />
+
+    <audio controls>
+      <source src="wickrweb://audio/message/S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e/1d36ad505c6c11eeaeddb71725aa058d" />
+    </audio> -->
+  </body>
+</html>
+
+
+
+~window.URL = class QURL extends URL {
+  constructor(url, base) {
+    super(url, base === 'qrc:' ? 'qrc:/' : base);
+  }
+}
+
+
+=== candidate uncompressed RCC headers where header+8+size==0x31EE43E ===

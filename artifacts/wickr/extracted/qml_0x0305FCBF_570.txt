@@ -1,0 +1,23 @@
+9import QtQml
+import "Commons/"
+import QtQuick.Controls.Basic
+
+NewModalMessageBox
+{
+    id: root
+
+    function showUpgradePrompt() {
+        root.show(function(buttonIndex) {
+            if (buttonIndex === 1) {
+                Qt.openUrlExternally("https://www.wickr.com/wickr-pro");
+            }
+        });
+    }
+
+    z: 100
+    titleText: qsTr("Did you know?")
+    messageText: qsTr("Upgrade to Wickr Pro to enjoy more voice & video features.")
+    buttons: [qsTr("Cancel"), qsTr("Explore Pro")]
+    primaryIndex: 1
+    xOutAvailable: true
+}

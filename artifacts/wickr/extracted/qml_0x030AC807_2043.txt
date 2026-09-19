@@ -1,0 +1,73 @@
+úimport QtQuick
+import com.wickr.widgets 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+    signal clicked()
+    property string label: ""
+    property string buttonName: ""
+    property string buttonColor: Branding.palette_cal_p2
+    property string buttonHoverColor: Branding.palette_cal_s1
+    property string buttonDisabledColor: Branding.palette_cal_p4
+
+    width: buttonLabel.width + 8 * ScreenRM.scale
+    height: buttonImageContainer.height + buttonLabel.height + 4 * ScreenRM.scale
+
+    property int margin: 6 * ScreenRM.scale
+    property int sideMargin: margin
+
+    FocusBorder
+    {
+        height: root.height + margin * 2
+        width: root.width + sideMargin * 2
+        visible: root.focus
+        z: 1
+    }
+
+    Rectangle
+    {
+        anchors.fill: parent
+        opacity: 0.7
+        color: Branding.palette_cal_p1
+        radius: 4 * ScreenRM.scale
+    }
+
+    Item {
+        id: buttonImageContainer
+        width: height
+        height: 24 * ScreenRM.scale
+        anchors.top: parent.top
+        anchors.topMargin: 2 * ScreenRM.scale
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        LayeredImage {
+            id: button
+            name: buttonName
+            color: root.enabled ? (rootMA.containsMouse ? buttonHoverColor : buttonColor) :
+                                  buttonDisabledColor
+            anchors.centerIn: parent
+        }
+    }
+
+    Text {
+        id: buttonLabel
+        anchors.top: buttonImageContainer.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: root.label
+        color: root.enabled ? buttonColor : buttonDisabledColor
+        font.pointSize: 11.8 * ScreenRM.fontScale
+        font.family: fonts.osReg
+    }
+
+    MouseArea {
+        id: rootMA
+        anchors.fill: parent
+        enabled: root.enabled
+        hoverEnabled: true
+        cursorShape : Qt.PointingHandCursor
+        onClicked: root.clicked()
+    }
+}

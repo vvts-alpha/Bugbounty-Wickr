@@ -1,0 +1,7 @@
+[
+  {"name":"POScontrol (self-script)",        "mode":"poscontrol","payload":"poscontrol","expect":"WIN"},
+  {"name":"docx renderSymbol inline <script>","mode":"docx","payload":"baseline_inline_script","expect":"inert"},
+  {"name":"pptx via DOMPurify",              "mode":"pptx","payload":"pptx_basic","expect":"inert"},
+  {"name":"altChunk srcdoc inline <script>+onerror","mode":"altchunk","payload":"altchunk_inline","expect":"inert"},
+  {"name":"altChunk srcdoc EXTERNAL self-script (mechanism, not attacker-hostable)","mode":"altchunk","payload":"altchunk_extself","expect":"WIN"}
+]

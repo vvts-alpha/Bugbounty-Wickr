@@ -1,0 +1,26 @@
+Wimport QtQuick
+import QtQuick.Window
+import com.wickr.widgets 1.0
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+QtObject {
+    id: root
+    property bool visible: false
+    property int screenIndex: 0
+
+    property var overlay: ScreenOverlay {
+        id: overlay
+        visible: root.visible
+        screenIndex: root.screenIndex
+        color: "transparent"
+
+        Rectangle {
+            id: border
+            anchors.fill: parent
+            color: "transparent"
+            border.width: 4
+            border.color: Branding.palette_gbl_s1
+        }
+    }
+}

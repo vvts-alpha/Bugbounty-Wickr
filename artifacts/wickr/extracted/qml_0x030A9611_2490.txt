@@ -1,0 +1,90 @@
+	¸import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtMultimedia
+import com.wickr.interfaces 1.0
+import com.wickr.models 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item
+{
+    id: rightCol
+    height: environmentMgr.canVideoCall ? 296 * ScreenRM.scale : 264 * ScreenRM.scale
+    property bool cameraPreviewFocus: false
+    property alias videoCover: videoCover
+
+    Connections
+    {
+        target: environmentMgr
+        function onCanVideoCallChanged() {
+            if(!environmentMgr.canVideoCall)
+            {
+                cameraPreviewLoader.source = ""
+            }
+        }
+    }
+
+    Loader
+    {
+        id: cameraPreviewLoader
+        width: rightCol.width
+        height: rightCol.height
+        function load()
+        {
+            cameraPreviewLoader.source = "CallAVCameraPreviewQt6.qml"
+        }
+    }
+
+    Keys.onPressed: {
+        if(cameraPreviewFocus){
+            if(videoCover.visible && environmentMgr.canVideoCall){
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    cameraPreviewLoader.load()
+                }
+            }
+        }
+    }
+
+    Rectangle
+    {
+        id: videoCover
+        width: rightCol.width
+        height: rightCol.height
+        color: Branding.palette_cal_p3
+        visible: cameraPreviewLoader.status === Loader.Null
+        Text {
+            text: {
+                if(environmentMgr.canVideoCall)
+                {
+                    qsTr("Click to view camera preview")
+                }
+                else
+                {
+                    qsTr("Video disabled by network admin")
+                }
+            }
+
+            anchors.centerIn: parent
+            width: parent.width - 32 * screenRM.scale
+            color: Branding.palette_cal_p2
+            font.pointSize: 15.8 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+        }
+
+        MouseArea
+        {
+            anchors.fill: parent
+            hoverEnabled: true
+            enabled: videoCover.visible && environmentMgr.canVideoCall
+            cursorShape : enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked: {
+                cameraPreviewLoader.load()
+            }
+        }
+    }
+}

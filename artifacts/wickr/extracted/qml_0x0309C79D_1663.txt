@@ -1,0 +1,56 @@
+~import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: root
+    color: "transparent"
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 60 * ScreenRM.scale
+    property string text: ""
+    signal clicked()
+    property alias checked: switchButton.checked
+    property int labelPadding: 30 * ScreenRM.scale
+    property bool labelBold: false
+    property bool enabled: true
+    property bool showSeparator: false
+    property bool anchorLabelToSwitch: false
+    property alias forceState: switchButton.forceState
+
+    Rectangle
+    {
+        height: 1 * ScreenRM.scale
+        width: root.parent.width
+        color: Branding.palette_gbl_p6
+        anchors.top: parent.top
+        visible: showSeparator
+    }
+
+    Text
+    {
+        id: label
+        text: root.text
+        font.pointSize: 14 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        font.bold: labelBold
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: anchorLabelToSwitch ? undefined : parent.left
+        anchors.leftMargin: anchorLabelToSwitch ? 0 : (labelPadding * ScreenRM.scale)
+        anchors.right: anchorLabelToSwitch ? switchButton.left : undefined
+        anchors.rightMargin: anchorLabelToSwitch ? (8 * ScreenRM.scale) : 0
+    }
+
+    MaterialSwitch
+    {
+        id: switchButton
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 30 * ScreenRM.scale
+        enabled: root.enabled
+        onClicked: root.clicked()
+    }
+}

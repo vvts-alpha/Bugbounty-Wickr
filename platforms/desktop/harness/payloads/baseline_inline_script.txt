@@ -1,0 +1,1 @@
+0;<img src=x alt=POC-injected-node><script>window.top.__RCE__="INLINE_SCRIPT_RAN"</script>

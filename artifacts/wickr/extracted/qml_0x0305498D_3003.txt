@@ -1,0 +1,107 @@
+ºimport QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQml.Models
+import QtQuick.Layouts
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+    color: "transparent"
+    property string email: ""
+    property int ustate: 0
+    property string cId: ""
+    signal goBack()
+
+    function show(emailEntry, userState, companyId) {
+        reset();
+        email = emailEntry;
+        ustate = userState;
+        cId = companyId;
+        root.visible = true
+
+        // Acquire the focus so keyboard navigation works
+        accountDetectedPanel.focus = true;
+    }
+
+    function clear() {
+        email = "";
+        ustate = 0;
+        cId = "";
+    }
+
+    function reset() {
+        clear();
+        root.visible = false;
+    }
+
+    function processContinue() {
+        if (root.visible) {
+            switch (ustate) {
+            case 1:
+                console.log("ACCOUNT DETECTED: You are a NON-SSO USER signing in, " + email);
+                showPasswwordEnterScreen(email);
+                break;
+
+            case 2:
+                console.log("ACCOUNT DETECTED: You are an SSO USER signing in, " + email + ", CompanyID: " + cId);
+                sigSSOProvision(email,cId, WickrOIDCWorkFlow.RegularSsoUser);
+                break;
+
+            default:
+                console.log("ACCOUNT DETECTED: Invalid User State = " + ustate);
+                break;
+            }
+        }
+    }
+
+    WrappedImage {
+        id: backgroundImg
+        fillMode: Image.PreserveAspectCrop
+        anchors.fill: parent
+        source: Branding.images_background
+    }
+
+    WickrPopupPanelWL {
+        id: accountDetectedPanel
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        panelOpacity: 1.0
+        panelBorderWidth: 1
+        headerText: qsTr("Account Detected")
+        headerImageResource: Branding.images_ic_select_network
+        headerImageColorResource: Branding.palette_rgs_s1
+        popupHeaderFontWeight: Font.Light
+        popupSubjectText: qsTr("Looks like you are already associated with a network.")
+        popupBodyMainText: ""
+        popupBodyMainHeight: 144 * ScreenRM.scale
+        popupBodySecondaryText: ""
+        popupBodySecondaryHeight: 0
+        btnLabelText: qsTr("CONTINUE")
+        btnBottomMargin: 70
+        visible: true
+        focus: true
+
+        btn2Visible: true
+        btn2Style: "textButton"
+        btn2LabelText: qsTr("HELP")
+
+        backButtonEnabled: true
+
+        onBackButtonPressed: {
+            goBack();
+        }
+
+        onPrimaryPressed: {
+            processContinue();
+        }
+
+        onAlternatePressed: {
+            wickrWindow.hyperlinkClicked("https://support.wickr.com/hc/en-us/articles/360009638513-Why-is-my-email-already-associated-with-a-Wickr-Pro-Network");
+        }
+    }
+
+}

@@ -1,0 +1,59 @@
+import QtQuick
+import "../"
+import com.wickr.interfaces 1.0
+import com.wickr.widgets 1.0
+import onboardStatus 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Layouts
+import Validators 1.0
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: toast
+
+    property alias button: buttonId
+    property bool darkShadow: true
+    property alias source: buttonId.source
+
+    signal buttonClicked()
+    signal buttonTabPressed()
+    signal buttonBacktabPressed()
+    signal buttonReturnPressed()
+
+    function buttonFocus()
+    {
+        buttonId.focus = true
+    }
+
+
+    width: 344 * ScreenRM.scale
+    height: 72 * ScreenRM.scale
+    color: Branding.palette_gbl_p2
+    radius: 8 * ScreenRM.scale
+
+    WickrIconTextButton {
+        id: buttonId
+
+        styleName: "toastButton"
+
+        anchors {
+            right: parent.right
+            rightMargin: 16 * ScreenRM.scale
+            bottom: parent.bottom
+            bottomMargin: 16 * ScreenRM.scale
+
+        }
+        onClicked: buttonClicked()
+        Keys.onTabPressed: {
+            buttonTabPressed()
+        }
+        Keys.onBacktabPressed: {
+            buttonBacktabPressed()
+        }
+        Keys.onReturnPressed: {
+            buttonReturnPressed()
+        }
+    }
+
+}

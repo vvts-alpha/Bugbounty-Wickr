@@ -1,0 +1,47 @@
+Pimport QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+WickrDrawer
+{
+    id: inviteToConvoRoot
+
+    leftSide: false
+    useOverlays: false
+
+    Component.onCompleted:
+    {
+        keyboardShortcutHelper.registerTopLevelItem(inviteToConvoRoot)
+    }
+
+    onDrawerClosing: {
+        keyboardShortcutHelper.unregisterTopLevelItem(inviteToConvoRoot)
+    }
+
+    Connections
+    {
+        target: keyboardShortcutHelper
+        enabled: inviteToConvoRoot.visible
+        function onHideWindow() {
+            if(keyboardShortcutHelper.isTopLevel(inviteToConvoRoot))
+            {
+                closeDrawer()
+            }
+        }
+    }
+
+    EditConvoPanel
+    {
+        id: inviteDrawerContent
+        onClose: inviteToConvoRoot.closeDrawer()
+        anchors.fill: parent
+        onShowAddMembers: addParticipantsLoader.show(false)
+        onShowAddModerators: addParticipantsLoader.show(true)
+    }
+}

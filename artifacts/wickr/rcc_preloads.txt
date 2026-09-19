@@ -1,0 +1,8 @@
+=== scan window 0x31E0000..0x31EE43E for RCC data entries (preloads.js candidate) ===
+
+=== 128 bytes before qwebchannel.js header (0x31EE3BE..0x31EE43E) ===
+00 7e 77 69 6e 64 6f 77 2e 55 52 4c 20 3d 20 63 6c 61 73 73 20 51 55 52 4c 20 65 78 74 65 6e 64 73 20 55 52 4c 20 7b 0d 0a 20 20 63 6f 6e 73 74 72 75 63 74 6f 72 28 75 72 6c 2c 20 62 61 73 65 29 20 7b 0d 0a 20 20 20 20 73 75 70 65 72 28 75 72 6c 2c 20 62 61 73 65 20 3d 3d 3d 20 27 71 72 63 3a 27 20 3f 20 27 71 72 63 3a 2f 27 20 3a 20 62 61 73 65 29 3b 0d 0a 20 20 7d 0d 0a 7d 0d 0a
+.~window.URL = class QURL extends URL {..  constructor(url, base) {..    super(url, base === 'qrc:' ? 'qrc:/' : base);..  }..}..
+
+=== qwebchannel.js header region 0x31EE43E..0x31EE460 ===
+00 00 10 96 00 00 43 1d 78 da cd 1c db 72 db c6 f5 3d 33 fe 87 35 27 13 93 31 0d 49 76 9a b6 54 dc 56

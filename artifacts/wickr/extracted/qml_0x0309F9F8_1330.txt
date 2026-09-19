@@ -1,0 +1,55 @@
+1import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: root
+
+    height: backButton.height
+    width: backButton.width + backButtonText.width + 10 * ScreenRM.scale
+    border.width: (root.focus ? 1 : 0)
+    border.color: "black"
+    color: "transparent"
+
+    signal clicked()
+
+    LayeredImage {
+        id: backButton
+        name: "ic_back"
+        color: Branding.palette_rgs_p5
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Text {
+        id: backButtonText
+        anchors.verticalCenter: backButton.verticalCenter
+        anchors.left: backButton.right
+        text: qsTr("Back")
+        horizontalAlignment: Text.AlignLeft
+        wrapMode: Text.NoWrap
+        textFormat: Text.AutoText
+        font.pointSize: 11 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        color: Branding.palette_rgs_p5
+    }
+
+    MouseArea {
+        hoverEnabled: true
+        anchors.fill: parent
+        cursorShape : Qt.PointingHandCursor
+        onClicked: {
+            root.clicked()
+        }
+    }
+
+    Keys.onReturnPressed: {
+        clicked();
+    }
+
+    Accessible.role: Accessible.Button
+    Accessible.name: backButtonText.text
+    //Accessible.description: "Some description"
+}
+

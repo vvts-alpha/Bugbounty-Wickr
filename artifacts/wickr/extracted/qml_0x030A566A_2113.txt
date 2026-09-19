@@ -1,0 +1,67 @@
+@import QtQuick
+import QtQuick.Controls
+import com.wickr.interfaces 1.0
+import com.wickr.widgets 1.0
+import "../"
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle {
+    id: onHoldScreen
+    anchors.fill: parent
+    visible: onHoldState === "on"
+    color: "transparent"
+
+    Rectangle
+    {
+        anchors.fill: parent
+        color: Branding.palette_cal_p1
+        opacity: 0.9
+    }
+
+    Column {
+        anchors.centerIn: parent
+        width: 310 * ScreenRM.scale
+        height: (159 * ScreenRM.scale) + onHoldText1.height + onHoldText2.height
+        WrappedImage {
+            id: onHoldIcon
+            source: "qrc:/images/ic-call-onhold.png"
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Item {
+            width: 1 * ScreenRM.scale
+            height: 31 * ScreenRM.scale
+        }
+        Text {
+            id: onHoldText1
+            width: parent.width
+            height: implicitHeight
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("THIS CALL IS ON HOLD")
+            color: Branding.palette_cal_p2
+            font.family: fonts.osReg
+            font.pointSize: 24 * ScreenRM.fontScale
+            horizontalAlignment: TextInput.AlignHCenter
+        }
+        Item {
+            width: 1 * ScreenRM.scale
+            height: 18 * ScreenRM.scale
+        }
+        Text {
+            id: onHoldText2
+            width: parent.width
+            height: implicitHeight
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("<p>For your protection, %1 audio, video, screensharing " +
+                       "and microphone are <b><i>disabled</i></b> while this call is on hold.").arg(Branding.copy_appShortName)
+            color: Branding.palette_cal_p2
+            font.family: fonts.osReg
+            font.pointSize: 14 * ScreenRM.fontScale
+            wrapMode: Text.WordWrap
+            textFormat: Text.RichText
+            horizontalAlignment: TextInput.AlignHCenter
+        }
+    }
+}

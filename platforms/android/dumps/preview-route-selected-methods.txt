@@ -1,0 +1,1064 @@
+
+
+## Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->accept(Lcom/wickr/files/FileDecryptionResult;)V [classes3.dex]
+0000: const-string              v0, "result"
+0004: invoke-static             v2, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: invoke-virtual            v2, Lcom/wickr/files/FileDecryptionResult;->getSuccess()Z
+0010: move-result               v2
+0012: if-nez                    v2, +018h
+0016: iget-object               v2, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->this$0 Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+001a: invoke-virtual            v2, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+0020: move-result-object        v2
+0022: iget-object               v0, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->$metaData Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0026: invoke-virtual            v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;->getGuid()Ljava/lang/String;
+002c: move-result-object        v0
+002e: invoke-virtual            v2, v0, Lcom/wickr/files/FileManager;->getFileState(Ljava/lang/String;)Lcom/wickr/files/FileState;
+0034: move-result-object        v2
+0036: sget-object               v0, Lcom/wickr/files/FileState;->Decrypted Lcom/wickr/files/FileState;
+003a: if-ne                     v2, v0, +003h
+003e: goto                      +2h
+0040: return-void               
+0042: iget-boolean              v2, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->$openAfterDecrypting Z
+0046: if-eqz                    v2, +009h
+004a: iget-object               v2, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->this$0 Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+004e: iget-object               v1, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->$metaData Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0052: invoke-virtual            v2, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->openFile(Lcom/wickr/enterprise/messages/model/AttachmentMetaData;)V
+0058: return-void               
+
+
+## Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->accept(Ljava/lang/Object;)V [classes3.dex]
+0000: check-cast                v1, Lcom/wickr/files/FileDecryptionResult;
+0004: invoke-virtual            v0, v1, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter$startFileDecryption$observable$2;->accept(Lcom/wickr/files/FileDecryptionResult;)V
+000a: return-void               
+
+
+## Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->bindClickListeners$lambda$0(Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter; Lcom/wickr/enterprise/messages/viewholder/FileMessageViewHolder; Landroid/view/View;)V [classes3.dex]
+0000: iget-object               v15, v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->messageAdapter Lcom/wickr/enterprise/messages/adapter/MessageAdapter;
+0004: invoke-virtual            v15, Lcom/wickr/enterprise/messages/adapter/MessageAdapter;->getData()Ljava/util/ArrayList;
+000a: move-result-object        v15
+000c: invoke-virtual            v14, Lcom/wickr/enterprise/messages/viewholder/FileMessageViewHolder;->getAdapterPosition()I
+0012: move-result               v14
+0014: invoke-virtual            v15, v14, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+001a: move-result-object        v14
+001c: const-string              v15, "null cannot be cast to non-null type com.wickr.enterprise.messages.model.FileMessageModel"
+0020: invoke-static             v14, v15, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object; Ljava/lang/String;)V
+0026: check-cast                v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;
+002a: invoke-virtual            v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+0030: move-result-object        v15
+0032: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0038: move-result-object        v0
+003a: invoke-virtual            v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;->getGuid()Ljava/lang/String;
+0040: move-result-object        v0
+0042: invoke-virtual            v15, v0, Lcom/wickr/files/FileManager;->getFileState(Ljava/lang/String;)Lcom/wickr/files/FileState;
+0048: move-result-object        v15
+004a: sget-object               v0, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter$WhenMappings;->$EnumSwitchMapping$0 [I
+004e: invoke-virtual            v15, Lcom/wickr/files/FileState;->ordinal()I
+0054: move-result               v1
+0056: aget                      v0, v0, v1
+005a: const/4                   v1, 1
+005c: if-eq                     v0, v1, +065h
+0060: const/4                   v1, 2
+0062: if-eq                     v0, v1, +053h
+0066: const/4                   v1, 3
+0068: if-eq                     v0, v1, +048h
+006c: const/4                   v1, 4
+006e: if-eq                     v0, v1, +030h
+0072: const/4                   v1, 5
+0074: if-eq                     v0, v1, +01eh
+0078: sget-object               v13, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+007c: invoke-virtual            v15, Lcom/wickr/files/FileState;->name()Ljava/lang/String;
+0082: move-result-object        v14
+0084: new-instance              v15, Ljava/lang/StringBuilder;
+0088: const-string              v0, "Ignoring state: "
+008c: invoke-direct             v15, v0, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+0092: invoke-virtual            v15, v14, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+0098: move-result-object        v14
+009a: invoke-virtual            v14, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+00a0: move-result-object        v14
+00a2: const/4                   v15, 0
+00a4: new-array                 v15, v15, [Ljava/lang/Object;
+00a8: invoke-virtual            v13, v14, v15, Ltimber/log/Timber$Forest;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+00ae: return-void               
+00b0: move-object               v0, v13
+00b2: check-cast                v0, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+00b6: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+00bc: move-result-object        v1
+00be: const/4                   v4, 4
+00c0: const/4                   v5, 0
+00c2: const/4                   v2, 1
+00c4: const/4                   v3, 0
+00c6: invoke-static/range       v0 ... v5, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->startFileDecryption$default(Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+00cc: return-void               
+00ce: invoke-virtual            v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+00d4: move-result-object        v6
+00d6: invoke-virtual            v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->getContext()Landroid/content/Context;
+00dc: move-result-object        v7
+00de: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+00e4: move-result-object        v8
+00e6: const/16                  v11, 8
+00ea: const/4                   v12, 0
+00ec: const/4                   v9, 1
+00ee: const/4                   v10, 0
+00f0: invoke-static/range       v6 ... v12, Lcom/wickr/enterprise/util/FileExtensionsKt;->downloadAttachment$default(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+00f6: return-void               
+00f8: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+00fe: move-result-object        v14
+0100: invoke-virtual            v13, v14, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->openFile(Lcom/wickr/enterprise/messages/model/AttachmentMetaData;)V
+0106: return-void               
+0108: move-object               v0, v13
+010a: check-cast                v0, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+010e: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0114: move-result-object        v1
+0116: const/4                   v4, 4
+0118: const/4                   v5, 0
+011a: const/4                   v2, 1
+011c: const/4                   v3, 0
+011e: invoke-static/range       v0 ... v5, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->startFileDecryption$default(Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+0124: return-void               
+0126: invoke-virtual            v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+012c: move-result-object        v6
+012e: invoke-virtual            v13, Lcom/wickr/enterprise/messages/adapter/delegates/FileMessageAdapter;->getContext()Landroid/content/Context;
+0134: move-result-object        v7
+0136: invoke-virtual            v14, Lcom/wickr/enterprise/messages/model/FileMessageModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+013c: move-result-object        v8
+013e: const/16                  v11, 8
+0142: const/4                   v12, 0
+0144: const/4                   v9, 0
+0146: const/4                   v10, 0
+0148: invoke-static/range       v6 ... v12, Lcom/wickr/enterprise/util/FileExtensionsKt;->downloadAttachment$default(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+014e: return-void               
+
+
+## Lcom/mywickr/WickrCore;->getEnableFilePreview()Z [classes4.dex]
+0000: iget-object               v0, v0, Lcom/mywickr/WickrCore;->$$delegate_0 Lcom/mywickr/config/WickrCoreFeatureConfig;
+0004: invoke-virtual            v0, Lcom/mywickr/config/WickrCoreFeatureConfig;->getEnableFilePreview()Z
+000a: move-result               v0
+000c: return                    v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$CallingField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$CallingField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$CallingField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$CallingField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "CALLING"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$CallingField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "clientMetricsConfig"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$PasswordField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$PasswordField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$PasswordField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$PasswordField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "passwordRequirements"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$PasswordField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$ReadReceiptField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$ReadReceiptField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$ReadReceiptField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$ReadReceiptField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "readReceiptConfig"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$ReadReceiptField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$ShredderField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$ShredderField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$ShredderField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$ShredderField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "shredder"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$ShredderField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$SystemBannerField;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$SystemBannerField;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$SystemBannerField;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$SystemBannerField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const-string              v3, "networkBanner"
+0010: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0016: move-result-object        v0
+0018: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$SystemBannerField;->defaultValue Ljava/lang/Object;
+001c: instance-of               v5, v5, Ljava/lang/Boolean;
+0020: if-eqz                    v5, +00bh
+0024: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+002a: move-result               v4
+002c: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0032: move-result-object        v4
+0034: return-object             v4
+0036: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->setConfigValue(Lcom/mywickr/config/WickrConfig$Field; Ljava/lang/Object; Z)V [classes4.dex]
+0000: iget-object               v0, v7, Lcom/mywickr/config/WickrConfig$Field;->fieldName Ljava/lang/String;
+0004: filled-new-array          v8, v0, [Ljava/lang/Object;
+000a: move-result-object        v0
+000c: const-string              v1, "Manually setting config field %s to value: %s"
+0010: invoke-static             v1, v0, Ltimber/log/Timber;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+0016: const/4                   v0, 0
+0018: instance-of               v1, v8, [J
+001c: if-eqz                    v1, +017h
+0020: new-instance              v1, Lorg/json/JSONArray;
+0024: invoke-direct             v1, Lorg/json/JSONArray;-><init>()V
+002a: check-cast                v8, [J
+002e: array-length              v2, v8
+0030: move                      v3, v0
+0032: if-ge                     v3, v2, +00ah
+0036: aget-wide                 v4, v8, v3
+003a: invoke-virtual            v1, v4, v5, Lorg/json/JSONArray;->put(J)Lorg/json/JSONArray;
+0040: add-int/lit8              v3, v3, 1
+0044: goto                      -9h
+0046: move-object               v8, v1
+0048: goto                      +18h
+004a: instance-of               v1, v8, [Ljava/lang/String;
+004e: if-eqz                    v1, +015h
+0052: new-instance              v1, Lorg/json/JSONArray;
+0056: invoke-direct             v1, Lorg/json/JSONArray;-><init>()V
+005c: check-cast                v8, [Ljava/lang/String;
+0060: array-length              v2, v8
+0062: move                      v3, v0
+0064: if-ge                     v3, v2, -00fh
+0068: aget-object               v4, v8, v3
+006c: invoke-virtual            v1, v4, Lorg/json/JSONArray;->put(Ljava/lang/Object;)Lorg/json/JSONArray;
+0072: add-int/lit8              v3, v3, 1
+0076: goto                      -9h
+0078: sget-object               v1, Lcom/mywickr/config/WickrConfig;->runtimeConfiguration Lorg/json/JSONObject;
+007c: iget-object               v2, v7, Lcom/mywickr/config/WickrConfig$Field;->fieldName Ljava/lang/String;
+0080: invoke-virtual            v1, v2, v8, Lorg/json/JSONObject;->put(Ljava/lang/String; Ljava/lang/Object;)Lorg/json/JSONObject;
+0086: new-instance              v1, Ljava/lang/StringBuilder;
+008a: invoke-direct             v1, Ljava/lang/StringBuilder;-><init>()V
+0090: const-string              v2, "Set config field "
+0094: invoke-virtual            v1, v2, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+009a: move-result-object        v1
+009c: iget-object               v7, v7, Lcom/mywickr/config/WickrConfig$Field;->fieldName Ljava/lang/String;
+00a0: invoke-virtual            v1, v7, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+00a6: move-result-object        v7
+00a8: const-string              v1, " to "
+00ac: invoke-virtual            v7, v1, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+00b2: move-result-object        v7
+00b4: invoke-virtual            v8, Ljava/lang/Object;->toString()Ljava/lang/String;
+00ba: move-result-object        v8
+00bc: invoke-virtual            v7, v8, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+00c2: move-result-object        v7
+00c4: invoke-virtual            v7, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+00ca: move-result-object        v7
+00cc: new-array                 v8, v0, [Ljava/lang/Object;
+00d0: invoke-static             v7, v8, Ltimber/log/Timber;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+00d6: if-eqz                    v9, +022h
+00da: new-instance              v7, Lcom/mywickr/config/WickrConfig$Event;
+00de: invoke-virtual            v6, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+00e4: move-result-object        v8
+00e6: const/4                   v1, 1
+00e8: invoke-direct             v7, v1, v8, Lcom/mywickr/config/WickrConfig$Event;-><init>(Z Ljava/lang/String;)V
+00ee: invoke-static             v7, Lcom/mywickr/WickrCore;->postEvent(Ljava/lang/Object;)V
+00f4: return-void               
+00f6: move-exception            v7
+00f8: invoke-static             v7, Ltimber/log/Timber;->e(Ljava/lang/Throwable;)V
+00fe: if-eqz                    v9, +00eh
+0102: new-instance              v7, Lcom/mywickr/config/WickrConfig$Event;
+0106: invoke-virtual            v6, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+010c: move-result-object        v6
+010e: invoke-direct             v7, v0, v6, Lcom/mywickr/config/WickrConfig$Event;-><init>(Z Ljava/lang/String;)V
+0114: invoke-static             v7, Lcom/mywickr/WickrCore;->postEvent(Ljava/lang/Object;)V
+011a: return-void               
+
+
+## Lcom/mywickr/config/WickrConfig;->getValueForField(Lcom/mywickr/config/WickrConfig$Field;)Ljava/lang/Object; [classes4.dex]
+0000: iget-object               v0, v5, Lcom/mywickr/config/WickrConfig$Field;->fieldName Ljava/lang/String;
+0004: iget-object               v1, v5, Lcom/mywickr/config/WickrConfig$Field;->defaultValue Ljava/lang/Object;
+0008: iget-object               v2, v5, Lcom/mywickr/config/WickrConfig$Field;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+000c: const/4                   v3, 0
+000e: invoke-direct             v4, v3, v0, v1, v2, Lcom/mywickr/config/WickrConfig;->getValue(Ljava/lang/String; Ljava/lang/String; Ljava/lang/Object; Ljava/util/function/BooleanSupplier;)Ljava/lang/Object;
+0014: move-result-object        v0
+0016: iget-object               v5, v5, Lcom/mywickr/config/WickrConfig$Field;->defaultValue Ljava/lang/Object;
+001a: instance-of               v5, v5, Ljava/lang/Boolean;
+001e: if-eqz                    v5, +00bh
+0022: invoke-direct             v4, v0, Lcom/mywickr/config/WickrConfig;->parseBooleanFromValue(Ljava/lang/Object;)Z
+0028: move-result               v4
+002a: invoke-static             v4, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0030: move-result-object        v4
+0032: return-object             v4
+0034: return-object             v0
+
+
+## Lcom/mywickr/config/WickrConfig;->loadConfig(Ljava/lang/String; Z)Z [classes4.dex]
+0000: const-string              v0, "networkBanner"
+0004: const-string              v1, "readReceiptConfig"
+0008: const-string              v2, "clientMetricsConfig"
+000c: const-string              v3, "shredder"
+0010: const-string              v4, "passwordRequirements"
+0014: const-string              v5, "CALLING"
+0018: const/4                   v6, 0
+001a: if-nez                    v13, +00ah
+001e: const-string              v12, "Unable to load null network configuration"
+0022: new-array                 v13, v6, [Ljava/lang/Object;
+0026: invoke-static             v12, v13, Ltimber/log/Timber;->e(Ljava/lang/String; [Ljava/lang/Object;)V
+002c: return                    v6
+002e: const-string              v7, "Loading new network configuration. forced: %b"
+0032: invoke-static             v14, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+0038: move-result-object        v8
+003a: filled-new-array          v8, [Ljava/lang/Object;
+0040: move-result-object        v8
+0042: invoke-static             v7, v8, Ltimber/log/Timber;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+0048: new-instance              v7, Lorg/json/JSONObject;
+004c: invoke-direct             v7, v13, Lorg/json/JSONObject;-><init>(Ljava/lang/String;)V
+0052: const-string              v8, "Loading network config: %s"
+0056: filled-new-array          v13, [Ljava/lang/Object;
+005c: move-result-object        v13
+005e: invoke-static             v8, v13, Ltimber/log/Timber;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+0064: const-string              v13, "Current config before load: %s"
+0068: invoke-virtual            v12, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+006e: move-result-object        v8
+0070: filled-new-array          v8, [Ljava/lang/Object;
+0076: move-result-object        v8
+0078: invoke-static             v13, v8, Ltimber/log/Timber;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+007e: invoke-virtual            v7, v5, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+0084: move-result               v13
+0086: if-eqz                    v13, +020h
+008a: invoke-virtual            v7, v5, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+0090: move-result-object        v13
+0092: invoke-static             Lcom/mywickr/config/WickrConfig$CallingField;->values()[Lcom/mywickr/config/WickrConfig$CallingField;
+0098: move-result-object        v5
+009a: array-length              v8, v5
+009c: move                      v9, v6
+009e: if-ge                     v9, v8, +014h
+00a2: aget-object               v10, v5, v9
+00a6: iget-object               v11, v10, Lcom/mywickr/config/WickrConfig$CallingField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+00aa: invoke-interface          v11, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+00b0: move-result               v11
+00b2: if-nez                    v11, +004h
+00b6: if-eqz                    v14, +005h
+00ba: invoke-direct             v12, v13, v10, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$CallingField;)V
+00c0: add-int/lit8              v9, v9, 1
+00c4: goto                      -13h
+00c6: invoke-virtual            v7, v4, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+00cc: move-result               v13
+00ce: if-eqz                    v13, +020h
+00d2: invoke-virtual            v7, v4, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+00d8: move-result-object        v13
+00da: invoke-static             Lcom/mywickr/config/WickrConfig$PasswordField;->values()[Lcom/mywickr/config/WickrConfig$PasswordField;
+00e0: move-result-object        v4
+00e2: array-length              v5, v4
+00e4: move                      v8, v6
+00e6: if-ge                     v8, v5, +014h
+00ea: aget-object               v9, v4, v8
+00ee: iget-object               v10, v9, Lcom/mywickr/config/WickrConfig$PasswordField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+00f2: invoke-interface          v10, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+00f8: move-result               v10
+00fa: if-nez                    v10, +004h
+00fe: if-eqz                    v14, +005h
+0102: invoke-direct             v12, v13, v9, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$PasswordField;)V
+0108: add-int/lit8              v8, v8, 1
+010c: goto                      -13h
+010e: invoke-virtual            v7, v3, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+0114: move-result               v13
+0116: if-eqz                    v13, +020h
+011a: invoke-virtual            v7, v3, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+0120: move-result-object        v13
+0122: invoke-static             Lcom/mywickr/config/WickrConfig$ShredderField;->values()[Lcom/mywickr/config/WickrConfig$ShredderField;
+0128: move-result-object        v3
+012a: array-length              v4, v3
+012c: move                      v5, v6
+012e: if-ge                     v5, v4, +014h
+0132: aget-object               v8, v3, v5
+0136: iget-object               v9, v8, Lcom/mywickr/config/WickrConfig$ShredderField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+013a: invoke-interface          v9, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+0140: move-result               v9
+0142: if-nez                    v9, +004h
+0146: if-eqz                    v14, +005h
+014a: invoke-direct             v12, v13, v8, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$ShredderField;)V
+0150: add-int/lit8              v5, v5, 1
+0154: goto                      -13h
+0156: invoke-virtual            v7, v2, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+015c: move-result               v13
+015e: if-eqz                    v13, +020h
+0162: invoke-virtual            v7, v2, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+0168: move-result-object        v13
+016a: invoke-static             Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->values()[Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;
+0170: move-result-object        v2
+0172: array-length              v3, v2
+0174: move                      v4, v6
+0176: if-ge                     v4, v3, +014h
+017a: aget-object               v5, v2, v4
+017e: iget-object               v8, v5, Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+0182: invoke-interface          v8, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+0188: move-result               v8
+018a: if-nez                    v8, +004h
+018e: if-eqz                    v14, +005h
+0192: invoke-direct             v12, v13, v5, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$ClientMetricsConfigField;)V
+0198: add-int/lit8              v4, v4, 1
+019c: goto                      -13h
+019e: invoke-virtual            v7, v1, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+01a4: move-result               v13
+01a6: if-eqz                    v13, +020h
+01aa: invoke-virtual            v7, v1, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+01b0: move-result-object        v13
+01b2: invoke-static             Lcom/mywickr/config/WickrConfig$ReadReceiptField;->values()[Lcom/mywickr/config/WickrConfig$ReadReceiptField;
+01b8: move-result-object        v1
+01ba: array-length              v2, v1
+01bc: move                      v3, v6
+01be: if-ge                     v3, v2, +014h
+01c2: aget-object               v4, v1, v3
+01c6: iget-object               v5, v4, Lcom/mywickr/config/WickrConfig$ReadReceiptField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+01ca: invoke-interface          v5, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+01d0: move-result               v5
+01d2: if-nez                    v5, +004h
+01d6: if-eqz                    v14, +005h
+01da: invoke-direct             v12, v13, v4, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$ReadReceiptField;)V
+01e0: add-int/lit8              v3, v3, 1
+01e4: goto                      -13h
+01e6: invoke-virtual            v7, v0, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+01ec: move-result               v13
+01ee: if-eqz                    v13, +020h
+01f2: invoke-virtual            v7, v0, Lorg/json/JSONObject;->getJSONObject(Ljava/lang/String;)Lorg/json/JSONObject;
+01f8: move-result-object        v13
+01fa: invoke-static             Lcom/mywickr/config/WickrConfig$SystemBannerField;->values()[Lcom/mywickr/config/WickrConfig$SystemBannerField;
+0200: move-result-object        v0
+0202: array-length              v1, v0
+0204: move                      v2, v6
+0206: if-ge                     v2, v1, +014h
+020a: aget-object               v3, v0, v2
+020e: iget-object               v4, v3, Lcom/mywickr/config/WickrConfig$SystemBannerField;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+0212: invoke-interface          v4, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+0218: move-result               v4
+021a: if-nez                    v4, +004h
+021e: if-eqz                    v14, +005h
+0222: invoke-direct             v12, v13, v3, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$SystemBannerField;)V
+0228: add-int/lit8              v2, v2, 1
+022c: goto                      -13h
+022e: invoke-static             Lcom/mywickr/config/WickrConfig$Field;->values()[Lcom/mywickr/config/WickrConfig$Field;
+0234: move-result-object        v13
+0236: array-length              v0, v13
+0238: move                      v1, v6
+023a: if-ge                     v1, v0, +014h
+023e: aget-object               v2, v13, v1
+0242: iget-object               v3, v2, Lcom/mywickr/config/WickrConfig$Field;->updateFromServerFunc Ljava/util/function/BooleanSupplier;
+0246: invoke-interface          v3, Ljava/util/function/BooleanSupplier;->getAsBoolean()Z
+024c: move-result               v3
+024e: if-nez                    v3, +004h
+0252: if-eqz                    v14, +005h
+0256: invoke-direct             v12, v7, v2, Lcom/mywickr/config/WickrConfig;->putValueForField(Lorg/json/JSONObject; Lcom/mywickr/config/WickrConfig$Field;)V
+025c: add-int/lit8              v1, v1, 1
+0260: goto                      -13h
+0262: invoke-virtual            v12, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+0268: move-result-object        v13
+026a: const-string              v14, "Current config after loading: %s"
+026e: filled-new-array          v13, [Ljava/lang/Object;
+0274: move-result-object        v0
+0276: invoke-static             v14, v0, Ltimber/log/Timber;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+027c: new-instance              v14, Lcom/mywickr/config/WickrConfig$Event;
+0280: const/4                   v0, 1
+0282: invoke-direct             v14, v0, v13, Lcom/mywickr/config/WickrConfig$Event;-><init>(Z Ljava/lang/String;)V
+0288: invoke-static             v14, Lcom/mywickr/WickrCore;->postEvent(Ljava/lang/Object;)V
+028e: return                    v0
+0290: move-exception            v13
+0292: invoke-static             v13, Ltimber/log/Timber;->e(Ljava/lang/Throwable;)V
+0298: new-instance              v13, Lcom/mywickr/config/WickrConfig$Event;
+029c: invoke-virtual            v12, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+02a2: move-result-object        v12
+02a4: invoke-direct             v13, v6, v12, Lcom/mywickr/config/WickrConfig$Event;-><init>(Z Ljava/lang/String;)V
+02aa: invoke-static             v13, Lcom/mywickr/WickrCore;->postEvent(Ljava/lang/Object;)V
+02b0: return                    v6
+
+
+## Lcom/mywickr/config/WickrConfig;->setConfigValue(Lcom/mywickr/config/WickrConfig$Field; Ljava/lang/Object;)V [classes4.dex]
+0000: const/4                   v0, 1
+0002: invoke-direct             v1, v2, v3, v0, Lcom/mywickr/config/WickrConfig;->setConfigValue(Lcom/mywickr/config/WickrConfig$Field; Ljava/lang/Object; Z)V
+0008: return-void               
+
+
+## Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->mapOfStringAndFilePreviewDestinationProvider()Ljava/util/Map; [classes4.dex]
+0000: invoke-static             Lcom/google/common/collect/ImmutableMap;->builder()Lcom/google/common/collect/ImmutableMap$Builder;
+0006: move-result-object        v0
+0008: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+000c: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsPDFPreviewFragmentDestinationToPDFMimeTypeFactory;->bindsPDFPreviewFragmentDestinationToPDFMimeType(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+0012: move-result-object        v1
+0014: const-string              v2, "application/pdf"
+0018: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+001e: move-result-object        v0
+0020: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+0024: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsImagePreviewFragmentDestinationToPNGMimeTypeFactory;->bindsImagePreviewFragmentDestinationToPNGMimeType(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+002a: move-result-object        v1
+002c: const-string              v2, "image/png"
+0030: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+0036: move-result-object        v0
+0038: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+003c: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsImagePreviewFragmentDestinationToJPGMimeTypeFactory;->bindsImagePreviewFragmentDestinationToJPGMimeType(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+0042: move-result-object        v1
+0044: const-string              v2, "image/jpeg"
+0048: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+004e: move-result-object        v0
+0050: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+0054: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsGIFPreviewFragmentDestinationToGIFMimeTypeFactory;->bindsGIFPreviewFragmentDestinationToGIFMimeType(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+005a: move-result-object        v1
+005c: const-string              v2, "image/gif"
+0060: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+0066: move-result-object        v0
+0068: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+006c: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsDOCXMimeTypeToFileWebPreviewFragmentFactory;->bindsDOCXMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+0072: move-result-object        v1
+0074: const-string              v2, "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+0078: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+007e: move-result-object        v0
+0080: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+0084: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsPPTXMimeTypeToFileWebPreviewFragmentFactory;->bindsPPTXMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+008a: move-result-object        v1
+008c: const-string              v2, "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+0090: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+0096: move-result-object        v0
+0098: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+009c: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsXLSXMimeTypeToFileWebPreviewFragmentFactory;->bindsXLSXMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+00a2: move-result-object        v1
+00a4: const-string              v2, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+00a8: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+00ae: move-result-object        v0
+00b0: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+00b4: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsCSVMimeTypeToFileWebPreviewFragmentFactory;->bindsCSVMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+00ba: move-result-object        v1
+00bc: const-string              v2, "text/comma-separated-values"
+00c0: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+00c6: move-result-object        v0
+00c8: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+00cc: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsCSVShortMimeTypeToFileWebPreviewFragmentFactory;->bindsCSVShortMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+00d2: move-result-object        v1
+00d4: const-string              v2, "text/csv"
+00d8: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+00de: move-result-object        v0
+00e0: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+00e4: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsPlainTextMimeTypeToFileWebPreviewFragmentFactory;->bindsPlainTextMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+00ea: move-result-object        v1
+00ec: const-string              v2, "text/plain"
+00f0: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+00f6: move-result-object        v0
+00f8: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+00fc: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsRTFMimeTypeToFileWebPreviewFragmentFactory;->bindsRTFMimeTypeToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+0102: move-result-object        v1
+0104: const-string              v2, "text/rtf"
+0108: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+010e: move-result-object        v0
+0110: iget-object               v1, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+0114: invoke-static             v1, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsApplicationXMLToFileWebPreviewFragmentFactory;->bindsApplicationXMLToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+011a: move-result-object        v1
+011c: const-string              v2, "application/xml"
+0120: invoke-virtual            v0, v2, v1, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+0126: move-result-object        v0
+0128: iget-object               v3, v3, Lcom/wickr/enterprise/DaggerApp_HiltComponents_SingletonC$SingletonCImpl;->filePreviewModule Lcom/wickr/enterprise/di/modules/FilePreviewModule;
+012c: invoke-static             v3, Lcom/wickr/enterprise/di/modules/FilePreviewModule_BindsTextXMLToFileWebPreviewFragmentFactory;->bindsTextXMLToFileWebPreviewFragment(Lcom/wickr/enterprise/di/modules/FilePreviewModule;)Lcom/wickr/enterprise/files/FilePreviewDestinationProvider;
+0132: move-result-object        v3
+0134: const-string              v1, "text/xml"
+0138: invoke-virtual            v0, v1, v3, Lcom/google/common/collect/ImmutableMap$Builder;->put(Ljava/lang/Object; Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+013e: move-result-object        v3
+0140: invoke-virtual            v3, Lcom/google/common/collect/ImmutableMap$Builder;->build()Lcom/google/common/collect/ImmutableMap;
+0146: move-result-object        v3
+0148: return-object             v3
+
+
+## Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment;->showFileOptionSelectDialog(Landroid/view/View; Lcom/wickr/files/FileVaultDirectory$Node$File; Z Z Z)V [classes4.dex]
+0000: const-string              v0, "anchor"
+0004: invoke-static             v4, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: const-string              v0, "fileNode"
+000e: invoke-static             v5, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+0014: new-instance              v0, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+0018: invoke-direct             v0, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;-><init>()V
+001e: if-eqz                    v7, +010h
+0022: new-instance              v7, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda9;
+0026: invoke-direct             v7, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda9;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+002c: const                     v1, 2131231635
+0032: const                     v2, 2131953854
+0038: invoke-virtual            v0, v1, v2, v7, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+003e: if-eqz                    v8, +010h
+0042: new-instance              v7, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda10;
+0046: invoke-direct             v7, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda10;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+004c: const                     v8, 2131231676
+0052: const                     v1, 2131953857
+0058: invoke-virtual            v0, v8, v1, v7, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+005e: if-eqz                    v6, +010h
+0062: new-instance              v7, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda12;
+0066: invoke-direct             v7, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda12;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+006c: const                     v8, 2131231587
+0072: const                     v1, 2131953853
+0078: invoke-virtual            v0, v8, v1, v7, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+007e: new-instance              v7, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda13;
+0082: invoke-direct             v7, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda13;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+0088: const                     v8, 2131230979
+008e: const                     v1, 2131953850
+0094: invoke-virtual            v0, v8, v1, v7, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+009a: invoke-virtual            v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment;->getFilePreviewRepository()Lcom/wickr/enterprise/files/FilePreviewRepository;
+00a0: move-result-object        v7
+00a2: invoke-virtual            v7, Lcom/wickr/enterprise/files/FilePreviewRepository;->isFilePreviewEnabled()Z
+00a8: move-result               v7
+00aa: if-nez                    v7, +010h
+00ae: new-instance              v7, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda14;
+00b2: invoke-direct             v7, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda14;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+00b8: const                     v8, 2131231682
+00be: const                     v1, 2131953858
+00c4: invoke-virtual            v0, v8, v1, v7, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+00ca: if-eqz                    v6, +010h
+00ce: new-instance              v6, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda15;
+00d2: invoke-direct             v6, v3, v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda15;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment; Lcom/wickr/files/FileVaultDirectory$Node$File;)V
+00d8: const                     v5, 2131231674
+00de: const                     v7, 2131953856
+00e4: invoke-virtual            v0, v5, v7, v6, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->addSimpleCriticalOption(I I Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+00ea: new-instance              v5, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda16;
+00ee: invoke-direct             v5, v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment$$ExternalSyntheticLambda16;-><init>(Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment;)V
+00f4: invoke-virtual            v0, v5, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->setDismissListener(Lkotlin/jvm/functions/Function0;)Lcom/wickr/enterprise/dialog/SmartDialog;
+00fa: invoke-virtual            v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment;->requireContext()Landroid/content/Context;
+0100: move-result-object        v5
+0102: const-string              v6, "requireContext(...)"
+0106: invoke-static             v5, v6, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object; Ljava/lang/String;)V
+010c: const/4                   v6, 1
+010e: invoke-virtual            v0, v5, v4, v6, Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;->show(Landroid/content/Context; Landroid/view/View; Z)Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;
+0114: move-result-object        v4
+0116: invoke-virtual            v3, v4, Lcom/wickr/enterprise/chat/rooms/FileDirectoryFragment;->setSmartOptionDialog(Lcom/wickr/enterprise/dialog/SmartOptionDialogBuilder;)V
+011c: return-void               
+
+
+## Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->isOpenFilePossible(Lcom/wickr/files/FileVaultDirectory$Node$File;)Z [classes4.dex]
+0000: new-instance              v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0004: invoke-virtual            v3, Lcom/wickr/files/FileVaultDirectory$Node$File;->getFile()Lcom/wickr/proto/MessageProto$MessageBody$File;
+000a: move-result-object        v3
+000c: invoke-virtual            v3, Lcom/wickr/proto/MessageProto$MessageBody$File;->getFileMetadata()Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;
+0012: move-result-object        v3
+0014: const-string              v1, "getFileMetadata(...)"
+0018: invoke-static             v3, v1, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object; Ljava/lang/String;)V
+001e: invoke-direct             v0, v3, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;-><init>(Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;)V
+0024: iget-object               v3, v2, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->filePreviewRepository Lcom/wickr/enterprise/files/FilePreviewRepository;
+0028: invoke-virtual            v3, Lcom/wickr/enterprise/files/FilePreviewRepository;->isFilePreviewEnabled()Z
+002e: move-result               v3
+0030: if-eqz                    v3, +00eh
+0034: iget-object               v3, v2, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->filePreviewRepository Lcom/wickr/enterprise/files/FilePreviewRepository;
+0038: invoke-virtual            v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;->getMimeType()Ljava/lang/String;
+003e: move-result-object        v1
+0040: invoke-virtual            v3, v1, Lcom/wickr/enterprise/files/FilePreviewRepository;->isMimeTypeSupported(Ljava/lang/String;)Z
+0046: move-result               v3
+0048: if-nez                    v3, +00ch
+004c: iget-object               v3, v2, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->fileManager Lcom/wickr/files/FileManager;
+0050: iget-object               v2, v2, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->context Landroid/content/Context;
+0054: invoke-static             v3, v2, v0, Lcom/wickr/enterprise/util/FileExtensionsKt;->isOpeningFileExternallyPossible(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData;)Z
+005a: move-result               v2
+005c: if-eqz                    v2, +004h
+0060: const/4                   v2, 1
+0062: return                    v2
+0064: const/4                   v2, 0
+0066: return                    v2
+
+
+## Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->viewFile(Lcom/wickr/files/FileVaultDirectory$Node$File;)V [classes4.dex]
+0000: const-string              v0, "fileNode"
+0004: invoke-static             v4, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: iget-object               v0, v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->fileManager Lcom/wickr/files/FileManager;
+000e: invoke-virtual            v4, Lcom/wickr/files/FileVaultDirectory$Node$File;->getFile()Lcom/wickr/proto/MessageProto$MessageBody$File;
+0014: move-result-object        v1
+0016: invoke-virtual            v1, Lcom/wickr/proto/MessageProto$MessageBody$File;->getFileMetadata()Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;
+001c: move-result-object        v1
+001e: invoke-virtual            v1, Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;->getGuid()Ljava/lang/String;
+0024: move-result-object        v1
+0026: const-string              v2, "getGuid(...)"
+002a: invoke-static             v1, v2, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object; Ljava/lang/String;)V
+0030: invoke-virtual            v0, v1, Lcom/wickr/files/FileManager;->getFileState(Ljava/lang/String;)Lcom/wickr/files/FileState;
+0036: move-result-object        v0
+0038: new-instance              v1, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+003c: invoke-virtual            v4, Lcom/wickr/files/FileVaultDirectory$Node$File;->getFile()Lcom/wickr/proto/MessageProto$MessageBody$File;
+0042: move-result-object        v4
+0044: invoke-virtual            v4, Lcom/wickr/proto/MessageProto$MessageBody$File;->getFileMetadata()Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;
+004a: move-result-object        v4
+004c: const-string              v2, "getFileMetadata(...)"
+0050: invoke-static             v4, v2, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object; Ljava/lang/String;)V
+0056: invoke-direct             v1, v4, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;-><init>(Lcom/wickr/proto/MessageProto$MessageBody$File$Metadata;)V
+005c: iget-object               v4, v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->fileManager Lcom/wickr/files/FileManager;
+0060: iget-object               v3, v3, Lcom/wickr/enterprise/chat/rooms/FileDirectoryPresenter;->context Landroid/content/Context;
+0064: invoke-static             v4, v0, v1, v3, Lcom/wickr/enterprise/util/FileExtensionsKt;->viewFile(Lcom/wickr/files/FileManager; Lcom/wickr/files/FileState; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Landroid/content/Context;)V
+006a: return-void               
+
+
+## Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->bindClickListeners$lambda$0(Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter; Lcom/wickr/enterprise/chat/rooms/SavedFileViewHolder; Landroid/view/View;)V [classes4.dex]
+0000: iget-object               v15, v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->savedItemsAdapter Lcom/wickr/enterprise/chat/rooms/SavedItemsAdapter;
+0004: invoke-virtual            v15, Lcom/wickr/enterprise/chat/rooms/SavedItemsAdapter;->getDeleteMode()Z
+000a: move-result               v15
+000c: if-nez                    v15, +0aah
+0010: iget-object               v15, v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->savedItemsAdapter Lcom/wickr/enterprise/chat/rooms/SavedItemsAdapter;
+0014: invoke-virtual            v15, Lcom/wickr/enterprise/chat/rooms/SavedItemsAdapter;->getData()Ljava/util/ArrayList;
+001a: move-result-object        v15
+001c: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileViewHolder;->getAdapterPosition()I
+0022: move-result               v14
+0024: invoke-virtual            v15, v14, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+002a: move-result-object        v14
+002c: const-string              v15, "null cannot be cast to non-null type com.wickr.enterprise.chat.rooms.SavedFileModel"
+0030: invoke-static             v14, v15, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object; Ljava/lang/String;)V
+0036: check-cast                v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;
+003a: invoke-virtual            v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+0040: move-result-object        v15
+0042: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0048: move-result-object        v0
+004a: invoke-virtual            v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;->getGuid()Ljava/lang/String;
+0050: move-result-object        v0
+0052: invoke-virtual            v15, v0, Lcom/wickr/files/FileManager;->getFileState(Ljava/lang/String;)Lcom/wickr/files/FileState;
+0058: move-result-object        v15
+005a: sget-object               v0, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter$WhenMappings;->$EnumSwitchMapping$0 [I
+005e: invoke-virtual            v15, Lcom/wickr/files/FileState;->ordinal()I
+0064: move-result               v1
+0066: aget                      v0, v0, v1
+006a: const/4                   v1, 1
+006c: if-eq                     v0, v1, +065h
+0070: const/4                   v1, 2
+0072: if-eq                     v0, v1, +053h
+0076: const/4                   v1, 3
+0078: if-eq                     v0, v1, +048h
+007c: const/4                   v1, 4
+007e: if-eq                     v0, v1, +030h
+0082: const/4                   v1, 5
+0084: if-eq                     v0, v1, +01eh
+0088: sget-object               v13, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+008c: invoke-virtual            v15, Lcom/wickr/files/FileState;->name()Ljava/lang/String;
+0092: move-result-object        v14
+0094: new-instance              v15, Ljava/lang/StringBuilder;
+0098: const-string              v0, "Ignoring state: "
+009c: invoke-direct             v15, v0, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+00a2: invoke-virtual            v15, v14, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+00a8: move-result-object        v14
+00aa: invoke-virtual            v14, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+00b0: move-result-object        v14
+00b2: const/4                   v15, 0
+00b4: new-array                 v15, v15, [Ljava/lang/Object;
+00b8: invoke-virtual            v13, v14, v15, Ltimber/log/Timber$Forest;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+00be: return-void               
+00c0: move-object               v0, v13
+00c2: check-cast                v0, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+00c6: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+00cc: move-result-object        v1
+00ce: const/4                   v4, 4
+00d0: const/4                   v5, 0
+00d2: const/4                   v2, 1
+00d4: const/4                   v3, 0
+00d6: invoke-static/range       v0 ... v5, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->startFileDecryption$default(Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+00dc: return-void               
+00de: invoke-virtual            v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+00e4: move-result-object        v6
+00e6: invoke-virtual            v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->getContext()Landroid/content/Context;
+00ec: move-result-object        v7
+00ee: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+00f4: move-result-object        v8
+00f6: const/16                  v11, 8
+00fa: const/4                   v12, 0
+00fc: const/4                   v9, 1
+00fe: const/4                   v10, 0
+0100: invoke-static/range       v6 ... v12, Lcom/wickr/enterprise/util/FileExtensionsKt;->downloadAttachment$default(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+0106: return-void               
+0108: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+010e: move-result-object        v14
+0110: invoke-virtual            v13, v14, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->openFile(Lcom/wickr/enterprise/messages/model/AttachmentMetaData;)V
+0116: return-void               
+0118: move-object               v0, v13
+011a: check-cast                v0, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;
+011e: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+0124: move-result-object        v1
+0126: const/4                   v4, 4
+0128: const/4                   v5, 0
+012a: const/4                   v2, 1
+012c: const/4                   v3, 0
+012e: invoke-static/range       v0 ... v5, Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter;->startFileDecryption$default(Lcom/wickr/enterprise/messages/adapter/delegates/BaseAttachmentAdapter; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+0134: return-void               
+0136: invoke-virtual            v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->getFileManager()Lcom/wickr/files/FileManager;
+013c: move-result-object        v6
+013e: invoke-virtual            v13, Lcom/wickr/enterprise/chat/rooms/SavedFileAdapter;->getContext()Landroid/content/Context;
+0144: move-result-object        v7
+0146: invoke-virtual            v14, Lcom/wickr/enterprise/chat/rooms/SavedFileModel;->getMetaData()Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+014c: move-result-object        v8
+014e: const/16                  v11, 8
+0152: const/4                   v12, 0
+0154: const/4                   v9, 0
+0156: const/4                   v10, 0
+0158: invoke-static/range       v6 ... v12, Lcom/wickr/enterprise/util/FileExtensionsKt;->downloadAttachment$default(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData; Z Z I Ljava/lang/Object;)V
+015e: return-void               
+0160: iget-object               v13, v14, Lcom/wickr/enterprise/chat/rooms/SavedFileViewHolder;->itemView Landroid/view/View;
+0164: invoke-virtual            v13, Landroid/view/View;->performClick()Z
+016a: return-void               
+
+
+## Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->accept(Lcom/wickr/files/FileDecryptionResult;)V [classes5.dex]
+0000: const-string              v0, "result"
+0004: invoke-static             v2, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: invoke-virtual            v2, Lcom/wickr/files/FileDecryptionResult;->getSuccess()Z
+0010: move-result               v2
+0012: if-nez                    v2, +014h
+0016: iget-object               v2, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$this_startFileDecryption Lcom/wickr/files/FileManager;
+001a: iget-object               v0, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$metaData Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+001e: invoke-virtual            v0, Lcom/wickr/enterprise/messages/model/AttachmentMetaData;->getGuid()Ljava/lang/String;
+0024: move-result-object        v0
+0026: invoke-virtual            v2, v0, Lcom/wickr/files/FileManager;->getFileState(Ljava/lang/String;)Lcom/wickr/files/FileState;
+002c: move-result-object        v2
+002e: sget-object               v0, Lcom/wickr/files/FileState;->Decrypted Lcom/wickr/files/FileState;
+0032: if-ne                     v2, v0, +003h
+0036: goto                      +2h
+0038: return-void               
+003a: iget-boolean              v2, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$openAfterDecrypting Z
+003e: if-eqz                    v2, +00bh
+0042: iget-object               v2, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$this_startFileDecryption Lcom/wickr/files/FileManager;
+0046: iget-object               v0, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$context Landroid/content/Context;
+004a: iget-object               v1, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->$metaData Lcom/wickr/enterprise/messages/model/AttachmentMetaData;
+004e: invoke-static             v2, v0, v1, Lcom/wickr/enterprise/util/FileExtensionsKt;->openFile(Lcom/wickr/files/FileManager; Landroid/content/Context; Lcom/wickr/enterprise/messages/model/AttachmentMetaData;)V
+0054: return-void               
+
+
+## Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->accept(Ljava/lang/Object;)V [classes5.dex]
+0000: check-cast                v1, Lcom/wickr/files/FileDecryptionResult;
+0004: invoke-virtual            v0, v1, Lcom/wickr/enterprise/util/FileExtensionsKt$startFileDecryption$observable$2;->accept(Lcom/wickr/files/FileDecryptionResult;)V
+000a: return-void               
+
+
+## Lcom/wickr/session/WickrSessionManager;->performPostLoginInitialization(Lcom/wickr/session/Session;)Z [classes6.dex]
+0000: sget-object               v0, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+0004: const/4                   v1, 0
+0006: new-array                 v2, v1, [Ljava/lang/Object;
+000a: const-string              v3, "Performing post-login initialization"
+000e: invoke-virtual            v0, v3, v2, Ltimber/log/Timber$Forest;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+0014: invoke-direct             v11, Lcom/wickr/session/WickrSessionManager;->clearLogoutReason()V
+001a: sget-object               v0, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+001e: const-string              v2, "Caching session using keystore and legacy method"
+0022: new-array                 v3, v1, [Ljava/lang/Object;
+0026: invoke-virtual            v0, v2, v3, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+002c: invoke-direct             v11, Lcom/wickr/session/WickrSessionManager;->cacheSession()Z
+0032: move-result               v0
+0034: if-eqz                    v0, +11bh
+0038: invoke-direct             v11, Lcom/wickr/session/WickrSessionManager;->cacheSessionUsingKeystore()Z
+003e: move-result               v0
+0040: if-eqz                    v0, +115h
+0044: sget-object               v0, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+0048: const-string              v2, "Clearing old cached password files"
+004c: new-array                 v3, v1, [Ljava/lang/Object;
+0050: invoke-virtual            v0, v2, v3, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+0056: iget-object               v0, v11, Lcom/wickr/session/WickrSessionManager;->context Landroid/app/Application;
+005a: check-cast                v0, Landroid/content/Context;
+005e: invoke-static             v0, Lcom/mywickr/wickr/WickrFileCache;->clearCachedPassword(Landroid/content/Context;)Z
+0064: invoke-static             Lcom/mywickr/wickr/WickrUser;->doesSelfUserExist()Z
+006a: move-result               v0
+006c: if-nez                    v0, +015h
+0070: invoke-static             Lcom/mywickr/wickr/WickrUser;->generateSelfUser()Lcom/mywickr/wickr/WickrUser;
+0076: move-result-object        v0
+0078: sget-object               v2, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+007c: const-string              v3, "Saving self user"
+0080: new-array                 v4, v1, [Ljava/lang/Object;
+0084: invoke-virtual            v2, v3, v4, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+008a: invoke-virtual            v0, Lcom/mywickr/wickr/WickrUser;->changeMade()V
+0090: invoke-virtual            v0, Lcom/mywickr/wickr/WickrUser;->save()Z
+0096: iget-object               v0, v11, Lcom/wickr/session/WickrSessionManager;->context Landroid/app/Application;
+009a: check-cast                v0, Landroid/content/Context;
+009e: invoke-static             v0, Lcom/mywickr/helpers/SharedPreferencesHelper;->getDefaultSharedPreferences(Landroid/content/Context;)Landroid/content/SharedPreferences;
+00a4: move-result-object        v0
+00a6: const-string              v2, "accountUsername"
+00aa: const/4                   v3, 0
+00ac: invoke-interface          v0, v2, v3, Landroid/content/SharedPreferences;->getString(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;
+00b2: move-result-object        v4
+00b4: check-cast                v4, Ljava/lang/CharSequence;
+00b8: if-eqz                    v4, +008h
+00bc: invoke-interface          v4, Ljava/lang/CharSequence;->length()I
+00c2: move-result               v4
+00c4: if-nez                    v4, +011h
+00c8: invoke-interface          v0, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+00ce: move-result-object        v0
+00d0: invoke-interface          v12, Lcom/wickr/session/Session;->getUsername()Ljava/lang/String;
+00d6: move-result-object        v4
+00d8: invoke-interface          v0, v2, v4, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String; Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+00de: move-result-object        v0
+00e0: invoke-interface          v0, Landroid/content/SharedPreferences$Editor;->apply()V
+00e6: sget-object               v0, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+00ea: invoke-interface          v12, Lcom/wickr/session/Session;->getSettings()Lcom/mywickr/wickr/WickrSettings;
+00f0: move-result-object        v2
+00f2: invoke-virtual            v2, Lcom/mywickr/wickr/WickrSettings;->getAppConfiguration()Ljava/lang/String;
+00f8: move-result-object        v2
+00fa: const/4                   v4, 1
+00fc: invoke-virtual            v0, v2, v4, Lcom/mywickr/config/WickrConfig;->loadConfig(Ljava/lang/String; Z)Z
+0102: new-instance              v0, Lcom/wickr/session/MessageCleanupService;
+0106: invoke-interface          v12, Lcom/wickr/session/Session;->getConvoRepository()Lcom/mywickr/repository/ConvoRepository;
+010c: move-result-object        v2
+010e: invoke-direct             v0, v2, Lcom/wickr/session/MessageCleanupService;-><init>(Lcom/mywickr/repository/ConvoRepository;)V
+0114: invoke-virtual            v11, Lcom/wickr/session/WickrSessionManager;->isBackground()Z
+011a: move-result               v2
+011c: invoke-virtual            v0, v2, Lcom/wickr/session/MessageCleanupService;->setBackground(Z)V
+0122: invoke-virtual            v0, Lcom/wickr/session/MessageCleanupService;->start()V
+0128: iput-object               v0, v11, Lcom/wickr/session/WickrSessionManager;->messageCleanupService Lcom/wickr/session/MessageCleanupService;
+012c: invoke-virtual            v11, Lcom/wickr/session/WickrSessionManager;->isBackground()Z
+0132: move-result               v0
+0134: if-nez                    v0, +00fh
+0138: sget-object               v0, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+013c: invoke-virtual            v0, Lcom/mywickr/config/WickrConfig;->isShredderBackgroundEnabled()Z
+0142: move-result               v0
+0144: if-eqz                    v0, +007h
+0148: iget-object               v0, v11, Lcom/wickr/session/WickrSessionManager;->fileShredderService Lcom/wickr/files/FileShredderService;
+014c: invoke-virtual            v0, Lcom/wickr/files/FileShredderService;->startBackgroundShredder()V
+0152: invoke-interface          v12, Lcom/wickr/session/Session;->onLogin()V
+0158: iget-object               v0, v11, Lcom/wickr/session/WickrSessionManager;->ioDispatcher Lkotlinx/coroutines/CoroutineDispatcher;
+015c: check-cast                v0, Lkotlin/coroutines/CoroutineContext;
+0160: invoke-static             v0, Lkotlinx/coroutines/CoroutineScopeKt;->CoroutineScope(Lkotlin/coroutines/CoroutineContext;)Lkotlinx/coroutines/CoroutineScope;
+0166: move-result-object        v5
+0168: new-instance              v0, Lcom/wickr/session/WickrSessionManager$performPostLoginInitialization$3;
+016c: invoke-direct             v0, v11, v3, Lcom/wickr/session/WickrSessionManager$performPostLoginInitialization$3;-><init>(Lcom/wickr/session/WickrSessionManager; Lkotlin/coroutines/Continuation;)V
+0172: move-object               v8, v0
+0174: check-cast                v8, Lkotlin/jvm/functions/Function2;
+0178: const/4                   v9, 3
+017a: const/4                   v10, 0
+017c: const/4                   v6, 0
+017e: const/4                   v7, 0
+0180: invoke-static/range       v5 ... v10, Lkotlinx/coroutines/BuildersKt;->launch$default(Lkotlinx/coroutines/CoroutineScope; Lkotlin/coroutines/CoroutineContext; Lkotlinx/coroutines/CoroutineStart; Lkotlin/jvm/functions/Function2; I Ljava/lang/Object;)Lkotlinx/coroutines/Job;
+0186: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+018a: const-string              v0, "Session login completed"
+018e: new-array                 v2, v1, [Ljava/lang/Object;
+0192: invoke-virtual            v11, v0, v2, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+0198: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+019c: invoke-interface          v12, Lcom/wickr/session/Session;->getUsernameHash()Ljava/lang/String;
+01a2: move-result-object        v0
+01a4: new-instance              v2, Ljava/lang/StringBuilder;
+01a8: const-string              v3, "UserID: "
+01ac: invoke-direct             v2, v3, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+01b2: invoke-virtual            v2, v0, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+01b8: move-result-object        v0
+01ba: invoke-virtual            v0, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+01c0: move-result-object        v0
+01c2: new-array                 v2, v1, [Ljava/lang/Object;
+01c6: invoke-virtual            v11, v0, v2, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+01cc: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+01d0: invoke-interface          v12, Lcom/wickr/session/Session;->getAppID()Ljava/lang/String;
+01d6: move-result-object        v0
+01d8: new-instance              v2, Ljava/lang/StringBuilder;
+01dc: const-string              v3, "AppID: "
+01e0: invoke-direct             v2, v3, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+01e6: invoke-virtual            v2, v0, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+01ec: move-result-object        v0
+01ee: invoke-virtual            v0, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+01f4: move-result-object        v0
+01f6: new-array                 v2, v1, [Ljava/lang/Object;
+01fa: invoke-virtual            v11, v0, v2, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+0200: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+0204: invoke-interface          v12, Lcom/wickr/session/Session;->getSessionID()J
+020a: move-result-wide          v2
+020c: new-instance              v0, Ljava/lang/StringBuilder;
+0210: const-string              v5, "SessionID: "
+0214: invoke-direct             v0, v5, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+021a: invoke-virtual            v0, v2, v3, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+0220: move-result-object        v0
+0222: invoke-virtual            v0, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+0228: move-result-object        v0
+022a: new-array                 v2, v1, [Ljava/lang/Object;
+022e: invoke-virtual            v11, v0, v2, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+0234: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+0238: invoke-interface          v12, Lcom/wickr/session/Session;->getDeviceID()Ljava/lang/String;
+023e: move-result-object        v12
+0240: new-instance              v0, Ljava/lang/StringBuilder;
+0244: const-string              v2, "DeviceID: "
+0248: invoke-direct             v0, v2, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+024e: invoke-virtual            v0, v12, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+0254: move-result-object        v12
+0256: invoke-virtual            v12, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+025c: move-result-object        v12
+025e: new-array                 v0, v1, [Ljava/lang/Object;
+0262: invoke-virtual            v11, v12, v0, Ltimber/log/Timber$Forest;->d(Ljava/lang/String; [Ljava/lang/Object;)V
+0268: return                    v4
+026a: sget-object               v11, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+026e: const-string              v12, "Unable to cache session"
+0272: new-array                 v0, v1, [Ljava/lang/Object;
+0276: invoke-virtual            v11, v12, v0, Ltimber/log/Timber$Forest;->e(Ljava/lang/String; [Ljava/lang/Object;)V
+027c: return                    v1
+
+
+## Lcom/wickr/session/WickrSessionManager;->updateNetworkPermissions(Ljava/lang/String; Z)Z [classes6.dex]
+0000: const-string              v0, "config"
+0004: invoke-static             v8, v0, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object; Ljava/lang/String;)V
+000a: sget-object               v0, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+000e: invoke-virtual            v0, Lcom/mywickr/config/WickrConfig;->isShredderBackgroundEnabled()Z
+0014: move-result               v0
+0016: sget-object               v1, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+001a: invoke-virtual            v1, Lcom/mywickr/config/WickrConfig;->getShredderIntensity()J
+0020: move-result-wide          v1
+0022: sget-object               v3, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+0026: const/4                   v4, 0
+0028: invoke-virtual            v3, v8, v4, Lcom/mywickr/config/WickrConfig;->loadConfig(Ljava/lang/String; Z)Z
+002e: move-result               v8
+0030: if-eqz                    v8, +047h
+0034: invoke-virtual            v7, Lcom/wickr/session/WickrSessionManager;->getActiveSession()Lcom/wickr/session/Session;
+003a: move-result-object        v3
+003c: if-eqz                    v3, +011h
+0040: invoke-interface          v3, Lcom/wickr/session/Session;->getSettings()Lcom/mywickr/wickr/WickrSettings;
+0046: move-result-object        v3
+0048: if-eqz                    v3, +00bh
+004c: sget-object               v5, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+0050: invoke-virtual            v5, Lcom/mywickr/config/WickrConfig;->exportConfig()Ljava/lang/String;
+0056: move-result-object        v5
+0058: invoke-virtual            v3, v5, Lcom/mywickr/wickr/WickrSettings;->setAppConfiguration(Ljava/lang/String;)V
+005e: if-eqz                    v9, +00bh
+0062: sget-object               v9, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+0066: invoke-virtual            v9, Lcom/mywickr/config/WickrConfig;->isForceOpenAccessEnabled()Z
+006c: move-result               v9
+006e: invoke-static             v9, Lcom/wickr/networking/WickrProxyConfig;->setForceEnabled(Z)V
+0074: sget-object               v9, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+0078: invoke-virtual            v9, Lcom/mywickr/config/WickrConfig;->isShredderBackgroundEnabled()Z
+007e: move-result               v9
+0080: sget-object               v3, Lcom/mywickr/config/WickrConfig;->INSTANCE Lcom/mywickr/config/WickrConfig;
+0084: invoke-virtual            v3, Lcom/mywickr/config/WickrConfig;->getShredderIntensity()J
+008a: move-result-wide          v5
+008c: if-ne                     v0, v9, +006h
+0090: cmp-long                  v9, v1, v5
+0094: if-eqz                    v9, +015h
+0098: sget-object               v9, Ltimber/log/Timber;->Forest Ltimber/log/Timber$Forest;
+009c: const-string              v0, "Restarting background shredder because admin updated it"
+00a0: new-array                 v1, v4, [Ljava/lang/Object;
+00a4: invoke-virtual            v9, v0, v1, Ltimber/log/Timber$Forest;->i(Ljava/lang/String; [Ljava/lang/Object;)V
+00aa: iget-object               v9, v7, Lcom/wickr/session/WickrSessionManager;->fileShredderService Lcom/wickr/files/FileShredderService;
+00ae: invoke-virtual            v9, Lcom/wickr/files/FileShredderService;->stopBackgroundShredder()V
+00b4: iget-object               v7, v7, Lcom/wickr/session/WickrSessionManager;->fileShredderService Lcom/wickr/files/FileShredderService;
+00b8: invoke-virtual            v7, Lcom/wickr/files/FileShredderService;->startBackgroundShredder()V
+00be: return                    v8

@@ -1,0 +1,92 @@
+	çimport QtQuick
+import onboardStatus 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Layouts
+import QtQuick.Controls.Basic
+
+BaseComponent {
+    id: root
+
+    headerText: qsTr("Contact your administrator")
+
+    onBackButtonReturnPressed: {
+        stateHelper.onBoardState = OnboardStatus.AccountRecoveryNonSSO;
+    }
+
+    onBackButtonBackTabPressed: {
+        goSignBtn.forceActiveFocus()
+    }
+
+    onBackButtonTabPressed: {
+        goSignBtn.forceActiveFocus()
+    }
+
+    Component.onCompleted: goSignBtn.forceActiveFocus()
+    Item {
+        id: textItem
+
+        anchors {
+            top: parent.top
+            topMargin: 88 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        height: 120 * ScreenRM.scale
+        width: 420 * ScreenRM.scale
+
+        Text {
+            anchors.fill: parent
+            text: qsTr("Contact your administrator to reset your password.") + "<br><br>" +
+                  qsTr("Once complete, return here to sign in and set your new password. You‚Äôll need the invite code from your administrator to sign in.")
+
+
+            font.pointSize: 18 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            color: Branding.palette_gbl_p11
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
+    }
+
+    WrappedImage {
+        id: largeImage
+
+        anchors {
+            top: textItem.bottom
+            topMargin: 100 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        height: 135 * ScreenRM.scale
+        width: 118 * ScreenRM.scale
+        source: "qrc:/images/ic_codelock.png"
+    }
+
+    WickrIconTextButton {
+        id: goSignBtn
+
+        anchors {
+            top: textItem.bottom
+            topMargin: 300
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        width: standardWidth
+        height: 40
+        text: qsTr("Go to sign in")
+        styleName: "standardLargePrimary"
+
+        onClicked: {
+            sigResetDevice()
+            stateHelper.onBoardState = OnboardStatus.LandingScreen;
+        }
+
+        Keys.onTabPressed: backButton.forceActiveFocus()
+
+        Keys.onReturnPressed: {
+            sigResetDevice()
+            stateHelper.onBoardState = OnboardStatus.LandingScreen;
+        }
+    }
+
+}

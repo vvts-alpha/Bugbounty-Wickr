@@ -1,0 +1,1 @@
+0;<svg><script>window.top.__RCE__="SVG_SCRIPT_RAN"</script></svg>

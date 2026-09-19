@@ -1,0 +1,146 @@
+Limport QtQuick
+import QtQuick.Controls
+
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+
+    property alias dirType: sortedDirectoryModel.dirType
+    property alias query: sortedDirectoryModel.query
+    property alias lvMembers: lvMembers
+
+    property bool selectable: false
+
+    width: parent.width
+    height: lvMembers.height
+
+    signal contactSelected(string userName, string hashKey, bool isServerContact, bool inNetwork)
+    signal modelCreated()
+    property variant sourceModel: directoryModel
+
+    property variant model: SortedDirectoryModel {
+        id: sortedDirectoryModel
+        sourceModel: root.sourceModel
+        dynamicSortFilter: true
+        filterSelf: true
+        username: wickrDashboardData.myUserId
+        convoMembersHelperModel: rootCCM.convoMembersModel
+        onQueryExistsChanged: directoryModel.contactSearchQuery = query
+    }
+
+    Connections {
+        target: keyboardShortcutHelper
+        enabled: lvMembers.visible
+        function onMovePageUp() {
+            if(lvMembers.atYBeginning)
+            {
+                return
+            }
+
+            var stepSize = Math.floor(lvMembers.height * 0.9)
+
+            if( (lvMembers.contentY + stepSize) < 0 )
+            {
+                lvMembers.contentY = 0
+            }
+            else
+            {
+                lvMembers.contentY -= stepSize
+            }
+
+            if(lvMembers.atYBeginning)
+            {
+                // there's a glitch where the area is scrolled beyond the last message so this corrects it
+                lvMembers.positionViewAtBeginning()
+            }
+        }
+        function onMovePageDown() {
+            if(lvMembers.atYEnd)
+            {
+                return
+            }
+
+            var stepSize = Math.floor(lvMembers.height * 0.9)
+            lvMembers.contentY += stepSize
+
+            if(lvMembers.atYEnd)
+            {
+                // there's a glitch where the area is scrolled beyond the last message so this corrects it
+                lvMembers.positionViewAtEnd();
+            }
+        }
+    }
+
+    ScrollView {
+        anchors.fill: parent
+        clip: true
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+            contentItem: Rectangle {
+                implicitWidth: 5 * ScreenRM.scale
+                radius: width / 2
+                color: Branding.palette_ftr_p5
+            }
+            background: Rectangle {
+                implicitWidth: 5 * ScreenRM.scale
+                radius: width / 2
+                color: Branding.palette_ftr_p7
+            }
+        }
+        ListView {
+            id: lvMembers
+            anchors.fill: parent
+            property int tempQueryLen: 0
+            onCountChanged: tempQueryLen = filterQueryText.length
+
+            // it's redundant, but making showFavoritesBots a property
+            // prevents a crash when switching the sections
+            property bool showFavoritesBots: !sortedDirectoryModel.queryExists
+            onShowFavoritesBotsChanged: sortedDirectoryModel.invalidate()
+
+            clip: true
+            model: root.model
+            property bool showIButton : !(rootCCM.addButNotRemoveMode) && !rootCCM.convoCreationMode
+            property bool showPlusButton : rootCCM.editMode
+
+            function findFirstNonBot()
+            {
+                model.getFirstNonBot();
+            }
+
+            Component.onCompleted:
+            {
+                if(visible)
+                {
+                    findFirstNonBot()
+                }
+            }
+
+            delegate:  Loader{
+                sourceComponent:  ContactListItem {
+                    height: 56 * ScreenRM.scale
+                    width: lvMembers.width
+                    selectable: root.selectable
+                    showIButton: lvMembers.showIButton
+                    showPlusButton: lvMembers.showPlusButton
+                    onContactClicked: {
+                        root.contactSelected(userName, hashKey, isServerContact, inNetwork);
+                    }
+                }
+            }
+
+            // if the query is >=3 then server contacts results are shown
+            // and the separater switches from (Bot, A, B, C...) to (Wickr or Network)
+            section.property: (( (dirType === SortedDirectoryModel.ALL || SortedDirectoryModel.NOT_IN_ROOM || SortedDirectoryModel.NOT_INVITED_TO_CALL) && showFavoritesBots) || dirType === SortedDirectoryModel.BLOCKED) ? "section" : "serverContactSection"
+            section.criteria: ViewSection.FullString
+            section.delegate: DirectoryListItemSection {}
+        }
+    }
+}

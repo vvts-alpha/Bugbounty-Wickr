@@ -1,0 +1,25 @@
+×import QtQuick
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    anchors.centerIn: parent
+    width: Math.ceil(parent.width + 6 * ScreenRM.scale)
+    height: Math.ceil(parent.height + 6 * ScreenRM.scale)
+    color: "transparent"
+    border.color: "#008FFF"
+    border.width: Math.ceil(2 * ScreenRM.scale)
+    radius: 4 * ScreenRM.scale
+
+    Rectangle
+    {
+        anchors.centerIn: parent
+        width: Math.ceil(parent.width - 4 * ScreenRM.scale)
+        height: Math.ceil(parent.height - 4 * ScreenRM.scale)
+        color: "transparent"
+        border.color: "#FFFFFF"
+        border.width: Math.ceil(1 * ScreenRM.scale)
+        radius: parent.radius - 1 * ScreenRM.scale
+    }
+}

@@ -1,0 +1,44 @@
+import QtQuick
+import onboardStatus 1.0
+import "../Commons/"
+import "../widgets/"
+import QtQuick.Controls.Basic
+
+NavigableItem {
+    id: root
+    width: 296 * ScreenRM.scale
+    height: rowContents.height
+    property string iconImg
+    property string information
+
+    Row
+    {
+        id: rowContents
+
+        WrappedImage
+        {
+            width: 40 * ScreenRM.scale
+            height: 40 * ScreenRM.scale
+            source: iconImg
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Item
+        {
+            height: 1
+            width: 8 * ScreenRM.scale
+        }
+
+        Text
+        {
+            anchors.verticalCenter: parent.verticalCenter
+            width : 248 * ScreenRM.scale
+            text: information
+            font.pointSize: 15 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            color: Branding.palette_gbl_p1
+            wrapMode: Text.WordWrap
+        }
+    }
+}

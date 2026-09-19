@@ -1,0 +1,30 @@
+Îimport QtQuick
+import onboardStatus 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Layouts
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+
+    property alias text: errorText1.text
+    width: 328 * ScreenRM.scale
+    height: childrenRect.height
+
+    Text {
+        id: errorText1
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: 16 * ScreenRM.scale
+        anchors.rightMargin: 6 * ScreenRM.scale
+        color: Branding.palette_rgs_u1
+        font.pointSize: 14 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        font.letterSpacing: 0.25
+
+        textFormat: Text.AutoText
+        wrapMode: Text.Wrap
+    }
+}

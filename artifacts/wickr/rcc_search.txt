@@ -1,0 +1,44 @@
+U16LE preloads.js          : 5 hits ['0xE46E6E', '0x1FBC81E', '0x1FBCCDC', '0x1FC0076', '0x31FA227']
+  lat1 preloads.js         : 2 hits
+U16LE webengine            : 7 hits ['0xE46E32', '0xE46E5A', '0xE46E8A', '0x1FBC80A', '0x1FBCCC8', '0x1FC0062', '0x31F3047']
+  lat1 webengine           : 8 hits
+U16LE qtwebchannel         : 0 hits []
+  lat1 qtwebchannel        : 0 hits
+U16LE qwebchannel.js       : 2 hits ['0xE46E9E', '0x31FA243']
+  lat1 qwebchannel.js      : 1 hits
+U16LE main.qml             : 3 hits ['0xE46E46', '0x20EF6A6', '0x31FA265']
+  lat1 main.qml            : 1 hits
+U16LE index.html           : 1 hits ['0x1CEDB3F']
+  lat1 index.html          : 1 hits
+U16LE file-preview.html    : 1 hits ['0x1CEDA67']
+  lat1 file-preview.html   : 0 hits
+U16LE style.js             : 25 hits ['0xE464DA', '0x1DE596A', '0x1E948EC', '0x1EB07A2', '0x1EB744A', '0x1EBBFC2', '0x1EC1AF2', '0x1EC7012']
+  lat1 style.js            : 9 hits
+
+U16 preloads.js @0xE46E6E context:
+  hex: 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 00 00 00 00 2f 00 77 00 65 00 62 00 65 00 6e 00 67 00 69 00
+  2 bytes before: 2f00 (as BE u16=12032)
+
+U16 preloads.js @0x1FBC81E context:
+  hex: 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 00 00 00 00 0f 00 00 00 57 00 65 00 62 00 45 00 6e 00 67 00
+  2 bytes before: 2f00 (as BE u16=12032)
+
+U16 preloads.js @0x1FBCCDC context:
+  hex: 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 22 00 0a 00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 20 00
+  2 bytes before: 2f00 (as BE u16=12032)
+
+U16 preloads.js @0x1FC0076 context:
+  hex: 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 00 00 00 00 0f 00 00 00 57 00 65 00 62 00 45 00 6e 00 67 00
+  2 bytes before: 2f00 (as BE u16=12032)
+
+U16 preloads.js @0x31FA227 context:
+  hex: 2e 00 68 00 74 00 6d 00 6c 00 0b 05 94 7d 73 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00 73 00 2e 00 6a 00 73 00 0e 0e 3a d6 33 00 71 00 77 00 65 00 62 00 63 00 68 00 61 00
+  2 bytes before: 7300 (as BE u16=29440)
+
+U16 webengine @0xE46E32 : 71 00 6d 00 6c 00 00 00 00 00 00 00 00 00 2f 00 77 00 65 00 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 6d 00 61 00 69 00 6e 00 2e 00 71 00 6d 00
+
+U16 webengine @0xE46E5A : 69 00 6e 00 2e 00 71 00 6d 00 6c 00 00 00 2f 00 77 00 65 00 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00
+
+U16 webengine @0xE46E8A : 64 00 73 00 2e 00 6a 00 73 00 00 00 00 00 2f 00 77 00 65 00 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 71 00 77 00 65 00 62 00 63 00 68 00 61 00
+
+U16 webengine @0x1FBC80A : 00 00 71 00 72 00 63 00 3a 00 2f 00 2f 00 2f 00 77 00 65 00 62 00 65 00 6e 00 67 00 69 00 6e 00 65 00 2f 00 70 00 72 00 65 00 6c 00 6f 00 61 00 64 00

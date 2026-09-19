@@ -1,0 +1,53 @@
+{import QtQuick
+import onboardStatus 1.0
+import "../Commons/"
+import "../widgets/"
+import QtQuick.Controls.Basic
+
+BaseComponent {
+    id: root
+    signal abortSync();
+
+    headerText: qsTr("Syncing...")
+
+    onBackButtonReturnPressed: {
+        wickrWindow.sigDeviceSyncAbort(false);
+    }
+
+    Item {
+        id: textItem
+
+        anchors {
+            top: parent.top
+            topMargin: 88 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        height: 90 * ScreenRM.scale
+        width: 420 * ScreenRM.scale
+
+        Text {
+            id: txtMsg
+            anchors.fill: parent
+            text: qsTr("Securely syncing your rooms, messages and contacts. Please keep Wickr open until syncing is complete.")
+            font.pointSize: 18 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            color: Branding.palette_gbl_p11
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
+    }
+
+    WrappedImage {
+        id: emailLargeImage
+        height: 196 * ScreenRM.scale
+        width: 220 * ScreenRM.scale
+
+        anchors {
+            top: textItem.bottom
+            topMargin: 12 * ScreenRM.scale
+            horizontalCenter: parent.horizontalCenter
+        }
+        source: "qrc:/images/dbsync.png"
+    }
+}

@@ -1,0 +1,35 @@
+ˆimport QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item
+{
+    id: root
+    property int bubbleCount: 16
+    property real value: 0
+    height: 12 * ScreenRM.scale
+    width: contentRow.width
+    Row
+    {
+        id: contentRow
+        spacing: 1 * ScreenRM.scale
+        Repeater
+        {
+            model: bubbleCount
+            Rectangle
+            {
+                height: 12 * ScreenRM.scale
+                width: height
+                property bool hightlight: value >= ((index + 1) / bubbleCount)
+                radius: 4 * ScreenRM.scale
+                border.width: 0.5 * ScreenRM.scale
+                border.color: Branding.palette_gbl_p4
+                color: hightlight ? Branding.palette_ftr_p9 : Branding.palette_cal_p2
+            }
+
+        }
+    }
+}

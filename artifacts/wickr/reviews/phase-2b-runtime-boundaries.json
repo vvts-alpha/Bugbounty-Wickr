@@ -1,0 +1,101 @@
+{
+  "schema": "wickr-phase-2b-runtime-boundaries/v1",
+  "subject": { "binary": "E:\\tmp\\wickr\\main\\WickrPro.exe", "sha256": "eccafde833d34386c859d6548e922649c2f58cd15f82998c8bd2966219341dbd", "product_version": "6.72.20.0" },
+  "mode": "static source + RCC-metadata extraction (stock client NOT executed; runtime not authorized)",
+  "terminology_correction": "Phase 2A called globalCSS a 'DOMPurify bypass'. Corrected: globalCSS is never processed by DOMPurify, so it is a SANITIZER COVERAGE GAP, not a bypass. Bypass / coverage-gap / CSP-permitted-CSS-injection / CSS-resource-load / JS-execution are distinct and not interchangeable.",
+  "globalcss": {
+    "sanitizer_relationship": "SANITIZER-EXEMPT (never passed through DOMPurify)",
+    "producer": "pptx2html.worker.js genGlobalCSS (worker:1206-1212) from styleTable; styleText built at worker:1158-1175",
+    "property_names_attacker_controlled": false,
+    "property_values_attacker_controlled": ["font-family (getFontType -> raw a:rPr/a:latin/@_typeface, worker:1488-1489, unescaped)", "color (attacker-influenced hex, unescaped)"],
+    "safe_values": ["getFontSize (parseInt, numeric)", "getFontBold/Italic/Decoration (fixed strings)", "getTextVerticalAlign (numeric+%)"],
+    "escaping_or_validation": "none",
+    "output_type": "CSS text: 'section ._css_N{<styleText>}\\n'",
+    "insertion_method": "React JSX <style>{cssText}</style> -> style.textContent (PowerPointPreview/index.tsx:203); NOT innerHTML",
+    "becomes": "a live <style> element (parsed into CSSOM by engine)",
+    "before_or_after_dompurify": "never processed by DOMPurify (separate sibling sink)",
+    "later_transformations": "none by app code",
+    "attacker_derived_inert_css_reaches_document": "SOURCE-PROVEN YES (data flow unescaped end-to-end)",
+    "classification": "SANITIZER COVERAGE GAP + CSP-PERMITTED CSS INJECTION (style-src 'unsafe-inline'); no JS execution established"
+  },
+  "preloads_js": {
+    "status": "RECOVERED",
+    "abs_path": "E:\\wickr\\extracted\\rcc\\preloads.js",
+    "qrc_path": "qrc:///webengine/preloads.js",
+    "size_bytes": 125,
+    "sha256": "093925b2c0ceaef06763fffe4f26bdb1b7fda863bb3a2b2d1ff634e5ca0f2249",
+    "file_offset": "0x31EE3BF..0x31EE43E (between wickr.html entry and qwebchannel.js RCC header)",
+    "extraction_method": "RCC names-blob parse (UTF-16LE) + data-array boundary localization; stored UNCOMPRESSED (no zlib header, missed by Phase 1 zlib scan)",
+    "discreteness_proof": "'window.URL = class QURL' occurs exactly once in binary (0x31EE3C0); absent from debug harness HTML",
+    "content": "~window.URL = class QURL extends URL { constructor(url, base) { super(url, base === 'qrc:' ? 'qrc:/' : base); } }",
+    "behavior": { "dom": "overrides window.URL to translate 'qrc:' base to 'qrc:/'", "messages": "none", "bridge": "none", "url": "'qrc:'->'qrc:/' shim only", "script_loading": "none", "scheme_registration": "none in JS (wickrweb:// is native-side)" },
+    "security_relevance": "minimal; does not alter the preview trust boundary",
+    "caveat": "exact 8-byte RCC entry-size word not cleanly isolated (3 null padding bytes precede body); body content and position unambiguous"
+  },
+  "csp": {
+    "header_csp_found_statically": false,
+    "header_csp_basis": "no source constructs CSP headers; QML sets no httpHeaders and registers no URL interceptor (grep of 134 QML files: httpHeaders/UrlRequestInterceptor/setHttpHeaders = 0 hits)",
+    "meta_csp": true,
+    "effective_runtime_csp": "REQUIRES RUNTIME TEST (meta-only proven statically; runtime capture not authorized)",
+    "custom_scheme_headers": "wickrweb:// handler is native-side; whether it injects response headers is not statically resolvable",
+    "meta_verbatim_entity_encoded": "default-src &#39;self&#39; qrc://* wickrweb://* ; style-src &#39;self&#39; &#39;unsafe-inline&#39; ; script-src &#39;self&#39; qrc://* ; connect-src &#39;self&#39; wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src &#39;self&#39; https://tile.googleapis.com wickrweb://* blob: data: ; font-src &#39;self&#39; data: ; media-src &#39;self&#39; wickrweb://* data: blob: ; frame-src &#39;self&#39; blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src &#39;self&#39; blob: ; child-src &#39;self&#39; blob: ; object-src &#39;self&#39;",
+    "meta_decoded_effective": "default-src 'self' qrc://* wickrweb://* ; style-src 'self' 'unsafe-inline' ; script-src 'self' qrc://* ; connect-src 'self' wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src 'self' https://tile.googleapis.com wickrweb://* blob: data: ; font-src 'self' data: ; media-src 'self' wickrweb://* data: blob: ; frame-src 'self' blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src 'self' blob: ; child-src 'self' blob: ; object-src 'self'",
+    "frame_ancestors_runtime_status": "INSUFFICIENT EVIDENCE (meta cannot enforce; no header found)"
+  },
+  "iframe_message": {
+    "iframe_location": "src/components/Modals/FilePreviewModal/index.tsx:134",
+    "iframe_attributes": ["src"],
+    "sandbox": "absent",
+    "preview_url_construction": "file-preview.html#${params} (relative -> same-origin)",
+    "parent_runtime_origin": "REQUIRES RUNTIME TEST (wickrSettings.webViewAddress; not statically resolvable)",
+    "preview_runtime_origin": "REQUIRES RUNTIME TEST (expected same as parent)",
+    "message_handler_location": "FilePreviewModal/index.tsx:99-114",
+    "gate": "event.data && typeof event.data==='object' && event.origin===window.parent.origin (:101)",
+    "origin_validated": true,
+    "source_window_validated": false,
+    "schema_validation": "minimal (object only; type matched on 'openLink')",
+    "url_validation_in_handler": false,
+    "user_confirmation_boundary": "openLink thunk shows ConfirmModal before uiBridge.openLink (ui.ts:151-164)",
+    "runtime_probes": ["intended preview iframe (same-origin): accepted", "unrelated same-origin iframe: accepted (origin-only)", "top-level window: accepted", "same-origin popup: accepted", "cross-origin frame: rejected", "malformed non-object data: rejected"]
+  },
+  "qml_findings": {
+    "source": "qml_0x030A2BEC_7847.bin + grep of all decompressed QML",
+    "request_interception": "not present",
+    "response_header_modification": "not present (no httpHeaders)",
+    "custom_scheme_registration_in_qml": "not present (wickrweb:// native-side)",
+    "local_content_access_settings": "not set (defaults)",
+    "javascript_enablement": "not overridden (enabled)",
+    "webchannel_registration": "channel.registerObject('uiBridge', uiBridge); webChannel:channel",
+    "user_scripts_preload": "qrc:///webengine/preloads.js @ DocumentCreation, MainWorld",
+    "cert_error_handling_main": "onCertificateError: error.ignoreCertificateError()",
+    "cert_error_handling_oidc": "defers CA-invalid to dialog",
+    "feature_permissions": "grantFeaturePermission(securityOrigin, feature, true) any origin",
+    "other": "offTheRecord:true; NoPersistentCookies; javascriptCanAccessClipboard:true; javascriptCanPaste:true"
+  },
+  "css_fixture_tests": [
+    { "id": "C-1", "input": "PPTX text run @_typeface='reviewMarkerFont'", "expected": "marker present in document.styleSheets", "classification": "CSP-PERMITTED CSS INJECTION (source-proven reach)" },
+    { "id": "C-2", "input": "PPTX text run @_typeface='a;}section{--review:1'", "expected": "custom property --review injected", "classification": "CSS injection of extra declarations (inert, no JS)" },
+    { "id": "C-3", "input": "PPTX text run @_typeface contains background:url(invalid-local://cssmarker)", "expected": "CSP violation (img-src/default-src blocks invalid scheme)", "classification": "CSS-TRIGGERED RESOURCE LOAD (governed by CSP); REQUIRES RUNTIME TEST" },
+    { "id": "C-4", "input": "compare style textContent before vs after microtask", "expected": "unchanged", "classification": "no post-insertion rewrite (source-proven)" }
+  ],
+  "final_answers": {
+    "globalcss_sanitizer_processed_or_exempt": "EXEMPT (sanitizer coverage gap)",
+    "globalcss_insertion_method": "React <style>{cssText}</style> -> style.textContent (PowerPointPreview:203)",
+    "attacker_controlled_css_dimensions_proven_by_source": "property VALUES (font-family via getFontType raw @_typeface; color); property NAMES fixed",
+    "attacker_derived_inert_css_reaches_final_document": "YES (source-proven; runtime confirmation pending C-1)",
+    "exact_effective_runtime_csp": "REQUIRES RUNTIME TEST (meta-only proven statically)",
+    "parent_preview_runtime_origins": "REQUIRES RUNTIME TEST (expected same-origin)",
+    "header_csp_exists": "NOT FOUND statically (no httpHeaders/interceptor in QML or sources)",
+    "preloads_js_recovered": true,
+    "message_handler_verifies_event_source": false (origin only)
+  },
+  "unresolved_gaps": [
+    "effective runtime CSP (header vs meta-only; report-only)",
+    "wickrweb:// native scheme handler response headers (C++; outside JS/QML artifacts)",
+    "CSS-triggered resource loading (C-3) runtime confirmation",
+    "parent/preview runtime origin equality capture",
+    "message event.source discrimination runtime confirmation (source already proves origin-only)",
+    "QtWebEngine/Chromium exact version (runtime-injected)"
+  ],
+  "claims_not_made": ["CSP bypass", "JavaScript execution", "bridge invocation", "native impact", "RCE"]
+}

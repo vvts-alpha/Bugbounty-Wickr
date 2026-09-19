@@ -1,0 +1,2069 @@
+}o<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+    <script type="text/javascript" src="qwebchannel.js"></script>
+    <script>
+      var wickrBridge;
+      var wickrSettings;
+      var wickrUiBridge;
+      var environmentMgr;
+      var fileManager;
+      var currentVgroupId;
+      window.onload = function () {
+        console.log("window onload");
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+          // all published objects are available in channel.objects under
+          // the identifier set in their attached WebChannel.id property
+          wickrBridge = channel.objects.bridge;
+          wickrUiBridge = channel.objects.uiBridge;
+          wickrOnboardingBridge = channel.objects.onboardingBridge
+
+          wickrSettings = channel.objects.wickrSettings;
+          const autoUnlock = wickrSettings.isAutoUnlockMessages;
+          console.log("auto unlock is ", autoUnlock);
+
+          serverModel = channel.objects.serverModel;
+          const isWOAProxyConfigured = serverModel.isWOAProxyConfigured;
+          console.log("isWOAProxyConfigured ", isWOAProxyConfigured);
+
+          const translationAvailable = wickrSettings.isTranslationAvailable;
+          console.log("Wickr Message Translations available:: ", translationAvailable);
+
+          if (translationAvailable) {
+            const translationEnabled = wickrSettings.isTranslationEnabled;
+            console.log("Wickr Message Translations Enabled:: ", translationEnabled);
+
+            wickrSettings.isTranslationEnabledChanged.connect(function () {
+              const translationEnabled = wickrSettings.isTranslationEnabled;
+              console.log("isTranslationEnabled changed:", translationEnabled);
+            });
+          }
+          wickrSettings.isTranslationAvailableChanged.connect(function () {
+            const translationAvailable = wickrSettings.isTranslationAvailable;
+            console.log("translationAvailable changed:", translationAvailable);
+          });
+
+          environmentMgr = channel.objects.environmentMgr;
+          const filesEnabled = environmentMgr.filesEnabled;
+          console.log("File transfers enabled: ", filesEnabled);
+
+          environmentMgr.signalChimeHandoffTokenChanged.connect(function () {
+            log("Chime Handoff Token:" + environmentMgr.chimeHandoffToken);
+          });
+
+          environmentMgr.signalNetworkBannerConfigChanged.connect(function () {
+            log("Network Banner Config Changed:" + JSON.stringify(environmentMgr.networkBannerConfig));
+          });
+
+          wickrBridge.messageUnreadCountChanged.connect(function () {
+            messageUnreadCount();
+          });
+
+          // onboarding bridge signals
+
+          wickrOnboardingBridge.checkUserExistsResult.connect(function(result) {
+            console.log("User exists result signal received:", JSON.stringify(result, null, 2));
+          });
+
+          wickrOnboardingBridge.onboardingPageChanged.connect(function(result) {
+            console.log("onboardingPageChanged signal received:", JSON.stringify(result));
+          });
+
+          wickrOnboardingBridge.onboardingUsernameExists.connect(function(result) {
+            console.log("onboardingUsernameExists signal received:", JSON.stringify(result));
+          });
+
+          wickrOnboardingBridge.processRegistrationResult.connect(function(result) {
+            try {
+                console.log("processRegistrationResult signal received:", JSON.stringify(result, null, 2));
+                if (result.status === "success") {
+                    // Handle success case
+                    console.log("Registration successful for user:", result.wickrid);
+                } else {
+                    // Handle non-success case
+                    console.log("Registration result status:", result.status);
+                }
+            } catch (error) {
+                console.error("Error processing registration result:", error);
+                console.log("Raw result:", result);
+            }
+          });
+
+          wickrOnboardingBridge.onboardingLoginResult.connect(function(result) {
+            console.log("onboardingLoginResult signal received:", JSON.stringify(result));
+          });
+
+
+          wickrOnboardingBridge.onboardingPageChanged.connect(function(result) {
+            console.log("onboardingPageChanged signal received:", JSON.stringify(result));
+          });
+
+          wickrOnboardingBridge.onboardingSSOResult.connect(function(result) {
+            console.log("onboardingSSOResult signal received:", JSON.stringify(result));
+          });
+
+          const action = {
+            firstName: "Stevyn",
+            lastName: "Pompelio",
+          };
+
+          fileManager = channel.objects.fileManager;
+
+          wickrBridge.activeConvoChanged.connect(function (vgroupId) {
+            currentVgroupId = vgroupId;
+            log("the vgroupId of the current conversation is", currentVgroupId);
+          });
+
+          wickrBridge.quickResponsesChanged.connect(function () {
+            log("the quick responses changed");
+            getQuickResponses();
+          });
+
+          wickrBridge.isServerConnectedChanged.connect(function () {
+            log("isServerConnected changed");
+            wickrBridge.isServerConnected(function (response) {
+              log(response);
+            });
+          });
+
+          wickrBridge.updateAvailableChanged.connect(function () {
+            log("updateAvailableChanged changed");
+            wickrBridge.updateAvailable(function (response) {
+              log(response);
+            });
+          });
+
+          wickrBridge.accountAttributesChanged.connect(function () {
+            log("accountAttributesChanged changed");
+            getAccountAttributes();
+          });
+
+          // window focus
+          getWindowStatus();
+
+          wickrBridge.windowFocusChanged.connect(function (j) {
+            log("the window's focus changed to:", j.hasFocus);
+          });
+
+          environmentMgr.onFilesEnabledChanged.connect(function () {
+            const filesEnabled = environmentMgr.filesEnabled;
+            log("File transfers enabled: ", filesEnabled);
+          });
+
+          wickrBridge.messageAdded.connect(function (vgroupID, tempMessageId, messageId) {
+            //log(`The message ${vgroupID} ${tempMessageId} ${messageId} was added`);
+          });
+
+          wickrBridge.messageChanged.connect(function (vgroupID, tempMessageId, messageId) {
+            //log(`The message ${vgroupID} ${tempMessageId} ${messageId} was changed`);
+          });
+
+          wickrBridge.roomHistoryChanged.connect(function (vgroupID) {
+            //log(`The room history of ${vgroupID} changed`);
+          });
+
+          wickrBridge.sleepChanged.connect(function (isSleep) {
+            log("The Sleep Changed value: ", isSleep);
+          });
+
+          wickrBridge.messageRemoved.connect(function (vgroupID, tempMessageId, messageId) {
+            log(`The message ${vgroupID} ${tempMessageId} ${messageId} was removed`);
+          });
+
+          wickrBridge.typingActivityChanged.connect(function (typingInfo, vgroupId) {
+            log(`Typing activity changed in ${vgroupId}`);
+            for (let i = 0; i < typingInfo.length; i++) {
+              let obj = typingInfo[i];
+              log(obj.activity);
+              log(obj.name);
+            }
+          });
+
+          wickrBridge.devicesChanged.connect(function (deviceStatus) {
+            log(JSON.stringify(deviceStatus));
+          });
+
+          wickrBridge.fileStatusChanged.connect(function (fileStatus) {
+            log(JSON.stringify(fileStatus));
+          });
+
+          wickrBridge.fileTransfers(function (fileTransfers) {
+            log(JSON.stringify(fileTransfers));
+          });
+
+          wickrUiBridge.searchResultClicked.connect(function (vgroupId, messageId) {
+            log(`The clicked search result yielded vgroupId: ${vgroupId} and messageId: ${messageId}`);
+          });
+
+          wickrBridge.convoAdded.connect(function (vgroupID) {
+            log(`The convo ${vgroupID} was added`);
+          });
+
+          wickrBridge.convoChanged.connect(function (vgroupID) {
+            log(`The convo ${vgroupID} was changed`);
+          });
+
+          wickrBridge.convoDeleted.connect(function (vgroupID) {
+            log(`The convo ${vgroupID} was deleted`);
+          });
+
+          wickrBridge.openFileAllowList(function (allowList) {
+            log(allowList.allowList);
+          });
+
+          wickrBridge.callStatusChanged.connect(function () {
+            log(`Call status changed`);
+          });
+
+          wickrBridge.userAdded.connect(function (idHash) {
+            log(`The user ${idHash} was added`);
+          });
+
+          wickrBridge.userChanged.connect(function (idHash) {
+            log(`The user ${idHash} was changed`);
+          });
+
+          wickrBridge.userDeleted.connect(function (idHash) {
+            log(`The user ${idHash} was deleted`);
+          });
+
+          wickrBridge.shredderStatusChanged.connect(function (status) {
+            log("Shredder status:", JSON.stringify(status));
+          });
+
+          wickrBridge.linkImageAdded.connect(function (j) {
+            log(JSON.stringify(j));
+            /* var img = document.createElement("img");
+                img.src = j.linkImage;
+                let linkImages = document.getElementById("linkImages");
+                linkImages.appendChild(img) */
+          });
+
+          wickrBridge.linkFavIconAdded.connect(function (j) {
+            log(JSON.stringify(j));
+            /* var img = document.createElement("img");
+                img.src = j.favIconImage;
+                let linkImages = document.getElementById("linkImages");
+                linkImages.appendChild(img); */
+          });
+
+          fileManager.fileManagerContentsChanged.connect(function (vgroupId) {
+            log(`The file management contents for convo ${vgroupId} was changed`);
+          });
+
+          wickrBridge.guardEnabledChanged.connect(function (status) {
+            log(`Guard enabled was changed:`, status);
+          });
+
+          wickrBridge.triggerDeviceAddRequest.connect(function (acceptMsgBackup, newDeviceKey, hideRequest) {
+            log(`The device add request ${acceptMsgBackup} ${newDeviceKey} ${hideRequest} was triggered`);
+          });
+
+          wickrBridge.usersToManageCountChanged.connect(function (users) {
+            log(`Users to manage count changed`);
+            //logObj(users);
+          });
+
+          wickrBridge.switchedToCode.connect(function (deviceSyncVerifyKey, supportBackup) {
+            log(`Switched to code during device sync ${deviceSyncVerifyKey} ${supportBackup}`);
+          });
+
+          wickrBridge.showDeviceSyncingScreen.connect(function (show) {
+            log(`Show device syncing screen: ${show}`);
+          });
+
+          wickrBridge.showNewDeviceBanner.connect(function () {
+            log(`Show new device banner`);
+          });
+
+          wickrBridge.atoDeviceAddRequest.connect(function (show, code) {
+            log(`ATO device add request received: ${show} ${code}`);
+          });
+
+          wickrBridge.errorCodeEmitted.connect(function(errorInfo) {
+            log("Error code info:", JSON.stringify(errorInfo));
+          });
+        });
+        log("wickrBridge loaded");
+      };
+
+      function log(...args) {
+        console.log(...args);
+        const pre = document.createElement("pre");
+        pre.innerText = args.join(" ");
+        document.body.append(pre);
+      }
+
+      function logObj(obj) {
+        console.log(JSON.stringify(obj, null, 2));
+      }
+
+      const messageBase = `wickrweb://message/`;
+      const convoBase = `wickrweb://convo/`;
+      const convolistBase = `wickrweb://convolist/`;
+
+      const mainVgroupId = `S7eeabb9610e56a82d1e30b3f99e9124350377a18c887ca502d197fa7797c3b6`;
+
+      const userbase = `wickrweb://users/`;
+      const userId = `nemo@mailinator.com`;
+      const userhash = `01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44`;
+
+      function getSomeUsers(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        userIds = ["user1@mailinator.com", "user2@mailinator.com"];
+        userHashes = ["01afb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44"];
+        xhr.setRequestHeader("userIds", userIds);
+        xhr.setRequestHeader("userHashes", userHashes);
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function run(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runWithHeaders(url, headers) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+        for (const property in headers) {
+          xhr.setRequestHeader(property, headers[property]);
+        }
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runJson(url, headers) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        for (const property in headers) {
+          xhr.setRequestHeader(property, headers[property]);
+        }
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          logObj(xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runGetActiveDevices(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          const deviceArray = xhr.response;
+          for (let i = 0; i < deviceArray.length; i++) {
+            let obj = deviceArray[i];
+            log(obj.appId);
+            log(obj.description);
+            log(obj.type);
+            log(obj.lastLoginTime);
+            log(obj.thisDevice);
+            log("----");
+          }
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runGetChimeToken(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+          const deviceArray = xhr.response;
+          logObj(deviceArray);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          log("xhr error!");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runPut(url) {
+        //console.log("action:", action)
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", url, true);
+        // xhr.setRequestHeader("action", action)
+
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          console.log("error status", JSON.stringify(xhr), xhr.status);
+          log("xhr error!");
+        };
+        xhr.onloadend = function () {
+          console.log("error status", xhr, xhr.status);
+          if (xhr.status == 404) throw new Error(url + " replied 404");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function runPost(url, msg) {
+        console.log("msg:", msg);
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("newmessage", encodeURI(msg));
+
+        xhr.onload = () => {
+          log("loaded. status:", xhr.status);
+          log("loaded. data:", xhr.response);
+        };
+        xhr.onreadystatechange = () => {
+          log("readyState:", xhr.readyState);
+        };
+        xhr.onerror = () => {
+          console.log("error status", JSON.stringify(xhr), xhr.status);
+          log("xhr error!");
+        };
+        xhr.onloadend = function () {
+          console.log("error status", xhr, xhr.status);
+          if (xhr.status == 404) throw new Error(url + " replied 404");
+        };
+        log("sending:", url);
+        xhr.send();
+      }
+
+      function uiAction(action) {
+        log(`sending action ${action}`);
+        let a = {
+          action: action,
+        };
+
+        if (action === "imagePreview" || action === "openFile" || action === "saveFile" || action === "locationPopup" || action === "joinCall" || action === "messageHistory" || action === "reactionPopup" || action === "deleteMessage" || action == "showMessageError") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "";
+          a["messageId"] = "";
+          a["savedImage"] = "7219f5ae-b34d-4092-bf52-6a50a809f4cb";
+        }
+
+        if (action === "locationPopup") {
+          a["vgroupId"] = "Sff079cb05843ff0dfc3f13a413a7885336849addcee2a46fe52d18336ed30d0";
+          a["messageId"] = "aadb921041fa11eebdc5ab82cbd66ba5";
+        }
+
+        if (action === "openLink") {
+          // this must be extracted from a link preview or detected by the UI when hovering over a link
+          a["link"] = "https://www.amazon.com";
+          a["showConfirmation"] = false;
+        }
+
+        if (action === "viewContactDetails" || action === "reportUser") {
+          a["userId"] = "dory34@mailinator.com";
+        }
+
+        if (action === "showMessageDialog") {
+          a["message"] = "This is a message";
+          a["title"] = "This is a title";
+        }
+
+        if (action === "securityVerification") {
+          a["userId"] = "nemo@mailinator.com";
+        }
+
+        if (action === "toggleFileDropArea") {
+          a["active"] = false;
+        }
+
+        wickrUiBridge.sendAction(a);
+      }
+
+      function msgAction(action) {
+        log(`sending action ${action}`);
+        let a = {
+          action: action,
+        };
+
+        if (action === "starMessage" || action === "unstarMessage" || action === "saveFileToRoom" || action === "saveLinkToRoom" || action === "emojiReact" || action === "translateMessage") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "Sf5c03eed1179410ba8d74bdf9fa74ee79e574173fe1ab21db735ed12d346490";
+          a["messageId"] = "9293de60d1c911eeae51e9c9efa35df6";
+        }
+
+        if (action === "clearMessageTempId") {
+          // Make sure these vgroupIds and messageIds map to real messages
+          a["vgroupId"] = "b3923c46516d17daba218857c5bee6b33331e2dced5df3d6041c4cf61748a322";
+          a["tempMessageId"] = "ca4e7a2f4cdce1bfddbfaa6fca37d01ea8fb3e8b854e28500de2fd79bd7e83ee";
+
+          wickrBridge.clearMessageTempId(a, function (success) {
+            log("Server message id:", success["serverMessageId"]);
+          });
+        }
+
+        if (action === "saveFileToRoom") {
+          a["vgroupId"] = "S400073b7ecff52357a9b253ed247c9477e152f4d185aa9d04ab85cd8fedad4a";
+          a["messageId"] = "339cd430439811eeb1fd959bbab42d8f";
+
+          wickrBridge.saveFileToRoom(a);
+        }
+
+        if (action === "saveLinkToRoom") {
+          // this must be extracted from a link preview or detected by the UI when hovering over a link
+          a["vgroupId"] = "S400073b7ecff52357a9b253ed247c9477e152f4d185aa9d04ab85cd8fedad4a";
+          a["messageId"] = "555a1100439811eeb1fd959bbab42d8f";
+
+          a["link"] = "https://www.amazon.com";
+          wickrBridge.saveLinkToRoom(a);
+        }
+
+        if (action === "starMessage") {
+          a["star"] = true;
+          wickrBridge.starMessage(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "getAwsCredentials") {
+          // Please set keys here to test translate
+          a["accessKeyId"] = "";
+          a["secretKey"] = "";
+          wickrBridge.getAwsCredentials(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "translateMessage") {
+          wickrBridge.translateMessage(a, function (success) {
+            log(success);
+          });
+        }
+        if (action === "showTranslationSettings") {
+          wickrBridge.showTranslationSettings(function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "emojiReact") {
+          a["emoji"] = "😊";
+          //a["remove"] = true;
+          wickrBridge.emojiReact(a, function (success) {
+            log(success);
+          });
+        }
+
+        if (action === "unstarMessage") {
+          a["star"] = false;
+          wickrBridge.starMessage(a, function (success) {
+            log(success);
+          });
+        }
+      }
+
+      function convoChanged(convoId) {
+        console.log("convo changed", convoId);
+        run(`${messageBase}${convoId}`);
+      }
+
+      function getClock() {
+        wickrBridge.getAppClock(function (time) {
+          log(time);
+        });
+      }
+
+      function setAppState() {
+        const a = {
+          fileManagement: {
+            folderName: "/",
+            folderUUID: "e2315ef6-3711-465d-8cb4-b7a89f9950cf",
+            dialogOpen: false,
+          },
+        };
+        wickrBridge.setAppState(a);
+      }
+
+      function sendTextMessage(vgroupId, message) {
+        const newMsg = {
+          vgroupId: vgroupId,
+          message: message,
+          // replyTo: "028710f0427f11ee81050da9005ada0a",
+          //  edit: "6e28e4a0429811ee81050da9005ada0a",
+          mentions: [
+            {
+              start: 0,
+              stop: 10,
+              //mentionAll: true,
+              // userId: "dory@mailinator.com",
+              //userHash:
+              // "50a305052b84d9af501912b7b3ec398517c71b118054ee3006c769f124f0dfdd",
+            },
+          ],
+        };
+
+        /*{
+
+                        "vgroupId": "S72eff934a293df5e81aacd1cc725a802dfb44c1f3910ee11ba875991b905ffa",
+                        "message": "Hello World",
+                        "replyTo": "bf9200e0404211eea9c9118ba1e85c07",
+                        "edit": "bf9200e0404211eea9c9118ba1e85c08",
+                        "mentions": [
+                          {
+                            "start": 10,
+                            "stop": 24,
+                            "userId": "bob@amazon.com",
+                            "userHash": "01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44"
+                            "mentionAll": false
+                          },
+                          {
+                            "start": 30,
+                            "stop": 44,
+                            "userId": "ann@amazon.com",
+                            "userHash": "21affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44"
+                          }
+                        ]
+                      }*/
+
+        wickrBridge.sendTextMessage(newMsg);
+      }
+
+      function sendVoiceMemo(vgroupId) {
+        const newMsg = {
+          vgroupId: vgroupId,
+          audioData:
+            "UklGRt46AABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0Ybo6AAA8LDEsJywcLBEsBiz7K/Er5ivbK9Arxiu7K7ArpSuaK5ArhSt6K28rZStaKzvqlNSf1KrUtdS/1MrU1dTg1OrU9dQA1QvVFtUg1SvVNtVB1UvVVtVh1WzVXvV/KnQqaSpfKlQqSSo+KjQqKSoeKhMqCSr+KfMp6CneKdMpyCm+KbMpqCmdKUfWUtZd1mjWctZ91ojWk9ad1qjWs9a+1sjW09be1unW89b+1gnXFNce1ynXMwrCKLcorCiiKJcojCiBKHcobChhKFcoTChBKDYoLCghKBYoDCgBKPYn7CfnEwXYENgb2CbYMNg72EbYUdhb2GbYcdh72IbYkdib2KbYsdi82MbY0djc2ObYSx0FJ/om7ybkJtomzybEJromryakJpomjyaEJnombyZkJlomTyZEJjomLybv/8PZztnZ2eTZ7tn52QTaDtoZ2iTaLto52kTaTtpZ2mTabtp52oTajtqZ2vvjUiVHJT0lMiUnJR0lEiUHJf0k8iToJN0k0iTIJL0ksiSoJJ0kkiSIJH0kcyS07YHbjNuX26HbrNu328HbzNvX2+Hb7Nv32wHcDNwW3CHcLNw23EHcTNxW3Bn3lSOKI4AjdSNqI2AjVSNKI0AjNSMrIyAjFSMLIwAj9iLrIuAi1iLLIsEitiI13T/dSt1V3V/dat113X/dit2U3Z/dqt203b/dyd3U3d/d6d303f7dCd4T3ngI2CHNIcIhuCGtIaMhmCGOIYMheCFuIWMhWSFOIUQhOSEuISQhGSEPIQQhdRDz3v3eCN8T3x3fKN8y3z3fR99S313fZ99y33zfh9+R35zfp9+x37zfxt/R3xwYGiAQIAUg+x/wH+Yf2x/RH8YfvB+xH6cfnB+RH4cffB9yH2cfXR9SH0gf8v+x4LvgxuDQ4Nvg5uDw4PvgBeEQ4RrhJeEv4TrhROFP4VnhZOFu4Xnhg+Er6WgeXR5THkgePh4zHikeHh4UHgke/x30Heod3x3VHcodwB21HasdoB2WHYsdLPFv4nnihOKO4pnio+Ku4rjiw+LN4tji4uLt4vfiAuMM4xfjIeMs4zbjQePT+KscoByWHIscgRx2HGwcYRxXHEwcQhw3HC0cIxwYHA4cAxz5G+4b5BvZG88bIuQt5DfkQuRM5FfkYeRs5HbkgOSL5JXkoOSq5LXkv+TK5NTk3+Tp5PPk/uS+Bu0a4xrZGs4axBq5Gq8apBqaGpAahRp7GnAaZhpbGlEaRxo8GjIaJxodGgMN4OXr5fXlAOYK5hTmH+Yp5jTmPuZJ5lPmXeZo5nLmfeaH5pHmnOam5rHmu+bsEjAZJhkcGREZBxn8GPwY+hj5GPgY9hj1GPMY8hjwGO8Y7hjsGOsY6RjoGPX/BOcG5wfnCecK5wvnDecO5xDnEecT5xTnFecX5xjnGucb5x3nHucf5yHnWu3dGNsY2hjYGNcY1hjUGNMY0RjQGM4YzRjMGMoYyRjHGMYYxBjDGMIYwBi/GJHzLucv5zDnMucz5zXnNuc45znnOuc85z3nP+dA50HnQ+dE50bnR+dJ50rn0/mzGLIYsRivGK4YrBirGKoYqBinGKUYpBiiGKEYoBieGJ0YmxiaGJkYlxiWGFXnV+dY51rnW+dd517nX+dh52LnZOdl52bnaOdp52vnbOdu52/ncOdy53PnIwaKGIkYhxiGGIUYgxiCGIAYfxh+GHwYexh5GHgYdhh1GHQYchhxGG8YbhgxDH/ngOeB54PnhOeG54fnieeK54vnjeeO55DnkeeS55TnleeX55jnmueb55znShJhGGAYXhhdGFsYWhhZGFcYVhhUGFMYUhhQGE8YTRhMGEsYSRhIGEYYRRj2/6jnqeer56znruev57Dnsuez57Xntue357nnuue8573nvufA58Hnw+fE59TtORg4GDcYNRg0GDIYMRgwGC4YLRgrGCoYKBgnGCYYJBgjGCEYIBgfGB0YHBjj89Hn0+fU59Xn1+fY59rn2+fc597n3+fh5+Ln4+fl5+bn6Ofp5+rn7Oft5/z5EBgPGA0YDBgLGAkYCBgGGAUYBBgCGAEY/xf+F/0X+xf6F/gX9xf2F/QX8xf55/rn/Of95//nAOgB6APoBOgG6AfoCOgK6AvoDegO6A/oEegS6BToFegW6PoF5xfmF+QX4xfhF+AX3xfdF9wX2hfZF9gX1hfVF9MX0hfRF88XzhfMF8sX3wsi6CToJegm6CjoKegr6CzoLegv6DDoMugz6DToNug36DnoOug76D3oPuhA6M8Rvhe8F7sXuhe4F7cXtRe0F7MXsRewF64XrResF6oXqReoF6YXpRejF6IX9v9L6E3oTuhQ6FHoUuhU6FXoV+hY6FnoW+hc6F7oX+hg6GLoY+hl6GboZ+hP7pYXlReTF5IXkRePF44XjBeLF4oXiBeHF4UXhBeDF4EXgBd+F30XfBd6F3kXNfR16HboeOh56HrofOh96H7ogOiB6IPohOiF6IfoiOiK6IvojOiO6I/okegl+m0XbBdqF2kXZxdmF2UXYxdiF2AXXxdeF1wXWxdZF1gXVxdVF1QXUxdRF1AXneie6J/ooeii6KTopeim6Kjoqeiq6Kzoreiv6LDoseiz6LTotui36LjouujRBUQXQhdBF0AXPhc9FzsXOhc5FzcXNhc1FzMXMhcwFy8XLhcsFysXKRcoF44LxujH6MnoyujL6M3ozujQ6NHo0ujU6NXo1ujY6Nno2+jc6N3o3+jg6OLo4+hVERsXGRcYFxYXFRcUFxIXERcQFw4XDRcLFwoXCRcHFwYXBBcDFwIXABf/Fvb/7+jw6PLo8+j16Pbo9+j56Pro/Oj96P7oAOkB6QLpBOkF6QfpCOkJ6Qvpye7zFvEW8BbvFu0W7BbrFukW6BbmFuUW5BbiFuEW3xbeFt0W2xbaFtkW1xbWFof0GOka6RvpHOke6R/pIeki6SPpJekm6SjpKekq6SzpLeku6TDpMekz6TTpTvrKFsgWxxbGFsQWwxbBFsAWvxa9FrwWuxa5FrgWtha1FrQWshaxFq8WrhatFkDpQulD6UTpRulH6UjpSulL6U3pTulP6VHpUulT6VXpVulY6VnpWulc6V3pqAWhFp8WnhacFpsWmhaYFpcWlhaUFpMWkRaQFo8WjRaMFosWiRaIFoYWhRY9C2npa+ls6W7pb+lw6XLpc+l06Xbpd+l56Xrpe+l96X7pf+mB6YLphOmF6Ybp2hB3FnYWdRZzFnIWcRZvFm4WbBZrFmoWaBZnFmYWZBZjFmEWYBZfFl0WXBb3/5PplOmV6ZfpmOma6ZvpnOme6Z/poOmi6aPppOmm6afpqemq6avpremu6UTvUBZOFk0WSxZKFkkWRxZGFkUWQxZCFkEWPxY+FjwWOxY6FjgWNxY2FjQWMxbZ9Lzpvem/6cDpwenD6cTpxenH6cjpyunL6czpzunP6dDp0unT6dXp1unX6Xf6JhYlFiQWIhYhFiAWHhYdFhsWGhYZFhcWFhYVFhMWEhYRFg8WDhYMFgsWChbk6eXp5uno6enp6+ns6e3p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NQk0CTMJMgnJ9sr2y/bM9s72z/bQ9tH20vbT9tT21fbW9tj22fa3/SUJJAkiCSEJIAkfCR4JHQkcCRsJGgkZCRgJFgkVCXH75/bo9un26vbr9uz27fbu9u/28Pby9vP29Pb19jj5CAkHCQYJBQkECQMJAgkBCQAJ/wj9CPwI+wj6CPkI/f8D9wT3BfcG9wf3CPcJ9wv3DPcN9w73D/cQ9xH3EvexBusI6gjpCOgI5wjmCOUI4wjiCOEI4AjfCN4I3QhsBB/3IPch9yL3I/cl9yb3J/co9yn3Kvcr9yz3Lfcu9zMCzwjOCM0IzAjLCMkIyAjHCMYIxQjECMMIwgjBCMAIO/c89z73P/dA90H3QvdD90T3RfdG90f3SPdK90v30/2zCLIIsQivCK4IrQisCKsIqgipCKgIpwimCKUIowir+1n3Wvdb91z3Xfde91/3YPdh92P3ZPdl92b3Z/eO+ZYIlQiUCJMIkgiRCJAIjwiOCI0IjAiKCIkIiAiHCP7/dfd293f3ePd593r3fPd99373f/eA94H3gveD94T3WwZ5CHgIdwh2CHUIdAhzCHIIcAhvCG4IbQhsCGsIMwSR95L3k/eV95b3l/eY95n3mveb95z3nfee95/3oPcXAl0IXAhbCFoIWQhXCFYIVQhUCFMIUghRCFAITwhOCK73r/ew97H3svez97T3tfe297f3uPe597v3vPe99/D9QQhACD8IPQg8CDsIOgg5CDgINwg2CDUINAgzCDII5PvL98z3zffO98/30PfR99L31PfV99b31/fY99n35PkkCCMIIgghCCAIHwgeCB0IHAgbCBoIGQgYCBYIFQj+/+f36Pfp9+r36/ft9+737/fw9/H38vfz9/T39ff29wYGBwgGCAUIBAgDCAIIAQgACP8H/Qf8B/sH+gf5B/oDA/gF+Ab4B/gI+An4CvgL+Az4DfgO+A/4EPgR+BP4+gHrB+oH6QfoB+cH5gfkB+MH4gfhB+AH3wfeB90H3Acg+CH4Ivgj+CT4Jfgm+Cf4KPgp+Cr4LPgt+C74L/gM/s8HzgfNB8sHygfJB8gHxwfGB8UHxAfDB8IHwQfABx38Pfg++D/4QPhB+EL4Q/hF+Eb4R/hI+En4SvhL+Dn6sgexB7AHrweuB60HrAerB6oHqQeoB6cHpgelB6MH/v9Z+Fr4W/hd+F74X/hg+GH4Yvhj+GT4Zfhm+Gf4aPiwBZUHlAeTB5IHkQeQB48HjgeNB4wHigeJB4gHhwfCA3b4d/h4+Hn4evh7+Hz4ffh++H/4gPiB+IL4g/iF+N4BeQd4B3cHdgd1B3QHcwdxB3AHbwduB20HbAdrB2oHkviT+JT4lfiW+Jf4mPiZ+Jr4m/id+J74n/ig+KH4Kf5dB1wHWwdZB1gHVwdWB1UHVAdTB1IHUQdQB08HTgdW/K/4sPix+LL4s/i1+Lb4t/i4+Ln4uvi7+Lz4vfiP+kAHPwc+Bz0HPAc7BzoHOQc4BzcHNgc1BzQHMwcyB/7/zPjN+M74z/jQ+NH40vjT+NT41fjW+Nf42PjZ+Nr4WwUjByIHIQcgBx8HHgcdBxwHGwcaBxkHGAcWBxUHiQPo+On46vjr+Oz47fju+O/48Pjx+PL48/j0+Pb49/jBAQcHBgcFBwQHAwcCBwEHAAf+Bv0G/Ab7BvoG+Qb4BgT5BfkG+Qf5CPkJ+Qr5C/kN+Q75D/kQ+RH5EvkT+UX+6wbqBukG6AbmBuUG5AbjBuIG4QbgBt8G3gbdBtwGj/wh+SL5JPkl+Sb5J/ko+Sn5Kvkr+Sz5Lfku+S/55PrOBs0GzAbLBsoGyQbIBscGxgbFBsQGwwbCBsEGwAb+/z75P/lA+UH5QvlD+UT5RflG+Uf5SPlJ+Ur5S/lM+QUFsQawBq8GrgatBqwGqwaqBqkGqAanBqYGpQakBlADWvlb+Vz5Xfle+V/5YPlh+WL5Y/lk+WX5Z/lo+Wn5pQGVBpQGkwaSBpEGkAaPBo4GjQaLBooGiQaIBocGhgZ2+Xf5ePl5+Xr5e/l9+X75f/mA+YH5gvmD+YT5hfli/nkGeAZ3BnYGdAZzBnIGcQZwBm8GbgZtBmwGawZqBsj8lPmV+Zb5l/mY+Zn5mvmb+Zz5nfme+Z/5oPmh+Tr7XAZbBloGWQZYBlcGVgZVBlQGUwZSBlEGUAZPBk4G/v+w+bH5svmz+bT5tfm2+bf5uPm5+br5u/m8+b35vvmwBD8GPgY9BjwGOwY6BjkGOAY3BjYGNQY0BjMGMgYXA8z5zfnO+c/50PnR+dL50/nU+dX51/nY+dn52vnb+YgBIwYiBiEGIAYfBh4GHQYcBhsGGgYZBhcGFgYVBhQG6Pnp+er57Pnt+e757/nw+fH58vnz+fT59fn2+ff5fv4HBgYGBQYEBgMG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",
+          recordingLength: 2000,
+        };
+        wickrBridge.sendVoiceMemo(newMsg);
+      }
+
+      function clipboard() {
+        navigator.clipboard.writeText("Testing copying text from the clipboard");
+        navigator.clipboard.readText().then((clipText) => log(clipText));
+      }
+
+      function markMessageRead(vgroup, message) {
+        const change = {
+          vgroupId: vgroup,
+          //  messageId: message,
+          timeStamp: 1692639122, //1692638741000000,
+        };
+
+        // specify a vgroupId and a messageId OR a timeStamp (seconds or microseconds) OR nothing else
+        wickrBridge.markMessageRead(change, function (success) {
+          log(success);
+        });
+      }
+
+      function starMessage(vgroup, message, star) {
+        const change = {
+          vgroupId: vgroup,
+          messageId: message,
+          star: star,
+        };
+
+        wickrBridge.starMessage(change, function (success) {
+          log(success);
+        });
+      }
+
+      function getQuickResponses() {
+        wickrBridge.getQuickResponses(function (responses) {
+          log(responses);
+        });
+      }
+
+      function getBoundaryIds() {
+        const change = {
+          vgroupId: "S48bdff279e4fd2e297f192f78e09c908bd555cf89e5b9f58d654e1a5f749b19",
+        };
+
+        wickrBridge.getBoundaryIds(change, function (result) {
+          log("oldest unread:", result["oldestUnreadId"]);
+          log("newest:", result["newestId"]);
+          log("oldest:", result["oldestId"]);
+          log("oldest unread mention:", result["oldestUnreadMentionId"]);
+          log("newest unack error:", result["newestUnackErrorId"]);
+        });
+      }
+
+      function checkIfClipboardHasImage() {
+        wickrUiBridge.clipboardHasImage(function (result) {
+          log(result);
+        });
+      }
+
+      function allowGuestUser() {
+        const preferences = {
+          vgroupId: "G403e36eab4f8196e841d44cfe16cc6fda7d7115491f63ed994359429f0073ad",
+          showError: true,
+        };
+
+        wickrBridge.allowForGuestUser(preferences, function (status) {
+          log("Allow for guest user status: ", status);
+        });
+      }
+
+      function convoDetails() {
+        const foo = {
+          vgroupId: "Sa754364e069f1df5f2313f7f0c4776c4e1e092fd0d4e1ba3da6b50957c216a1",
+        };
+
+        wickrBridge.getConversationDetails(foo, function (status) {
+          log("Conversation details:", JSON.stringify(status));
+        });
+      }
+
+      function botNewDM() {
+        const change = {
+          userId: "dllautz@amazon.com",
+          userHash: "22096215ebf04420b9bbec53d248ed0bece84e17e0cd8861589cf5f8f016997f",
+          message: "Hello, Dave",
+        };
+
+        wickrBridge.createDM(change, function (success) {
+          log(success);
+        });
+      }
+
+      function sendSelfTyping() {
+        const change = {
+          activity: "typing",
+        };
+
+        wickrBridge.sendTypingActivity(change, function (success) {
+          log("Self typing indicator status:", success);
+        });
+      }
+
+      function googleMapsApi() {
+        wickrBridge.getGoogleMapsApiInfo(function (result) {
+          log("Roadmap:", result["roadmapSessionToken"]);
+          log("Satellite:", result["satelliteSessionToken"]);
+          log("Terrain:", result["terrainSessionToken"]);
+          log("Hybrid:", result["hybridSessionToken"]);
+          log("Key:", result["apiKey"]);
+        });
+      }
+
+      function getVgroupIdBeforeDmCreation() {
+        const change = {
+          // server hash will be provided on web end, need to provide beta to web team to test out
+          otherUserHash: "",
+        };
+
+        wickrBridge.getVgroupIdFromHash(change, function (vgroupId) {
+          log("Here is the vgroupId, ahead of time:", vgroupId);
+        });
+      }
+
+      function resendMessage() {
+        const change = {
+          vgroupId: "Sf516863038f9521432d5e90d86860bb14b9fb3827767de791b54b0d40ad3316",
+          messageId: "9f3231d8c7de378c435c42486a00530a08c73f7abc9e29de5028abb02557a241",
+        };
+
+        wickrBridge.resendMessage(change, function (result) {
+          log(result);
+        });
+      }
+
+      function clearAll() {
+        wickrBridge.clearAll(function (result) {
+          log("Clear all unreads status:", result);
+        });
+      }
+
+      function pinConvo() {
+        const change = {
+          vgroupId: "S85ad2e877d7b612c7ee0d6ac5007225442698d136168e65f20d03ff0f25ec56",
+        };
+
+        wickrBridge.pinConvo(change, function (result) {
+          log("Pinned convo status:", result);
+        });
+      }
+
+      function unpinConvo() {
+        const change = {
+          vgroupId: "S85ad2e877d7b612c7ee0d6ac5007225442698d136168e65f20d03ff0f25ec56",
+        };
+
+        wickrBridge.unpinConvo(change, function (result) {
+          log("Unpinned convo status:", result);
+        });
+      }
+
+      function leaveConvo() {
+        const change = {
+          vgroupId: "S45f696af260c0461f7390faf99c7484aa3b665e68724fcff502883d37fc897f",
+        };
+
+        wickrBridge.leaveConvo(change, function (result) {
+          log("Leave convo status:", result);
+        });
+      }
+
+      function deleteConvo() {
+        const change = {
+          vgroupId: "S5de4e0132551d89d9b15de0514a8470d0fdeda6260c653ebc658b9e8ff2aabf",
+        };
+
+        wickrBridge.deleteConvo(change, function (result) {
+          log("Deleted convo status:", result);
+        });
+      }
+
+      function startCall() {
+        wickrBridge.handleStartCall(function (result) {
+          log("Handling Call Button Press:", result);
+        });
+      }
+
+      function getSelfCallStatus() {
+        wickrBridge.getSelfCallStatus(function (result) {
+          log("Self user in call:", result);
+        });
+      }
+
+      function ackMsgSendFailure() {
+        const foo = {
+          vgroupId: "S48bdff279e4fd2e297f192f78e09c908bd555cf89e5b9f58d654e1a5f749b19",
+          msgId: "e1b7f6a0946d11ee856ccf3c2e98caf0",
+        };
+
+        wickrBridge.ackMessageSendFailure(foo, function (result) {
+          log("Status for acking message send failure:", result);
+        });
+      }
+
+      function getAnalyticsCapabilities() {
+        wickrBridge.supportedAnalytics(function (result) {
+          log("supported Analytics:", result);
+        });
+      }
+
+      function sendAnalyticsEvent() {
+        const foo = {
+          event: "Guest Sign Up",
+        };
+
+        wickrBridge.sendAnalyticsEvent(foo, function (result) {
+          log("sendAnalyticsEvent:", result);
+        });
+
+        const bar = {
+          callRating: 5,
+        };
+
+        wickrBridge.sendAnalyticsEvent(bar, function (result) {
+          log("sendAnalyticsEvent:", result);
+        });
+
+        const message = {
+          key: "Purchase",
+          count: 1,
+          sum: 1000,
+          dur: 3600,
+          segmentation: {
+            Item: "Laptop X",
+            "Sub Category": "Computers",
+            "Main Category": "Electronics",
+          },
+        };
+
+        wickrBridge.sendAnalyticsMessage(message, function (result) {
+          log("sendAnalyticsMessage:", result);
+        });
+      }
+
+      function cancelFile() {
+        const foo = {
+          uuid: "a10af881-2f78-4dd4-95f5-96f48d04775b",
+          action: "cancel",
+        };
+
+        wickrBridge.fileTransferAction(foo, function () {
+          log("file canceled:", uuid);
+        });
+      }
+
+      function clearFile() {
+        const foo = {
+          uuid: "59F82B74-19F0-4E0C-9F86-613D8EA683C9",
+          action: "clear",
+        };
+
+        wickrBridge.fileTransferAction(foo, function () {
+          log("file cleared:", uuid);
+        });
+      }
+
+      function getActiveConvoInfo() {
+        wickrBridge.getActiveConvoInfo(function (result) {
+          log(result["vgroupId"]);
+        });
+      }
+
+      function getWindowStatus() {
+        wickrBridge.isWindowFocused(function (focus) {
+          log("the window has focus:", focus);
+        });
+      }
+
+      function sendRetryWOAProxy() {
+        wickrBridge.sendRetryWOAProxy(function (status) {
+          log("retry woa proxy status:", status);
+        });
+      }
+
+      function createFolder() {
+        f = {
+          vgroupId: currentVgroupId,
+          folderName: "New sub folder 2",
+          parentFolderUUID: "3d433998-317a-4610-8b2b-4aa29134bbfa",
+        };
+        fileManager.createFolder(f, function (response) {
+          logObj(response);
+        });
+      }
+
+      function renameFolder() {
+        f = {
+          vgroupId: currentVgroupId,
+          folderName: "A Subfolder3",
+          folderUUID: "8d93b911-9561-4393-9d4f-a25c471d1987",
+        };
+        fileManager.renameFolder(f, function (response) {
+          logObj(response);
+        });
+      }
+
+      function removeFolder() {
+        f = {
+          vgroupId: currentVgroupId,
+          folderUUID: "0929b6bb-80bd-46f0-a0fe-cb0114db0aee",
+        };
+        fileManager.removeFolder(f);
+      }
+
+      function moveFolder() {
+        f = {
+          vgroupId: currentVgroupId,
+          folderUUID: "416e4590-43d8-40d6-ae3b-540074996372",
+          newParentFolderUUID: "8d93b911-9561-4393-9d4f-a25c471d1987",
+        };
+        fileManager.moveFolder(f);
+      }
+
+      function moveFile() {
+        f = {
+          vgroupId: currentVgroupId,
+          fileUUID: "be128d44-6d85-43be-8077-9e6e430a3c89",
+          folderUUID: "7f26472a-5b37-4c67-89f9-7bca52fbd65e",
+        };
+        fileManager.moveFile(f, function (response) {
+          logObj(response);
+        });
+      }
+
+      function unPinLink() {
+        const foo = {
+          vgroupId: "Se825e6ab519ae57d4aadabdda46f8a0e8bf860f0c016f9e82eeb0a8c5e204de",
+          link: "https://www.amazon.com",
+        };
+
+        fileManager.unPinLink(foo, function (success) {
+          log(success);
+        });
+      }
+
+      function checkNames() {
+        let f = {
+          fileName: "hello.txt",
+        };
+        fileManager.checkName(f, function (response) {
+          logObj(response);
+        });
+
+        f = {
+          fileName: "h*e&l;/o.txt",
+        };
+        fileManager.checkName(f, function (response) {
+          logObj(response);
+        });
+
+        f = {
+          folderName: "My Documents",
+        };
+        fileManager.checkName(f, function (response) {
+          logObj(response);
+        });
+      }
+
+      let uploadUUID = "";
+      function pinNewFile() {
+        options = {
+          title: "Upload file",
+        };
+
+        const parentFolder = "5d6b344d-e4d9-468f-ba3a-357944a98001";
+        fileManager.showOpenDialog(options, function (r) {
+          if ("fileName" in r) {
+            fileName = r["fileName"];
+            size = r["size"];
+            log("file name:", fileName);
+            log("file size:", size);
+            if (fileName.length > 0) {
+              r["vgroupId"] = currentVgroupId;
+              r["parentFolder"] = parentFolder;
+              r["renamedFile"] = "renamed2";
+              fileManager.pinNewFile(r, function (u) {
+                logObj(u);
+                uploadUUID = u["uuid"];
+                log("new pinned file: ", uploadUUID);
+              });
+            }
+          } else {
+            console.log("The user did not select a file");
+          }
+        });
+      }
+
+      function downloadPinnedFile() {
+        options = {
+          title: "Save as",
+        };
+
+        r = {
+          fileUUID: "7a4c2df4-a8cb-4fd2-b598-ea3366961887",
+          vgroupId: currentVgroupId,
+        };
+        fileManager.downloadPinnedFile(r);
+      }
+
+      function openPinnedFile() {
+        r = {
+          fileUUID: "622abf2a-e135-4083-9fc7-cec5ddb26596",
+          vgroupId: currentVgroupId,
+        };
+        fileManager.openPinnedFile(r);
+      }
+
+      function cancelDownload() {
+        f = {
+          uuid: "c4540c19-caff-453c-a622-e79ead9e9692",
+        };
+
+        fileManager.cancelDownload(f);
+      }
+
+      function getBranding() {
+        const foo = {
+          string: "productName",
+        };
+
+        wickrBridge.getString(foo, function (status) {
+          log("productName:", status.string);
+        });
+
+        const bar = {
+          link: "privacyPolicyURL",
+        };
+
+        wickrBridge.getLink(bar, function (status) {
+          log("privacyPolicyURL:", status.link);
+        });
+      }
+
+      function cancelPinNewFile() {
+        f = {
+          uuid: "ab2f056a-6bb6-465a-964f-9c1c6108eac2",
+        };
+
+        fileManager.cancelPinNewFile(f);
+      }
+
+      function unpinFile() {
+        f = {
+          vgroupId: currentVgroupId,
+          uuid: "be128d44-6d85-43be-8077-9e6e430a3c89",
+        };
+        fileManager.unPinFile(f);
+      }
+
+      function unPinItems() {
+        f = {
+          vgroupId: currentVgroupId,
+          files: ["7219f5ae-b34d-4092-bf52-6a50a809f4cb", "3452ab19-253b-4570-ba25-0ad19054292b"],
+          links: ["https://www.amazon.com", "https://www.microsoft.com"],
+        };
+        fileManager.unPinItems(f);
+      }
+
+      function renameFile() {
+        r = {
+          vGroupID: currentVgroupId,
+          uuid: "6b8a7ff7-c0a2-4460-9d01-d63092992c04",
+          existingFileName: "Dory_(Finding_Nemo).png",
+          newFileName: "Dory_()",
+        };
+        fileManager.renamePinnedFile(r, function (response) {
+          logObj(response);
+        });
+      }
+
+      function clearBotWarning() {
+        const foo = {
+          vgroupId: "S60332dd019dd11c38dcc88219368b159dafedd840b7c81482478c3645b13a59",
+        };
+
+        wickrBridge.clearBotWarning(foo, function (status) {
+          log("clear bot warning status:", status);
+        });
+      }
+
+      function notNowVerify() {
+        const foo = {
+          userId: "",
+          manuallyUnverified: "false",
+        };
+
+        wickrBridge.notNowUnverifiedUser(foo, function (status) {
+          log("not now verify status:", status);
+        });
+      }
+
+      function createRoom() {
+        const foo = {
+          members: [""],
+          roomTitle: "best room ever",
+          roomDescription: "welcome to the best room ever",
+          destructionTime: 31536000,
+          burnOnRead: 0,
+        };
+
+        wickrBridge.createRoom(foo, function (success) {
+          log("Create room status:", success);
+        });
+      }
+
+      function createGroup() {
+        const foo = {
+          members: ["b41e9830b87c971a667883e16de269cce63165a4879cba651fda33f5ed325108", "17e9b6646ef2a99c39dd7f795c8457c15b76e8c29ad2ac7cd60512f48be69cc3"],
+        };
+
+        wickrBridge.createGroup(foo, function (success) {
+          log("Create group status:", success);
+        });
+      }
+
+      function setActiveConvo(convo) {
+        const foo = {
+          vgroupId: convo,
+        };
+
+        wickrBridge.setActiveConvo(foo);
+      }
+
+      function sendEmail() {
+        const foo = {
+          to: "hellowickr@mailinator.com",
+          subject: "hello",
+          body: "testing",
+        };
+
+        wickrBridge.sendEmail(foo, function (success) {
+          log("Send email status:", success);
+        });
+      }
+
+      function sendErrorReport() {
+        const foo = {
+          vgroupId: "b3923c46516d17daba218857c5bee6b33331e2dced5df3d6041c4cf61748a322",
+          msgId: "c015543eafe0561a930e96188d4e1ba445b50191e64958b77e86a867be45d509",
+        };
+
+        wickrBridge.reportError(foo, function (success) {
+          log("Report error status:", success);
+        });
+      }
+
+      <!--addedUsers: [],-->
+      <!--deletedUsers: [],-->
+      <!--title: "",-->
+      <!--description: "",-->
+      <!--deletedModerators: [],-->
+      <!--destructionTime: ,-->
+      <!--burnOnRead: ,-->
+      <!--addedModerators: [],-->
+      function editConvo() {
+        const foo = {
+          vgroupId: "S622f4080fff6b428b4b4c0209826daa4c5c6d66c9d5036443d26b4cdc0b0fa3",
+          burnOnRead: 259200,
+        };
+
+        wickrBridge.editConvo(foo, function (success) {
+          log("Edit convo status:", success);
+        });
+      }
+
+      function sendSystemNotification() {
+        const foo = {
+          message: "Hello World!",
+        };
+
+        wickrBridge.systemNotification(foo, function (success) {
+          log("System Notification:", success);
+        });
+      }
+
+      function setConvoNotification() {
+        const foo = {
+          vgroupId: "S78857693974809a44beda99ef50e569cb8f3d25d2724031437b0a68276b04d2",
+          all: true,
+        };
+
+        wickrBridge.setConvoNotification(foo, function (success) {
+          log("Change convo notification status:", success);
+        });
+      }
+
+      function setIsFavorite() {
+        const foo = {
+          userHash: "b41e9830b87c971a667883e16de269cce63165a4879cba651fda33f5ed325108",
+          favorite: false,
+        };
+
+        wickrBridge.setIsFavorite(foo, function (success) {
+          log("Set as favorite status:", success);
+        });
+      }
+
+      function setIsBlocked() {
+        const foo = {
+          userHash: "b41e9830b87c971a667883e16de269cce63165a4879cba651fda33f5ed325108",
+          block: false,
+        };
+
+        wickrBridge.setIsBlocked(foo, function (success) {
+          log("Set as blocked status:", success);
+        });
+      }
+
+      function getAccountAttributes() {
+        wickrBridge.accountAttributes(function (success) {
+          log("accountAttributes:", JSON.stringify(success));
+        });
+      }
+
+      function startShredder() {
+        const foo = {
+          action: "start",
+        };
+        wickrBridge.shredderAction(foo);
+      }
+
+      function stopShredder() {
+        const foo = {
+          action: "stop",
+        };
+        wickrBridge.shredderAction(foo);
+      }
+
+      function shredderStatus() {
+        wickrBridge.shredderStatus(function (success) {
+          log("Shredder status:", JSON.stringify(success));
+        });
+      }
+
+      function saveLogs() {
+        wickrBridge.saveLogs();
+      }
+
+      function clearLogs() {
+        wickrBridge.clearLogs();
+      }
+
+      function setCustomName() {
+        const foo = {
+          userHash: "b41e9830b87c971a667883e16de269cce63165a4879cba651fda33f5ed325108",
+          customName: "",
+        };
+
+        wickrBridge.setCustomName(foo, function (success) {
+          log("Set custom name:", success);
+        });
+      }
+
+      function suspendDevice() {
+        const foo = {
+          appId: "928220652c24ed0c86dfc7d31a42963d0f3a8b2021b63ef66d1d5b5a45243719",
+        };
+
+        wickrBridge.suspendDevice(foo, function (success) {
+          log("Suspend device status:", success);
+        });
+      }
+
+      function viewOpenSource() {
+        wickrBridge.viewOpenSource();
+      }
+
+      function quitApp() {
+        wickrBridge.quitApp();
+      }
+
+      function signOut() {
+        wickrBridge.signOut();
+      }
+
+      function getAppVersion() {
+        wickrBridge.getAppVersion(function (foo) {
+          log("App Version:", foo["version"]);
+        });
+      }
+
+      function checkForUpdates() {
+        wickrBridge.checkForUpdates();
+      }
+
+      function resetApp() {
+        wickrBridge.resetApp();
+      }
+
+      function uninstallApp() {
+        wickrBridge.uninstallApp();
+      }
+
+      function validatePassword() {
+        const foo = {
+          password: "",
+        };
+
+        wickrBridge.validatePassword(foo, function (success) {
+          log("Validate password status:", success);
+        });
+      }
+
+      function requestChimeRegisterProfile() {
+        wickrBridge.requestChimeRegisterProfile();
+      }
+
+      function messageUnreadCount() {
+        wickrBridge.messageUnreadCount(function (unreadCounts) {
+          const roomCount = unreadCounts.messageUnreadRoomCount;
+          const groupCount = unreadCounts.messageUnreadGroupCount;
+          const dmCount = unreadCounts.messageUnreadDMCount;
+          log("messageUnreadCount changed:", roomCount, groupCount, dmCount);
+        });
+      }
+
+      function verifyUser() {
+        const foo = {
+          userId: "nightwing@mailinator.com",
+          verify: true,
+        };
+
+        wickrBridge.verifyUser(foo, function (status) {
+          log("Verify/Unverify user status:", status);
+        });
+      }
+
+      function validateQRCode() {
+        const foo = {
+          qrCode: "",
+        };
+
+        wickrBridge.validateQRCode(foo, function (status) {
+          log("QR code validation status:", status);
+        });
+      }
+
+      function changeProfilePicture() {
+        wickrBridge.changeProfilePicture(function (status) {
+          log("Change profile picture status:", status);
+        });
+      }
+
+      function clearProfilePicture() {
+        const foo = {
+          remove: true,
+        };
+
+        wickrBridge.changeProfilePicture(foo, function (status) {
+          log("Clear profile picture status:", status);
+        });
+      }
+
+      function changePresence() {
+        const foo = {
+          enable: true,
+        };
+
+        wickrBridge.changePresence(foo, function (status) {
+          log("Change presence status:", status);
+        });
+      }
+
+      function isGuardEnabled() {
+        wickrBridge.isGuardEnabled(function (status) {
+          log("Guard enabled status:", status);
+        });
+      }
+
+      function resetDirectory() {
+        wickrBridge.resetDirectory(function (status) {
+          log("Reset directory status:", status);
+        });
+      }
+
+      function getUserStatus() {
+        const foo = {
+          userIds: ["nightwing@mailinator.com"],
+        };
+
+        wickrBridge.getUserStatus(foo, function (status) {
+          log("Get user status:", status);
+        });
+      }
+
+      function sendLocationMessage() {
+        const foo = {
+          latitude: 40.74844,
+          longitude: -73.985664,
+          vgroupId: "Sb30141a4d0032d8dc62f0a45fe4127bee83a24e1603f603510dd953e09e1739",
+        };
+
+        wickrBridge.sendLocationMessage(foo, function (status) {
+          log("Send location message status:", status);
+        });
+      }
+
+      function activateHyperlink() {
+        const foo = {
+          url: "https://google.com",
+        };
+
+        wickrBridge.activateHyperlink(foo, function (status) {
+          log("Activate hyperlink status:", status);
+        });
+      }
+
+      function updateRecentSearchQueries() {
+        const foo = {
+          searchQuery: "wickr",
+          producedResults: true,
+        };
+
+        wickrBridge.updateRecentSearchQueries(foo, function (status) {
+          log("Update recent search queries status:", status);
+        });
+      }
+
+      function isDBCorrupted() {
+        wickrBridge.isDBCorrupted(function (status) {
+          log("DB corruption status:", status);
+        });
+      }
+
+      function showDBError() {
+        wickrBridge.showDBError(function (status) {
+          log("Show DB error status:", status);
+        });
+      }
+
+      function getProcessMetrics() {
+        wickrBridge.processMetrics(function (status) {
+          log("Process metrics:");
+          logObj(status);
+        });
+      }
+
+      function closeAccount() {
+        wickrBridge.ssoTerminateAccount(function (status) {
+          log("SSO terminate account status:", status);
+        });
+      }
+
+      function resetProcessMetrics() {
+        wickrBridge.resetProcessMetrics();
+      }
+
+      // non API related, used to hide and show buttons underneath each header
+      function headerClicked(buttonGroup) {
+        if (buttonGroup === "") {
+          log("No button group provided");
+        } else {
+          var displayStatus = document.getElementById(buttonGroup).style.display;
+
+          if (displayStatus === "none") {
+            displayStatus = "block";
+          } else {
+            displayStatus = "none";
+          }
+
+          document.getElementById(buttonGroup).style.display = displayStatus;
+        }
+      }
+
+    function messageDeleteMessage(vgroup, message) {
+        const change = {
+            vgroupId: vgroup,
+            messageId: message,
+        };
+
+        wickrBridge.deleteMessage(change, function (success) {
+            log("Delete message:", success);
+        });
+    }
+
+      function setIsWebViewLoaded() {
+        const foo = {
+          status: true,
+        };
+
+        wickrBridge.setIsWebViewLoaded(foo, function () {
+          log("Setting webview status");
+        });
+      }
+
+      function setSupportedErrors() {
+        const foo = {
+          supportedErrors: ["SUSPENDED_ACCOUNT", "ADMIN_DEVICE_SUSPEND", "FILE_ALREADY_SAVED", "WOA_PROXY_NOT_STARTED", "WOA_FOA_ON",
+          "WOA_DISABLED_ON_NETWORK", "WOA_ADMIN_UPDATED_CONFIG", "WOA_PROBLEM_WITH_CONFIG", "WOA_FALLBACK_TO_OLD_CONFIG",
+          "WOA_FOA_CANNOT_LOGIN_INVALID_CONFIG", "ACTIVE_ROOM_DELETED", "REMOVED_FROM_ACTIVE_ROOM", "DIRECTORY_SERVER_ERROR"],
+        };
+
+        wickrBridge.setSupportedErrors(foo, function () {
+          log("Setting webview status");
+        });
+      }
+
+      function pushDeviceQRScan() {
+        const foo = {
+          pubKeyBytes: "",
+        };
+
+        wickrBridge.pushDeviceQRScan(foo, function (status) {
+          log("Push device QR scan status", status);
+        });
+      }
+
+      function switchToCode() {
+        const foo = {
+          pubKeyBytes: "",
+        };
+
+        wickrBridge.switchToCode(foo, function (status) {
+          log("Switch to code status", status);
+        });
+      }
+
+      function pushDeviceCode() {
+        const foo = {
+        };
+
+        wickrBridge.pushDeviceCode(foo, function (status) {
+          log("Push device code status", status);
+        });
+      }
+
+      function getUsersToManage() {
+        wickrBridge.getUsersToManage(function (users) {
+          logObj(users);
+        });
+      }
+
+      function userActionRemove() {
+        const foo = {
+          userId: "jtest4@mailinator.com",
+          status: "inactive",
+        };
+
+        wickrBridge.userActionRemove(foo, function(status) {
+          log("User action remove status:", status);
+        });
+      }
+
+      function updateApp() {
+        wickrBridge.updateApp(function(status) {
+          log("Update app status:", status);
+        });
+      }
+
+      function ignoreUpdate() {
+        wickrBridge.ignoreUpdate(function(status) {
+          log("Ignore update status:", status);
+        });
+      }
+
+      function blockATORequest() {
+        wickrBridge.blockATORequest(function(status) {
+          log("Block ATO request status:", status);
+        });
+      }
+
+      function use12HourFormat() {
+        wickrBridge.use12HourFormat(function(status) {
+          log("Use 12 hour format status:", status);
+        });
+      }
+
+      function loadLinks() {
+        wickrBridge.getBrandingLinks(function (linkData) {
+          log("Updated Link information:");
+          logObj(linkData);
+        });
+      }
+
+      function manageNotifications() {
+        const foo = {
+          vgroupId: "Sf471afebb430c84ee0de418616ac21cc9dee63b7baf44d1baba0f44617ca2f1",
+          isMuted: true,
+          sync: true,
+          muteSelfMentions: true,
+          muteAllMentions: true,
+          muteCalls: false,
+          hideBadgeCount: false,
+          muteExpiration: -1,
+        }
+
+        wickrBridge.manageNotifications(foo, function(status) {
+          log("Manage notifications status:", status);
+        });
+      }
+
+      function testCrashReporting() {
+        wickrBridge.testCrashReporting(function (status) {
+          log("Test crash reporting status:", status);
+        });
+      }
+
+      function testNetworkBanner() {
+        const foo = {
+          enabled: true,
+          content: "Free Icecream in the Lobby",
+          severity: "info",
+          dismissible: true,
+        }
+
+        wickrBridge.testNetworkBanner(foo, function(status) {
+          log("Test network banner status:", status);
+        });
+      }
+
+      function forwardMessage() {
+        const foo = {
+          originalVGroupId: "S186c0540f00dbc30f8491d56f41e30e97d8096f3af00a8eec1e5485b13551a5",
+          originalMessageId: "be4357d08a9511f0bde9b338d2a7ea0b",
+          targetVGroupId: "S18173141f48a61ef02f95e4cf4af99065a6cdcbdfda8ed80f5af01dc0f2e095",
+          comment: "Hello World, look at what this person sent",
+        }
+
+        // originalVGroupId: "3eabcfcf54f6c24897070eb53adb3519336e59023ae2e9e4b9ddd38df274c39f"
+        // targetVGroupId: "S442135b08b63af94cb46cd011fb96e5bed436c54c999a970b6cb4a51b67a802"
+        // targetUserHashes: ["1715981c4ae5da78e6bc471f3b1b7525f083674057c68f04ff80418bf694dbd6", "1053818734a03635b99daee32ef27c59b022bd245aa04ec29db5f663f05aa19f"]
+        // location - ec0c1d207a4e11f083a4d7b48f312bba
+        // file - fa5975d07a4e11f083a4d7b48f312bba
+
+        wickrBridge.forwardMessage(foo, function(status) {
+          log("Test forward message:", status);
+        });
+      }
+
+      function testCheckUserExists() {
+        const username = "ludai002@mailinator.com";
+    
+        try {
+          wickrOnboardingBridge.checkUserExists(username, false, false, function(result) {
+            console.log("Check user exists result:", result);
+          });
+        } catch (error) {
+        console.error("Error checking user exists:", error);
+        }
+      }
+ 
+      function testVerifyInviteCode() {
+        // Call the API with test values
+        wickrOnboardingBridge.verifyInviteCode("ludai001@mailinator.com", "UW27SSNTK3IGCU7");
+      }
+
+      function testVerifyInviteCode_emailExists() {
+        // Call the API with test values
+        wickrOnboardingBridge.verifyInviteCode("ludai002@mailinator.com", "UW27SSNTK3IGCU7");
+      }
+
+
+      function testRegisterWithPassword() {
+        // Call the API with test values
+        wickrOnboardingBridge.registerWithPassword("Password");
+      }
+
+      function testInitiateLogin() {
+        // Call the API with test values
+        wickrOnboardingBridge.initiateLogin("ludai001@mailinator.com", "password", "");
+      }
+
+      function testResetPassword() {
+        // Call the API with test values
+        wickrOnboardingBridge.resetPassword("ludai002@mailinator.com");
+      }
+
+      function testVerifyMasterRecoveryKey() {
+        // Call the API with test values
+        wickrOnboardingBridge.verifyMasterRecoveryKey("018E 346D 4AS7 K93H NW0V 4P93 E0Y7 1JRQ F9C8 0RNN 7VRQ B4SG 0EJ4 9");
+      }
+
+      function testSSOProvision() {
+        // Call the API with test values
+        console.log("calling testSSOProvision");
+        const AccountFlowType = {
+          RegularSsoUser: Number(0),  // Explicitly convert to number
+          GuestSignUp: Number(1),
+          GuestSignIn: Number(2)
+        };
+        wickrOnboardingBridge.handleSSOProvisionChanged("dunnmtt@testentra.qa.worktalk.me", "UW2-Matt-SSO_yejjqp", AccountFlowType.RegularSsoUser);
+      }
+
+      function testStartGuestSignUpFlow() {
+        // Call the API with test values
+        console.log("calling StartGuestSignUpFlow");
+        wickrOnboardingBridge.startGuestSignUpFlow();
+      }
+
+      async function testShowSaveFileDialog() {
+        try {
+          // Call the API and await the response
+          const response = await wickrOnboardingBridge.showSaveFileDialog();
+          
+          // Log the response for debugging
+          console.log('Save dialog response:', JSON.stringify(response));
+
+          // Test the response structure
+          if (response.success) {
+            console.log('File saved successfully');
+          } else if (response.error) {
+            console.log('Dialog result:', response.error);
+          } else {
+            console.error('Unexpected response format:', response);
+          }
+        } catch (error) {
+          console.error('Error in save dialog:', error);
+        }
+      }
+
+      // can be used to benchmark a single iteration of an API call
+      // to call: benchmark(functionName, [arg1, arg2, arg3, ...])
+      async function benchmark(buttonFunction, args) {
+        const start = performance.now();
+        const temp = await buttonFunction.apply(this, args);
+        const end = performance.now();
+        log(buttonFunction.name, "took", end - start, "ms");
+      }
+      
+    </script>
+  </head>
+
+  <body>
+    <p onclick="headerClicked('endpointButtons')">Endpoints (Hide/Show)</p>
+    <div id="endpointButtons">
+      <button onclick="run(`${messageBase}${mainVgroupId}`)">Run Convo</button>
+      <button onclick="run(`wickrweb://message/S3ee80f7b322c71bb535cf758615772bb67b7994ac6b274b573c225de319c5dc/77a693d04e8011eeb9d2f97ebde6c8b2/3/5`)">Run Message</button>
+      <button onclick="run(`${userbase}id/${userId}`)">Run User Name</button>
+      <button onclick="run(`${userbase}idHash/${userhash}`)">Run User</button>
+      <button onclick="runPut(`${messageBase}${mainVgroupId}/3f5193003bc911ee9ac913b306fd33e6?starred=true`)">Star</button>
+      <button onclick="runPut(`${messageBase}${mainVgroupId}/3f5193003bc911ee9ac913b306fd33e6?starred=false`)">Unstar</button>
+      <button onclick="runPost(`${messageBase}${mainVgroupId}`, `hello world 😄`)">Send message (Post)</button>
+      <button onclick="run(`${convoBase}${mainVgroupId}`)">Get single convo</button>
+      <button onclick="run(`${convoBase}${mainVgroupId}/members`)">Get All Members</button>
+      <button onclick="run(`${convoBase}${mainVgroupId}/members/others`)">Get Other Members</button>
+      <button onclick="run(`wickrweb://users/id/nemo@mailinator.com`)">Get a user from ID</button>
+      <button onclick="run(`wickrweb://users/idHash/01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44`)">Get a user from ID Hash</button>
+      <button onclick="run(`wickrweb://users`)">Get all users</button>
+      <button onclick="getSomeUsers(`wickrweb://users`)">Get some users</button>
+      <button onclick="run(`${convolistBase}${mainVgroupId}`)">Run ConvoList (specific)</button>
+      <button onclick="run(`${convolistBase}`)">Run ConvoList</button>
+      <button onclick="run(`wickrweb://users/self`)">Get self user</button>
+      <button onclick="runJson(`wickrweb://search`, { 'searchQuery' : 'test%3F', 'numConvoItems' : '5', 'numFileItems' : '-1', 'numMessageItems' : '5', 'numStarredItems' : '5', 'numSearchItems' : '5', 'activeTab' : 'files', 'isStarred' : 'false' })">Run search</button>
+      <button onclick="run(`wickrweb://users/blocked`)">Get blocked users</button>
+      <button onclick="runGetActiveDevices(`wickrweb://devices/active`)">Get Active Devices</button>
+      <button onclick="runJson(`wickrweb://convo/S9deaff10638fe31313a6e3c8bc1c40ce5140759adbafe087d529cf4cb8d3b0c/roomHistory`, {})">Get room history</button>
+      <button onclick="runJson(`wickrweb://message/18e8110cca62d6b15ff00e391928f8d1e1484d1cf804c3ca67dd3045624a4d8a/ccc876d017d411ef8b76f1e6421c0a24/react/👨‍💻`, { 'remove' : 'false' })">Emoji React</button>
+      <button onclick="run(`wickrweb://contacts/contacts`)">Get Contacts</button>
+      <button onclick="runWithHeaders(`wickrweb://contacts/directory`, {'pageNumber' : '1'})">Get Directory</button>
+      <button onclick="runWithHeaders(`wickrweb://contacts/search`, {'searchQuery' : 'test'})">Search Contacts/Directory</button>
+      <button onclick="runGetChimeToken(`wickrweb://chimetoken`)">Get Chime Token</button>
+      <button onclick="runJson(`wickrweb://verification/fingerprints/nightwing@mailinator.com`, {})">Get Fingerprints</button>
+      <button onclick="runJson(`wickrweb://myaccount/password`, {'oldPassword' : '', 'newPassword' : ''})">Change Password</button>
+      <button onclick="runJson(`wickrweb://myaccount/leavenetwork`, {'password' : ''})">Leave Network</button>
+      <button onclick="runJson(`wickrweb://contacts/convertdirectoryuser`, {'userId' : '', 'userHash' : ''})">Convert Directory User to Contact</button>
+      <button onclick="runJson(`wickrweb://admin/controls`, {})">Open Admin Console</button>
+      <button onclick="runJson(`wickrweb://admin/inviteuser`, {'email' : 'bena@mailinator.com'})">Invite to Team</button>
+      <button onclick="runJson(`wickrweb://contacts/checkuser`, {'searchQuery' : 'jakobtag@mailinator.com'})">Check User</button>
+      <button onclick="run(`wickrweb://file/message/S0a5a987e3bb19b17b389da2d6b7a10cc0c2901c496f5024d100c4af839b804d/0221c980be2911ef99f04b222c50cd5c`)">Download Message File Data</button>
+      <button onclick="run(`wickrweb://file/savedfile/d110b16f-5e56-4b02-bbbd-877c25bf7ca8`)">Download Saved File Data</button>
+      <button onclick="run(`wickrweb://filemanager/S9e4c071792eb9b2226cd3a46721ceed6dce915ff786f799417d3c9a3292968b/`)">Load Files</button>
+      <button onclick="run(`wickrweb://filemanager/S9e4c071792eb9b2226cd3a46721ceed6dce915ff786f799417d3c9a3292968b/saveditems`)">Saved Files</button>
+      <button onclick="runJson(`wickrweb://awscredentials`, {})">AWS Credentials</button>
+      <button onclick="runJson(`wickrweb://convo/getTdfTags`, {'description' : 'SECRET relto FAKE'})">TDF Tags</button>
+    </div>
+
+    <p onclick="headerClicked('uiBridgeButtons')">Wickr UI Bridge (Hide/Show)</p>
+    <div id="uiBridgeButtons">
+      <button onclick="uiAction('test')">UI Action (test)</button>
+      <button onclick="uiAction('uploadFile')">UI Action (uploadFile)</button>
+      <button onclick="uiAction('shareLocation')">UI Action (shareLocation)</button>
+      <button onclick="uiAction('imagePreview')">Image preview window</button>
+      <button onclick="uiAction('openFile')">Open File</button>
+      <button onclick="uiAction('saveFile')">Save File</button>
+      <button onclick="uiAction('locationPopup')">Location Window</button>
+      <button onclick="uiAction('joinCall')">Join Call</button>
+      <button onclick="uiAction('declineCall')">Decline Call</button>
+      <button onclick="uiAction('messageHistory')">Message History</button>
+      <button onclick="uiAction('viewContactDetails')">View Contact Details</button>
+      <button onclick="uiAction('openLink')">Open Link</button>
+      <button onclick="uiAction('reactionPopup')">Reaction Popup</button>
+      <button onclick="uiAction('showMessageDialog')">Show message dialog</button>
+      <button onclick="uiAction('deleteMessage')">Delete message</button>
+      <button onclick="uiAction('reportUser')">Report User</button>
+      <button onclick="uiAction('pasteImage')">UI Action (pasteImage)</button>
+      <button onclick="uiAction('openHamburgerMenu')">Open Hamburger Menu</button>
+      <button onclick="uiAction('showMessageError')">Show message error</button>
+      <button onclick="uiAction('viewRoomDetails')">Show Convo Details</button>
+      <button onclick="uiAction('openSearchPopout')">Show Search Popout</button>
+      <button onclick="uiAction('openSavedItems')">Show Saved Items</button>
+      <button onclick="uiAction('addMods')">Add Mods</button>
+      <button onclick="uiAction('manageUsers')">Manage Users</button>
+      <button onclick="uiAction('verifyContact')">Verify Contact</button>
+      <button onclick="uiAction('createGroup')">Create Group</button>
+      <button onclick="uiAction('createRoom')">Create Room</button>
+      <button onclick="uiAction('createDM')">Create DM</button>
+      <button onclick="uiAction('referAFriend')">Refer a Friend</button>
+      <button onclick="uiAction('limitedGuestAccess')">Limited Guest Access</button>
+      <button onclick="uiAction('myAccount')">My Account</button>
+      <button onclick="uiAction('addDevice')">Add or Sync Device</button>
+      <button onclick="uiAction('securityVerification')">Security Verification</button>
+      <button onclick="uiAction('openSettingsPanel')">Open Settings Panel</button>
+      <button onclick="uiAction('toggleFileDropArea')">Toggle File Drop Area</button>
+      <button onclick="uiAction('openContactsPanel')">Open Contacts Panel</button>
+    </div>
+
+    <p onclick="headerClicked('onboardingBridgeButtons')">Wickr Onboarding Bridge (Hide/Show)</p>
+    <div id="onboardingBridgeButtons">
+      <button onclick="testCheckUserExists()">Test Check User Exists</button>
+      <button onclick="testVerifyInviteCode()">Test Verify Invite Code</button>
+      <button onclick="testVerifyInviteCode_emailExists()">Test Verify Invite Code - Email Exists</button>
+      <button onclick="testRegisterWithPassword()">Test Register With Password</button>
+      <button onclick="testInitiateLogin()">Test Initiate Login</button>
+      <button onclick="testResetPassword()">Test Reset Password</button>
+      <button onclick="testVerifyMasterRecoveryKey()">Test VerifyMasterRecoveryKey</button>
+      <button onclick="testLogout()">Test Log out</button>
+      <button onclick="testSSOProvision()">Test SSO Provision</button>
+      <button onclick="testShowSaveFileDialog()">Test Show Save File Dialog</button>
+      <button onclick="testStartGuestSignUpFlow()">Test startGuestSignUpFlow API</button>
+    </div>
+
+
+    <p onclick="headerClicked('bridgeButtons')">Wickr Bridge (Hide/Show)</p>
+    <div id="bridgeButtons">
+      <button onclick="getClock()">Get Clock</button>
+      <button onclick="setAppState()">Set App State</button>
+      <button onclick="msgAction('starMessage')">Star (WebChannel)</button>
+      <button onclick="msgAction('getAwsCredentials')">getAwsCredentials (WebChannel)</button>
+      <button onclick="msgAction('translateMessage')">Translate Message (WebChannel)</button>
+      <button onclick="msgAction('showTranslationSettings')">Show Translation Settings (WebChannel)</button>
+      <button onclick="msgAction('unstarMessage')">Unstar (WebChannel)</button>
+      <button onclick="benchmark(sendTextMessage, [`${mainVgroupId}`, `hello world 😄 https://www.amazon.com https://www.google.com`])">Send message (Web Channel)</button>
+      <button onclick="markMessageRead(`${mainVgroupId}`, 'ed3eb5c0402d11ee93b73bdbbc7c910b')">Mark message read</button>
+      <button onclick="msgAction('saveFileToRoom')">Save File to room</button>
+      <button onclick="msgAction('saveLinkToRoom')">Save Link to room</button>
+      <button onclick="clipboard()">Clipboard</button>
+      <button onclick="getQuickResponses()">Quick Responses</button>
+      <button onclick="msgAction('emojiReact')">Emoji React</button>
+      <button onclick="benchmark(getBoundaryIds, [])">Get Boundary IDs</button>
+      <button onclick="checkIfClipboardHasImage()">Check if Clipboard has Image</button>
+      <button onclick="sendVoiceMemo(`S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e`)">Send voice memo</button>
+      <button onclick="allowGuestUser()">Check for Allow Guest User</button>
+      <button onclick="convoDetails()">Convo Details</button>
+      <button onclick="botNewDM()">Bot Button for New DM</button>
+      <button onclick="sendSelfTyping()">Send Self Typing</button>
+      <button onclick="googleMapsApi()">Get the Google Maps API key and token</button>
+      <button onclick="getVgroupIdBeforeDmCreation()">Get vgroupId from server hash</button>
+      <button onclick="resendMessage()">Retry a message send</button>
+      <button onclick="clearAll()">Clear All Unreads</button>
+      <button onclick="pinConvo()">Pin Convo</button>
+      <button onclick="unpinConvo()">Unpin Convo</button>
+      <button onclick="leaveConvo()">Leave Convo</button>
+      <button onclick="deleteConvo()">Delete Convo</button>
+      <button onclick="msgAction('clearMessageTempId')">Clear message temp ID</button>
+      <button onclick="startCall()">Start Call</button>
+      <button onclick="getSelfCallStatus()">Get Self Call Status</button>
+      <button onclick="ackMsgSendFailure()">Acknowledge Message Send Failure</button>
+      <button onclick="getAnalyticsCapabilities()">Analytics capabilities</button>
+      <button onclick="sendAnalyticsEvent()">Send Analytics Events</button>
+      <button onclick="cancelFile()">Cancel file</button>
+      <button onclick="clearFile()">Clear file</button>
+      <button onclick="getActiveConvoInfo()">Active Convo Info</button>
+      <button onclick="getWindowStatus()">Window Status</button>
+      <button onclick="sendRetryWOAProxy()">Send Retry WOA Proxy</button>
+      <button onclick="clearBotWarning()">Clear Bot Warning</button>
+      <button onclick="notNowVerify()">Not Now Verify</button>
+      <button onclick="createRoom()">Create Room</button>
+      <button onclick="createGroup()">Create Group</button>
+      <button onclick="setActiveConvo('S35222b6ff8057250938ffe3648bb4da205f4ab9708a53a219a71d8236806139')">Activate Convo</button>
+      <button onclick="setActiveConvo('')">Deactivate Convo</button>
+      <button onclick="sendEmail()">Send Email</button>
+      <button onclick="sendErrorReport()">Error Report</button>
+      <button onclick="sendSystemNotification()">System Notification</button>
+      <button onclick="setConvoNotification()">Set Convo Notification</button>
+      <button onclick="setIsFavorite()">Set Is Favorite</button>
+      <button onclick="setIsBlocked()">Set Is Blocked</button>
+      <button onclick="setCustomName()">Set Custom Name</button>
+      <button onclick="suspendDevice()">Suspend Device</button>
+      <button onclick="getAccountAttributes()">Get Account Attributes</button>
+      <button onclick="startShredder()">Start Shredder</button>
+      <button onclick="stopShredder()">Stop Shredder</button>
+      <button onclick="shredderStatus()">Shredder Status</button>
+      <button onclick="saveLogs()">Save Logs</button>
+      <button onclick="clearLogs()">Clear Logs</button>
+      <button onclick="editConvo()">Edit Convo</button>
+      <button onclick="viewOpenSource()">View Open Source</button>
+      <button onclick="quitApp()">Quit App</button>
+      <button onclick="signOut()">Sign Out</button>
+      <button onclick="getAppVersion()">Get App Version</button>
+      <button onclick="checkForUpdates()">Check For Updates</button>
+      <button onclick="resetApp()">Reset App</button>
+      <button onclick="uninstallApp()">Uninstall App</button>
+      <button onclick="validatePassword()">Validate Password</button>
+      <button onclick="requestChimeRegisterProfile()">Request Chime Handoff Token</button>
+      <button onclick="messageUnreadCount()">Message Unread Count</button>
+      <button onclick="verifyUser()">Verify/Unverify User</button>
+      <button onclick="validateQRCode()">Validate QR Code</button>
+      <button onclick="changeProfilePicture()">Change Profile Picture</button>
+      <button onclick="clearProfilePicture()">Clear Profile Picture</button>
+      <button onclick="changePresence()">Change Presence</button>
+      <button onclick="isGuardEnabled()">Guard Enabled Status</button>
+      <button onclick="resetDirectory()">Reset Directory</button>
+      <button onclick="getUserStatus()">Get User Status</button>
+      <button onclick="sendLocationMessage()">Send Location Message</button>
+      <button onclick="activateHyperlink()">Activate Hyperlink</button>
+      <button onclick="updateRecentSearchQueries()">Update Recent Search Queries</button>
+      <button onclick="isDBCorrupted()">Is DB Corrupted</button>
+      <button onclick="showDBError()">Show DB Error</button>
+      <button onclick="getProcessMetrics()">Get Process Metrics</button>
+      <button onclick="resetProcessMetrics()">Reset Process Metrics</button>
+      <button onclick="closeAccount()">Close Account</button>
+      <button onclick="messageDeleteMessage()">Message Delete Message</button>
+      <button onclick="setIsWebViewLoaded()">Set Is Web View Loaded</button>
+      <button onclick="setSupportedErrors()">Set Supported Errors</button>
+      <button onclick="getUsersToManage()">Get Users to Manage</button>
+      <button onclick="userActionRemove()">User Action Remove</button>
+      <button onclick="pushDeviceQRScan()">Push Device QR Scan</button>
+      <button onclick="switchToCode()">Switch to Code</button>
+      <button onclick="pushDeviceCode()">Push Device Code</button>
+      <button onclick="updateApp()">Update App</button>
+      <button onclick="ignoreUpdate()">Ignore Update</button>
+      <button onclick="blockATORequest()">Block ATO Request</button>
+      <button onclick="use12HourFormat()">Use 12 Hour Format</button>
+      <button onclick="loadLinks()">Load Branding Links</button>
+      <button onclick="manageNotifications()">Manage Notifications</button>
+      <button onclick="testCrashReporting()">Test Crash Reporting</button>
+      <button onclick="testNetworkBanner()">Test Network Banner</button>
+      <button onclick="forwardMessage()">Forward Message</button>
+    </div>
+
+    <p onclick="headerClicked('fileManagerButtons')">File Manager (Hide/Show)</p>
+    <div id="fileManagerButtons">
+      <button onclick="pinNewFile()">Pin new file</button>
+      <button onclick="cancelPinNewFile()">Cancel pin new file</button>
+      <button onclick="unpinFile()">Unpin file</button>
+      <button onclick="renameFile()">Rename file</button>
+      <button onclick="createFolder()">Create Folder</button>
+      <button onclick="renameFolder()">Rename Folder</button>
+      <button onclick="removeFolder()">Remove Folder</button>
+      <button onclick="moveFolder()">Move Folder</button>
+      <button onclick="moveFile()">Move File</button>
+      <button onclick="checkNames()">Check names</button>
+      <button onclick="downloadPinnedFile()">Download Pinned File</button>
+      <button onclick="openPinnedFile()">Open Pinned File</button>
+      <button onclick="cancelDownload()">Cancel download</button>
+      <button onclick="getBranding()">Get Branding</button>
+      <button onclick="unPinLink()">Unpin link</button>
+      <button onclick="unPinItems()">Unpin items</button>
+
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/a2b6b24a-92a9-4ec1-91e9-b0bd4d9d3513`)">Get folders (Specific Folder)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/saveditems`)">Get folders (saved items)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId)">Get folders (Root Folder)</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/file/0e9575f1-6042-4cb9-bb87-b6f7ecf408af`)">Get folder from file</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/legacysaveditems`)">Get legacy saved items</button>
+      <button onclick="run(`wickrweb://filemanager/` + currentVgroupId + `/savedlinks`)">Get Links</button>
+    </div>
+
+    <!-- <div id="linkImages"></div> -->
+    <!-- <img src="wickrweb://image/userId/nemo@mailinator.com" height="200" />
+    <img src="wickrweb://image/user/01affb3d228ab18bd34806aa16b7a255744656b98c5fd526c3e479f1d93e8a44" height="200" /> -->
+    <!-- <img src="wickrweb://image/savedfile/7219f5ae-b34d-4092-bf52-6a50a809f4cb" height="200" /> -->
+    <!--    Alternative way to test self typing indicator via a textbox, uncomment below-->
+    <!--    <input id="input" name ="input" onchange="sendSelfTyping()" />-->
+    <!--     <img src="wickrweb://image/message/S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e/35e4bb305c6c11eeaeddb71725aa058d" height="200" />
+
+    <audio controls>
+      <source src="wickrweb://audio/message/S03b90529e7e8998771da21f30465a03f0bbee1587d4559e63b95396510e856e/1d36ad505c6c11eeaeddb71725aa058d" />
+    </audio> -->
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- CVE-2026-16413 reach probe: can WebGL declare the attribute/output ARRAY that the bracket
+  binding resolves against? Test compile of every form across webgl1/webgl2, then for any that
+  link, exercise bindAttribLocation("name[idx]") and the location oracle. -->
+<meta charset="utf-8"><title>16413 reach</title><pre id="log">running…</pre><script>
+const L=[];const log=(...a)=>{L.push(a.join(' '));document.getElementById('log').textContent=L.join('\n');};
+const FS3=`#version 300 es\nprecision highp float;\nout vec4 o;\nvoid main(){o=vec4(1.0);}`;
+
+function tryShader(gl, label, vsrc, isES3){
+  const vs=gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs,vsrc); gl.compileShader(vs);
+  const ok=gl.getShaderParameter(vs,gl.COMPILE_STATUS);
+  const inf=(gl.getShaderInfoLog(vs)||'').trim().replace(/\s+/g,' ').slice(0,90);
+  log(`[${label}] VS compile=${ok?'OK':'FAIL'} ${ok?'':inf}`);
+  return ok?vs:null;
+}
+
+function linkTest(gl, label, vs, fs, bindName){
+  const p=gl.createProgram(); gl.attachShader(p,vs); gl.attachShader(p,fs);
+  gl.getError();
+  if(bindName) gl.bindAttribLocation(p,3,bindName);
+  gl.linkProgram(p);
+  const lk=gl.getProgramParameter(p,gl.LINK_STATUS);
+  const inf=(gl.getProgramInfoLog(p)||'').trim().replace(/\s+/g,' ').slice(0,80);
+  let lb='-',lh='-';
+  if(lk && bindName){ lb=gl.getAttribLocation(p,bindName); lh=gl.getAttribLocation(p,bindName.replace(/\[[0-9]+\]$/,'')); }
+  log(`   ${label}: link=${lk?'ok':'fail'} ${inf} | loc("${bindName}")=${lb} loc(base)=${lh} ctxLost=${gl.isContextLost()}`);
+  gl.deleteProgram(p);
+  return gl.isContextLost();
+}
+
+function run(){
+  // ---- WebGL2 (ESL3) ----
+  let gl=document.createElement('canvas').getContext('webgl2',{antialias:false});
+  if(gl){
+    log('--- webgl2 / ESL3 ---');
+    try{const d=gl.getExtension('WEBGL_debug_renderer_info');if(d)log('renderer:',gl.getParameter(d.UNMASKED_RENDERER_WEBGL));}catch(e){}
+    const fs=gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs,FS3); gl.compileShader(fs);
+    const forms=[
+      ['in vec2 a[2]               (plain)',         `#version 300 es\nin vec2 a[2];\nvoid main(){gl_Position=vec4(a[0],0.0,1.0);}`],
+      ['layout(0) in vec2 a[2]     (explicit loc)',  `#version 300 es\nlayout(location=0) in vec2 a[2];\nvoid main(){gl_Position=vec4(a[0],0.0,1.0);}`],
+      ['in vec2 a[2]; use a[1]     (idx 1)',         `#version 300 es\nin vec2 a[2];\nvoid main(){gl_Position=vec4(a[1],0.0,1.0);}`],
+    ];
+    for(const [label,vsrc] of forms){ const vs=tryShader(gl,label,vsrc); if(vs){ linkTest(gl,'bind a[1]',vs,fs,'a[1]'); linkTest(gl,'bind a[0]',vs,fs,'a[0]'); } }
+  } else log('webgl2 unavailable');
+
+  // ---- WebGL1 (ESL1) ----
+  gl=document.createElement('canvas').getContext('webgl',{antialias:false});
+  if(gl){
+    log('--- webgl1 / ESL1 ---');
+    const fs=gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs,`precision mediump float;\nvoid main(){gl_FragColor=vec4(1.0);}`); gl.compileShader(fs);
+    const forms=[
+      ['attribute vec2 a[2]        (plain)',         `attribute vec2 a[2];\nvoid main(){gl_Position=vec4(a[0],0.0,1.0);}`],
+      ['attribute vec2 a[2]; use[1]',                `attribute vec2 a[2];\nvoid main(){gl_Position=vec4(a[1],0.0,1.0);}`],
+    ];
+    for(const [label,vsrc] of forms){ const vs=tryShader(gl,label,vsrc); if(vs){ linkTest(gl,'bind a[1]',vs,fs,'a[1]'); linkTest(gl,'bind a[0]',vs,fs,'a[0]'); } }
+  } else log('webgl1 unavailable');
+  log('done');
+}
+run();
+</script>

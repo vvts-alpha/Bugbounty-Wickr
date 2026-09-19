@@ -1,0 +1,28 @@
+:import QtQuick
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+// catch any mouse events and emit a signal to the Item that is using it
+
+MouseArea
+{
+    id: root
+
+    signal mouseClicked()
+    signal mouseEntered()
+
+    anchors.fill: parent
+    hoverEnabled: true
+    onWheel: function(wheel) { wheel.accepted = true }
+    onPressed:  function(mouse) { mouse.accepted = true }
+    onReleased: function(mouse) { mouse.accepted = true }
+    onDoubleClicked: function(mouse) { mouse.accepted = true }
+    onPositionChanged: function(mouse) { mouse.accepted = true }
+    onPressAndHold: function(mouse) { mouse.accepted = true }
+    acceptedButtons: Qt.AllButtons
+    onEntered: root.mouseEntered()
+    onClicked: function(mouse) {
+        mouse.accepted = true
+        root.mouseClicked()
+    }
+}

@@ -1,0 +1,59 @@
+Dimport QtQuick
+import com.wickr.widgets 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+    height:  label.height + 12 * ScreenRM.scale
+    width: parent.width
+    signal close()
+
+    Rectangle
+    {
+        anchors.fill: parent
+        color: "#3B3B3B"
+        opacity: 0.8
+    }
+
+    LayeredImage {
+        name: "exclamation-triangle"
+        color: Branding.palette_cal_p2
+        anchors.left: parent.left
+        anchors.leftMargin: 16 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    Text
+    {
+        id: label
+        text: qsTr("Experiencing network issues. Try switching to a better network or moving closer to a WiFi access point.")
+        anchors.left: parent.left
+        anchors.leftMargin: 40 * ScreenRM.scale
+        anchors.right: parent.right
+        anchors.rightMargin: 40 * ScreenRM.scale
+        font.pointSize: 13.8 * ScreenRM.fontScale
+        font.family: fonts.osReg
+        color: Branding.palette_cal_p2
+        anchors.verticalCenter: parent.verticalCenter
+        wrapMode: Text.WordWrap
+    }
+
+    LayeredImage {
+        id: button
+        name: "ic-close"
+        color: Branding.palette_cal_p2
+        anchors.right: parent.right
+        anchors.rightMargin: 16 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+
+        MouseArea
+        {
+            anchors.fill: parent
+            onPressed: root.close()
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+        }
+    }
+}

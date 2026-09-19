@@ -1,0 +1,30 @@
+‰import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import com.wickr.models 1.0
+import "../style.js" as WickrStyle
+import "../widgets/"
+import "../"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+WickrDrawer
+{
+    id: inviteToConvoRoot
+
+    leftSide: false
+    useOverlays: false
+
+    // increment when the drawer is shown to tweak the UI for the first/second/n opens
+    onOpening: inviteDrawerContent.openCount += 1
+
+    onDrawerOpenCompleted: {
+        inviteDrawerContent.raise()
+    }
+
+    InviteToConvo
+    {
+        id: inviteDrawerContent
+        onClose: inviteToConvoRoot.closeDrawer()
+    }
+}

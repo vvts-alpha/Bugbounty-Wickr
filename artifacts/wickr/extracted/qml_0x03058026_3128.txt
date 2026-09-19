@@ -1,0 +1,102 @@
+7import QtQuick
+import QtQuick.Controls
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: root
+    height: 32 * ScreenRM.scale
+    color: Branding.palette_gbl_s1
+    visible: false
+    signal switchToAppUpdate()
+
+    Connections {
+        target: autoUpdateUIHelper
+        function onUpdateAvailableChanged() {
+            if(wickrSettings.isLinux || wickrSettings.webView)
+            {
+                root.visible = false
+            }
+            else
+            {
+                if(autoUpdateUIHelper.updateAvailable && !autoUpdateUIHelper.forcedUpdate && !wickrDashboardData.dbCorrupt)
+                    root.visible = true;
+                else
+                    root.visible = false;
+            }
+        }
+    }
+
+    Connections {
+        target: environmentMgr
+        function onSignalCheckForUpdatesChanged() {
+            if(environmentMgr.checkForUpdates)
+            {
+                autoUpdateUIHelper.updateAvailableChanged()
+            }
+            else
+            {
+                root.visible = false;
+            }
+        }
+    }
+
+    LayeredImage {
+        id: closeButton
+        color: Branding.palette_gbl_p3
+        anchors.left: parent.left
+        anchors.leftMargin: 12 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        name: "ic-close"
+        fillMode: Image.PreserveAspectFit
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                console.log("ignore update selected.")
+                autoUpdateUIHelper.updateAvailable = false;
+            }
+        }
+    }
+
+    Row {
+        id:decorations
+        spacing: 8 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            id: updateText
+            anchors.top: parent.top
+            anchors.topMargin: 3 * ScreenRM.scale
+            text: qsTr("A new version of %1 is now available.").arg(Branding.copy_productName)
+            font.pointSize: 13.8 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            font.letterSpacing: 0.25
+            color: Branding.palette_gbl_p1
+        }
+
+        StandardButton {
+            id: updateButton
+            primary: false
+            customFontSize: 13.8 * ScreenRM.fontScale
+            btnFixedWidth : labelTxt.width + 16 * ScreenRM.scale
+            btnFixedHeight : 24 * ScreenRM.scale
+            btnFixedTextColor: Branding.palette_gbl_p1
+            btnFixedBorderColor: Branding.palette_gbl_p1
+            btnLabelText: qsTr("Update")
+            btnLabelCapitalization: Font.MixedCase
+            style: "standard"
+            weight: "med"
+            onClicked: {
+                console.log("update application selected.");
+                wickrWindow.sigCheckForUpdates(false);
+                autoUpdateUIHelper.updateAvailable = false;
+            }
+        }
+    }
+}

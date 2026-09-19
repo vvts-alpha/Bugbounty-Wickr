@@ -1,0 +1,152 @@
+### Content-Security-Policy : 0 match(es)
+### default-src : 0 match(es)
+### script-src : 0 match(es)
+### base-uri : 0 match(es)
+### trusted-types : 0 match(es)
+### require-trusted-types-for : 0 match(es)
+### qrc:/ : 2 match(es)
+   src/components/Errors/prodErrors.tsx:22:75
+   src/components/Overlays/BetaFeaturesOverlay/index.tsx:23:37
+### wickrweb:// : 1 match(es)
+   src/apis/webFetch/endpoints.ts:6:34
+### qt.webChannelTransport : 1 match(es)
+   src/apis/webChannel/utils.ts:38:68
+### QWebChannel : 18 match(es)
+   src/apis/webChannel/utils.ts:7:13
+   src/apis/webChannel/utils.ts:10:14
+   src/apis/webChannel/utils.ts:11:14
+   src/apis/webChannel/utils.ts:12:12
+   src/apis/webChannel/utils.ts:14:25
+   src/apis/webChannel/utils.ts:25:26
+   src/apis/webChannel/utils.ts:26:41
+   src/apis/webChannel/utils.ts:27:24
+   src/apis/webChannel/utils.ts:29:17
+   src/apis/webChannel/utils.ts:30:30
+   src/apis/webChannel/utils.ts:32:28
+   src/apis/webChannel/utils.ts:38:29
+   ... +6 more
+### WebChannelMessageBridge : 0 match(es)
+### postMessage : 13 match(es)
+   src/file-preview/components/withLinkHandler.tsx:17:23
+   src/file-preview/components/PowerPointPreview/index.tsx:148:18
+   src/lib/pptx2html/pptx2html.worker.js:26:14
+   src/lib/pptx2html/pptx2html.worker.js:34:10
+   src/lib/pptx2html/pptx2html.worker.js:50:10
+   src/lib/pptx2html/pptx2html.worker.js:60:8
+   src/lib/pptx2html/pptx2html.worker.js:69:10
+   src/lib/pptx2html/pptx2html.worker.js:73:10
+   src/lib/pptx2html/pptx2html.worker.js:79:8
+   src/lib/pptx2html/pptx2html.worker.js:85:8
+   src/lib/pptx2html/pptx2html.worker.js:158:8
+   src/lib/pptx2html/pptx2html.worker.js:2009:8
+   ... +1 more
+### addEventListener("message" : 0 match(es)
+### addEventListener('message' : 1 match(es)
+   src/file-preview/components/PowerPointPreview/index.tsx:77:18
+### iframe : 4 match(es)
+   src/prebootstrap.ts:18:41
+   src/components/Modals/CheckSpeed/index.tsx:27:10
+   src/components/Modals/FilePreviewModal/index.tsx:117:44
+   src/components/Modals/FilePreviewModal/index.tsx:134:12
+### sandbox : 0 match(es)
+### srcdoc : 0 match(es)
+### innerHTML : 1 match(es)
+   src/components/Convo/ConvoMessageContextMenuItems.tsx:139:31
+### outerHTML : 1 match(es)
+   src/components/CopyHandler/copyTextSelection.tsx:35:29
+### insertAdjacentHTML : 0 match(es)
+### dangerouslySetInnerHTML : 1 match(es)
+   src/file-preview/components/PowerPointPreview/index.tsx:201:13
+### DOMPurify : 2 match(es)
+   src/file-preview/components/PowerPointPreview/index.tsx:2:8
+   src/file-preview/components/PowerPointPreview/index.tsx:23:10
+### createElement("script" : 0 match(es)
+### createElement('script' : 0 match(es)
+### import( : 11 match(es)
+   src/components/Tours/ToursManager.tsx:7:33
+   src/file-preview/previews.ts:7:28
+   src/file-preview/previews.ts:8:28
+   src/file-preview/previews.ts:9:36
+   src/file-preview/previews.ts:10:28
+   src/file-preview/previews.ts:11:29
+   src/file-preview/previews.ts:12:28
+   src/file-preview/previews.ts:13:35
+   src/store/index.ts:18:3
+   src/utils/debug.ts:265:5
+   src/utils/debug.ts:268:5
+### Worker( : 3 match(es)
+   src/apis/webFetch/index.ts:24:13
+   src/apis/webFetch/index.ts:35:16
+   src/file-preview/components/PowerPointPreview/index.tsx:73:30
+### openLink : 37 match(es)
+   src/apis/webChannel/BridgeWebChannel.ts:20:3
+   src/apis/webChannel/UIBridgeWebChannelAdapter.ts:107:3
+   src/apis/webChannel/UIBridgeWebChannelAdapter.ts:110:16
+   src/components/ExternalLinks.tsx:3:10
+   src/components/ExternalLinks.tsx:22:11
+   src/components/Banners/BannerComponents/CrossBoundaryClassification/index.tsx:5:10
+   src/components/Banners/BannerComponents/CrossBoundaryClassification/index.tsx:20:14
+   src/components/ConsentPopup/index.tsx:23:10
+   src/components/ConsentPopup/index.tsx:77:16
+   src/components/ConsentPopup/index.tsx:83:16
+   src/components/Convo/BaseConvoMessage.tsx:38:10
+   src/components/Convo/BaseConvoMessage.tsx:148:11
+   ... +25 more
+### FilePreview : 46 match(es)
+   src/components/Convo/BaseConvoMessage.tsx:392:30
+   src/components/Convo/ConvoMessageContextMenuItems.tsx:75:10
+   src/components/Convo/ConvoMessageContextMenuItems.tsx:529:24
+   src/components/FileManagement/FileManagementItem/index.tsx:138:18
+   src/components/FileManagement/FileManagementItem/index.tsx:300:22
+   src/components/Modals/ModalManager.tsx:28:8
+   src/components/Modals/ModalManager.tsx:165:13
+   src/components/Modals/ModalManager.tsx:166:17
+   src/components/Modals/FilePreviewModal/index.tsx:4:10
+   src/components/Modals/FilePreviewModal/index.tsx:19:16
+   src/components/Modals/FilePreviewModal/index.tsx:28:28
+   src/components/Modals/FilePreviewModal/index.tsx:32:7
+   ... +34 more
+### FilePreviewModal : 18 match(es)
+   src/components/Convo/ConvoMessageContextMenuItems.tsx:529:24
+   src/components/FileManagement/FileManagementItem/index.tsx:138:18
+   src/components/FileManagement/FileManagementItem/index.tsx:300:22
+   src/components/Modals/ModalManager.tsx:28:8
+   src/components/Modals/ModalManager.tsx:165:13
+   src/components/Modals/ModalManager.tsx:166:17
+   src/components/Modals/FilePreviewModal/index.tsx:19:16
+   src/components/Modals/FilePreviewModal/index.tsx:28:28
+   src/components/Modals/FilePreviewModal/index.tsx:32:7
+   src/components/Modals/FilePreviewModal/index.tsx:37:68
+   src/components/Modals/FilePreviewModal/index.tsx:69:28
+   src/components/Modals/FilePreviewModal/index.tsx:86:28
+   ... +6 more
+### docx-preview : 1 match(es)
+   src/file-preview/components/DocPreview/index.tsx:1:46
+### pptx2html : 3 match(es)
+   src/file-preview/components/PowerPointPreview/index.tsx:11:34
+   src/file-preview/components/PowerPointPreview/index.tsx:16:15
+   src/file-preview/components/PowerPointPreview/index.tsx:200:46
+### mammoth : 0 match(es)
+### pdfjs : 0 match(es)
+### JSZip : 2 match(es)
+   src/lib/pptx2html/pptx2html.worker.js:4:8
+   src/lib/pptx2html/pptx2html.worker.js:44:21
+### xlsx : 3 match(es)
+   src/componentlibrary/icons/Document/index.tsx:566:13
+   src/file-preview/previews.ts:19:3
+   src/file-preview/components/SpreadsheetPreview/index.tsx:1:46
+### DOMParser : 5 match(es)
+   src/file-preview/components/XmlPreview/index.tsx:197:28
+   src/utils/dom.ts:9:30
+   src/utils/dom.ts:341:65
+   src/utils/dom.ts:345:52
+   src/utils/dom.ts:350:22
+### createContextualFragment : 0 match(es)
+### cloneNode : 4 match(es)
+   src/components/Emojify/index.tsx:51:35
+   src/utils/emoji/emojiHelpers.ts:12:28
+   src/utils/tiptap/markdown.tsx:836:67
+   src/utils/tiptap/markdown.tsx:839:38
+### importNode : 0 match(es)
+### adoptNode : 0 match(es)
+### document.write : 0 match(es)

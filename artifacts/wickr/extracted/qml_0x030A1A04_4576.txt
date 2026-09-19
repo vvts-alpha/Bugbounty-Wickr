@@ -1,0 +1,117 @@
+ßimport QtQuick
+import QtQuick.Controls
+import QtWebChannel
+import QtWebEngine
+import com.wickr.interfaces 1.0
+import com.wickr.widgets 1.0
+import "../widgets/"
+import "../Commons/"
+import QtQuick.Controls.Basic
+
+Item {
+    id: root
+
+    WebEngineView {
+        id: webview
+        anchors.fill: parent
+        zoomFactor: ScreenRM.scale
+        onCertificateError: error.ignoreCertificateError()
+        onFeaturePermissionRequested: {
+            console.log("granting permissions", securityOrigin, feature)
+            grantFeaturePermission(securityOrigin, feature, true);
+        }
+        webChannel: channel
+        onJavaScriptConsoleMessage: {
+            if (wickrSettings.uiLoggingEnabled)
+            {
+                switch(level)
+                {
+                case WebEngineView.InfoMessageLevel: console.info("[JS] %1".arg(message)); break
+                case WebEngineView.WarningMessageLevel: console.warn("[JS] %1".arg(message)); break
+                case WebEngineView.ErrorMessageLevel: console.error("[JS] %1".arg(message)); break
+                default: break
+                }
+            }
+        }
+
+        // this will put the browser into private mode and will not save any cache to disk
+        // https://doc.qt.io/qt-5/qml-qtwebengine-webengineprofile.html#offTheRecord-prop
+        profile.offTheRecord: true
+        profile.persistentCookiesPolicy: WebEngineProfile.NoPersistentCookies
+
+        // https://doc.qt.io/qt-5/qwebenginesettings.html#WebAttribute-enum
+        settings.javascriptCanAccessClipboard: true
+        settings.javascriptCanPaste: true
+
+        onContextMenuRequested: function(request){
+            // hide the context menu except for text input areas (for copy/paste/spellcheck)
+            // this means menus like back, view source, etc. won't be shown
+            if(wickrSettings.isAlpha)
+            {
+                // allow refresh for Alpha builds for dev testing
+                request.accepted = false
+                return;
+            }
+            request.accepted = !request.isContentEditable
+        }
+
+        Component.onCompleted: {
+            if(wickrDashboardData.qt6)
+            {
+                const preloadsScript = { name: "Preloads",
+                    sourceUrl: "qrc:///webengine/preloads.js",
+                    injectionPoint: WebEngineScript.DocumentCreation,
+                    worldId: WebEngineScript.MainWorld
+                }
+                userScripts.collection = [ preloadsScript ];
+            }
+            else
+            {
+                const webEngineScript = Qt.createQmlObject(`
+                                                           import QtWebEngine
+                                                           WebEngineScript {
+                                                           injectionPoint: WebEngineScript.DocumentCreation
+                                                           name: "Preloads"
+                                                           sourceUrl: "qrc:///webengine/preloads.js"
+                                                           worldId: WebEngineScript.MainWorld
+                                                           }
+                                                           `,
+                                                           webview);
+                userScripts = [ webEngineScript ];
+            }
+
+            profile.clearHttpCache()
+            channel.registerObject("uiBridge", uiBridge)
+
+            // enabling off the record clears out the spellCheckEnabled and spellCheckLanguages fields so they must be recreated
+            const languages = webViewRouter.spellCheckLang()
+            profile.spellCheckEnabled = true
+            profile.spellCheckLanguages = languages
+
+            // the url must be loaded after all channel objects are registered
+            url = wickrSettings.webViewAddress
+        }
+
+        WickrUIBridge
+        {
+            id: uiBridge
+            Component.onCompleted: {
+                if(typeof wickrWindow !== "undefined")
+                {
+                    wickrWindow.uiBridge = uiBridge
+                }
+            }
+        }
+
+        Connections
+        {
+            target: convoActivator
+            function onCurrentConvoChanged() {
+                if(convoActivator.vgroupID.length > 0)
+                {
+                    webview.forceActiveFocus()
+                }
+            }
+        }
+    }
+}

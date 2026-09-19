@@ -1,0 +1,99 @@
+{
+  "schema": "wickr-phase-2a-pptx-boundary/v1",
+  "subject": {
+    "binary": "E:\\tmp\\wickr\\main\\WickrPro.exe",
+    "sha256": "eccafde833d34386c859d6548e922649c2f58cd15f82998c8bd2966219341dbd",
+    "product_version": "6.72.20.0"
+  },
+  "mode": "static source review (application not executed)",
+  "primary_files": [
+    { "id": "F1", "path": "src/file-preview/components/PowerPointPreview/index.tsx", "abs": "E:\\wickr\\extracted\\sources\\src\\file-preview\\components\\PowerPointPreview\\index.tsx", "bytes": 8615, "sha256": "b5b79318c9e0de74562345e64b7be620ea5ce7c9b01509657f81c0d73c14a9b9", "lines": 286, "origin": "sourcesContent", "sourcemap": "app-CAX5Wyxr.js.map" },
+    { "id": "F2", "path": "src/lib/pptx2html/pptx2html.worker.js", "abs": "E:\\wickr\\extracted\\sources\\src\\lib\\pptx2html\\pptx2html.worker.js", "bytes": 61021, "sha256": "e94c4c53194118da9ee7d0bdb03f5925ac72c3961636e7f43f604a7c479bb2d0", "lines": 2079, "origin": "sourcesContent", "sourcemap": "pptx2html.worker-DeYYp-mz.js.map" },
+    { "id": "F3", "path": "src/components/Modals/FilePreviewModal/index.tsx", "abs": "E:\\wickr\\extracted\\sources\\src\\components\\Modals\\FilePreviewModal\\index.tsx", "bytes": 4961, "sha256": "71e5588a04c86245883a37122c6b4b5b6a0d6f8fb37937f56f3370d7190d899c", "lines": 141, "origin": "sourcesContent", "sourcemap": "app-DOUtVdma.js (main) map" },
+    { "id": "F4", "path": "src/file-preview/components/withLinkHandler.tsx", "abs": "E:\\wickr\\extracted\\sources\\src\\file-preview\\components\\withLinkHandler.tsx", "bytes": 841, "sha256": "829e00588354ebef462c9f8f516a8bcb817dad84f4d543ed54c775b417388fbe", "lines": 29, "origin": "sourcesContent", "sourcemap": "file-preview-4vkBugtX.js.map" },
+    { "id": "F5", "path": "src/apis/webChannel/utils.ts", "abs": "E:\\wickr\\extracted\\sources\\src\\apis\\webChannel\\utils.ts", "bytes": 1244, "sha256": "fdcf59825e25649cde76a2b6b554e1faf932c9f819c859391dc977281933063b", "lines": 41, "origin": "sourcesContent", "sourcemap": "app-DOUtVdma.js (main) map" }
+  ],
+  "dompurify_version_evidence": {
+    "version": "3.2.5",
+    "manifest_entry": "extracted/text_0x00E47343_5412.txt @0x00E47EF8 -> 'dompurify,3.2.5'",
+    "bundled_banner": "extracted/text_0x01C7F2E9_24646.txt -> 'DOMPurify 3.2.5 | (c) Cure53 ... 3.2.5/LICENSE'",
+    "import": "PowerPointPreview/index.tsx:2 -> import DOMPurify from 'dompurify' (default export, no custom instance)"
+  },
+  "sanitize_call": {
+    "file": "src/file-preview/components/PowerPointPreview/index.tsx",
+    "definition_lines": "22-29",
+    "call_line": 93,
+    "exact": "DOMPurify.sanitize(dirtyHtml, { USE_PROFILES: { html: true, svg: true } })",
+    "hooks_configured": false,
+    "trusted_types_configured": false,
+    "notes": "per-fragment sanitize then string-concatenate across slides; concatenated whole inserted once"
+  },
+  "iframe": {
+    "location": "src/components/Modals/FilePreviewModal/index.tsx:134",
+    "markup": "<iframe src={previewUrl} />",
+    "attributes": ["src"],
+    "sandbox": "absent",
+    "url_construction": "previewUrl = `${FILE_PREVIEW_URL}#${urlParams.toString()}`; FILE_PREVIEW_URL = 'file-preview.html' (relative -> same-origin)",
+    "construction_lines": "FilePreviewModal:30,95-97",
+    "expected_parent_origin": "wickrSettings.webViewAddress (runtime; not statically resolvable)",
+    "expected_preview_origin": "same as parent (file-preview.html, frame-src 'self')"
+  },
+  "csp": {
+    "header_csp_found": false,
+    "header_csp_evidence": "no source constructs CSP headers; QML sets no httpHeaders; setHttpHeaders absent",
+    "meta_csp_found": true,
+    "meta_csp_locations": ["extracted/decompressed/html_0x00E46F48_*.bin", "extracted/decompressed/html_0x00E568B7_*.bin"],
+    "note_char_references": "HTML character references (&#39;) in the meta content attribute are decoded before CSP interpretation; effective policy uses literal single quotes",
+    "verbatim_entity_encoded": "default-src &#39;self&#39; qrc://* wickrweb://* ; style-src &#39;self&#39; &#39;unsafe-inline&#39; ; script-src &#39;self&#39; qrc://* ; connect-src &#39;self&#39; wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src &#39;self&#39; https://tile.googleapis.com wickrweb://* blob: data: ; font-src &#39;self&#39; data: ; media-src &#39;self&#39; wickrweb://* data: blob: ; frame-src &#39;self&#39; blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src &#39;self&#39; blob: ; child-src &#39;self&#39; blob: ; object-src &#39;self&#39;",
+    "decoded_effective": "default-src 'self' qrc://* wickrweb://* ; style-src 'self' 'unsafe-inline' ; script-src 'self' qrc://* ; connect-src 'self' wickrweb://* https://bedrock-runtime.*.amazonaws.com https://bedrock-agent.*.amazonaws.com https://bedrock-agent-runtime.*.amazonaws.com ; img-src 'self' https://tile.googleapis.com wickrweb://* blob: data: ; font-src 'self' data: ; media-src 'self' wickrweb://* data: blob: ; frame-src 'self' blob: https://fast.com/ https://main.d4zeeqgazhley.amplifyapp.com/ ; worker-src 'self' blob: ; child-src 'self' blob: ; object-src 'self'",
+    "frame_ancestors_status": "INSUFFICIENT EVIDENCE (meta cannot enforce frame-ancestors; no header policy found)"
+  },
+  "message_handler": {
+    "location": "src/components/Modals/FilePreviewModal/index.tsx:99-114",
+    "registration": "FilePreviewModal:114 useEventListener(window,'message',handleIframeMessage)",
+    "gate_condition_line": 101,
+    "exact_condition": "if (event.data && typeof event.data === 'object' && event.origin === window.parent.origin)",
+    "origin_validated": true,
+    "source_window_validated": false,
+    "instance_validated": false,
+    "url_validated": false,
+    "forwarded_to": "dispatch(openLink({link:event.data.url, showConfirmation:true})) -> store/thunks/ui.ts:163/166 extra.uiBridge.openLink (native)",
+    "verdict_on_line_101": "verifies ORIGIN ONLY; same-origin senders all pass; rejects cross-origin; does not verify event.source or a specific preview instance; the line is an accurate extraction, not a mistaken reference"
+  },
+  "preview_webchannel_reachability": {
+    "reachable": false,
+    "reason": "file-preview HTML does not load qwebchannel.js; getQt() (platform.ts:11) returns undefined; getOrOpenWickrQWebChannels (webChannel/utils.ts:32-36) throws 'Qt not defined'",
+    "sole_native_path": "openLink via parent postMessage + user ConfirmModal (ui.ts:151-164)"
+  },
+  "candidates": [
+    { "id": "C1", "source": "PowerPointPreview/index.tsx:201 (dangerouslySetInnerHTML) <- worker slide HTML", "attacker_input": "PPTX text/shape name-id-type/hyperlink target/styles", "transformation": "worker unescaped string concat -> DOMPurify.sanitize(html+svg) -> React render", "boundary": "DOM insertion (HTML)", "validation": "DOMPurify 3.2.5 html+svg; per-fragment then concatenate", "classification": "REQUIRES BENIGN RUNTIME TEST", "missing_evidence": "whether any construct survives DOMPurify 3.2.5 in this QtWebEngine build", "test": "T1/T2/T3" },
+    { "id": "C2", "source": "PowerPointPreview/index.tsx:203 <style>{cssText}</style>; worker:1206-1212 genGlobalCSS()", "attacker_input": "PPTX style-table CSS", "transformation": "worker builds CSS -> React <style> text child (no DOMPurify)", "boundary": "DOM insertion (CSS)", "validation": "none", "classification": "SECURITY-RELEVANT DESIGN WEAKNESS", "missing_evidence": "whether CSS can cause CSP-permitted resource loads (url()/@import)", "test": "T4" },
+    { "id": "C3", "source": "FilePreviewModal/index.tsx:134 <iframe src={previewUrl} />", "attacker_input": "architectural", "transformation": "same-origin frame, no sandbox", "boundary": "frame isolation", "validation": "CSP frame-src 'self'", "classification": "SECURITY-RELEVANT DESIGN WEAKNESS", "missing_evidence": "runtime origin equality", "test": "T5" },
+    { "id": "C4", "source": "FilePreviewModal/index.tsx:101 message gate", "attacker_input": "MessageEvent from any same-origin sender", "transformation": "origin-only check -> openLink dispatch", "boundary": "messaging trust", "validation": "event.origin===window.parent.origin; object check; downstream ConfirmModal", "classification": "REQUIRES BENIGN RUNTIME TEST", "missing_evidence": "behavior for stray same-origin/spoofed messages", "test": "T6" },
+    { "id": "C5", "source": "PowerPointPreview/index.tsx:25 USE_PROFILES svg:true", "attacker_input": "PPTX shape SVG", "transformation": "DOMPurify svg profile", "boundary": "sanitizer namespace surface", "validation": "DOMPurify default SVG handling", "classification": "REQUIRES BENIGN RUNTIME TEST", "missing_evidence": "SVG/foreignObject mutation under DOMPurify 3.2.5 + this engine", "test": "T2" },
+    { "id": "C6", "source": "store/thunks/ui.ts:163,166 extra.uiBridge.openLink (native) from FilePreviewModal:104", "attacker_input": "preview link URL", "transformation": "openLink thunk showConfirmation:true -> ConfirmModal -> native", "boundary": "native bridge invocation", "validation": "user confirmation dialog (ui.ts:151-164)", "classification": "ESTABLISHED SAFE BY CODE", "missing_evidence": "none (user-mediated)", "test": "T7" },
+    { "id": "C7", "source": "pptx2html.worker.js:1195 <a href='{linkURL}'>; linkURL from worker:188 @_Target", "attacker_input": "PPTX hyperlink target URL", "transformation": "unescaped emit -> DOMPurify -> DOM -> click", "boundary": "URI in DOM", "validation": "DOMPurify URI scheme filtering; withLinkHandler re-reads a.href; ConfirmModal", "classification": "REQUIRES BENIGN RUNTIME TEST", "missing_evidence": "effective href scheme after DOMPurify + browser serialization", "test": "T8" }
+  ],
+  "data_flow_summary": "FilePreviewModal builds same-origin iframe(file-preview.html#params) -> FilePreviewProvider reads hash, builds wickrweb:///file/message/:c/:m -> PowerPointPreview fetch->arrayBuffer -> worker.postMessage(processPPTX) -> JSZip parse -> processSingleSlide emits unescaped HTML + globalCSS -> slide HTML via DOMPurify.sanitize(html+svg) -> dangerouslySetInnerHTML; globalCSS -> <style> (no sanitize); link click -> withLinkHandler postMessage(openLink) -> FilePreviewModal origin gate -> openLink thunk -> ConfirmModal -> uiBridge.openLink(native)",
+  "top3_runtime_tests": [
+    "T1: feed worker+DOMPurify an inert PPTX text run carrying a marker and assert no script/event-handler elements survive into .pptx2htmlWrapper (unit)",
+    "T4: feed a PPTX style-table CSS value of background:url(local-invalid://cssmarker) and confirm CSP blocks the resource load under img-src (stock client)",
+    "T6: postMessage openLink from a synthetic same-origin sender vs cross-origin sender and confirm cross-origin is rejected while documenting that same-origin senders are accepted (origin-only gate) (stock client)"
+  ],
+  "corrections_vs_phase1": [
+    "CSP is meta-only; NO header CSP found (no setHttpHeaders in QML/sources)",
+    "HTML char references &#39; decode before CSP interpretation (effective policy uses literal quotes)",
+    "frame-ancestors: INSUFFICIENT EVIDENCE (meta cannot enforce; no header found), not 'absent'",
+    "origin gate at line 101 checks ORIGIN ONLY (not event.source/instance)",
+    "DOMPurify version 3.2.5 confirmed; exact config USE_PROFILES html+svg, no hooks",
+    "globalCSS bypasses DOMPurify (new finding, design weakness, CSS-only)",
+    "preview->WebChannel unreachable (qt undefined in preview context)"
+  ],
+  "files_required_next": [
+    "src/lib/pptx2html/pptx2html.worker.js deeper emitters (260-480,506-960,1214-1370) for exhaustive worker-output inventory",
+    "extracted/decompressed/qml_0x030A2BEC_7847.bin full QML to confirm/deny any header CSP via httpHeaders/interceptor",
+    "qrc:///webengine/preloads.js body (still NOT FOUND)",
+    "runtime: resolved wickrSettings.webViewAddress, preview window.location.origin, presence of any header/report-only CSP"
+  ],
+  "claims_not_made": ["DOMPurify bypass", "CSP bypass", "JavaScript execution", "bridge invocation", "native impact", "RCE"]
+}

@@ -1,0 +1,27 @@
+ÿ{
+	"_version": "0.2.0",
+    "canStartCall": false,
+	"maxAutoDownloadSize": 5000000,
+    "maxUploadSize": 5000000,
+	"availableEnvelopeTTL": [
+		0,
+		600,
+		3600,
+		86400,
+		604800,
+		2592000
+	],    
+    "destructOnRead": [
+        0,
+        45,
+        600,
+        3600,
+        86400
+    ],
+    "canChangePassword": false,
+    "alwaysReauthenticate": true,
+    "canAddContact": false,
+    "onlyShowInNetwork": true,
+    "canCreateRoom": true,
+    "requireTransitiveTrust" : false
+}

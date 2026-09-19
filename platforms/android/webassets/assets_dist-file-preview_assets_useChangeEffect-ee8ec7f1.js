@@ -1,0 +1,1 @@
+import{r as t}from"./file-preview-ee8ec7f1.js";function f(u,r){const e=t.useRef(!1);t.useEffect(()=>{if(!e.current)e.current=!0;else return u()},r)}function n(u,r){const e=t.useRef(!1);t.useLayoutEffect(()=>{if(!e.current)e.current=!0;else return u()},r)}export{f as a,n as u};

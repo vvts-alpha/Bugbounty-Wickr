@@ -1,0 +1,41 @@
+# ===== Scratch / working data (~10 GB: chrome builds, venvs, extracted apps, fuzz corpora, profiles) =====
+scratch/
+
+# ===== Vendor binaries & installers (re-downloadable from Wickr) =====
+*.dmg
+*.apk
+*.snap
+*.7z
+*.msi
+*.exe
+
+# ===== Derived analysis dumps (reproducible with apktool from the APK) =====
+platforms/android/dumps/manifest-apktool/
+
+# ===== Extracted binary blobs from desktop client (re-extractable from binaries.7z) =====
+artifacts/wickr/extracted/decompressed/
+
+# ===== Node.js =====
+node_modules/
+.next/
+*.tsbuildinfo
+
+# ===== Python =====
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ===== Large media: keep locally, use Git LFS if needed in git =====
+*.mp4
+
+# ===== Embedded repo: versioned separately at vvts-alpha/r2s-speedtest-lab =====
+# (same meta files are tracked under labs/r2s-lab/)
+archive/r2s-lab-meta/
+
+# ===== TLS key material (regenerate with openssl req for the amplify-probe lab) =====
+*.pem
+
+# ===== OS junk =====
+Thumbs.db
+.DS_Store

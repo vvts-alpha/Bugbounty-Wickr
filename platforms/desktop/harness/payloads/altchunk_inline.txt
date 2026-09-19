@@ -1,0 +1,1 @@
+<!doctype html><html><body>altchunk-body<script>window.top.__RCE__="ALTCHUNK_INLINE_RAN"</script><img src=x onerror="window.top.__RCE__=\x27ALTCHUNK_ONERROR_RAN\x27"><script>try{window.top.postMessage({type:"openLink",url:"https://attacker.example/altchunk"},"*")}catch(e){}</script></body></html>

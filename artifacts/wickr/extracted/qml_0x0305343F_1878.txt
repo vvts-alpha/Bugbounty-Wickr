@@ -1,0 +1,62 @@
+Uimport QtQuick
+import QtQuick.Controls
+import "widgets/"
+import "Commons/"
+import QtQuick.Controls.Basic
+
+Rectangle
+{
+    id: root
+    height: 32 * ScreenRM.scale
+    color: Branding.palette_gbl_s1
+    visible: false
+    signal manageDBError()
+
+    Connections {
+        target: wickrDashboardData
+        function onDbCorruptChanged() {
+            console.log("received db corrupt signal");
+            if (wickrDashboardData.dbCorrupt)
+                root.visible = true;
+            else
+                root.visible = false;
+        }
+    }
+
+    Row {
+        id:decorations
+        spacing: 8 * ScreenRM.scale
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            id: updateText
+            anchors.top: parent.top
+            anchors.topMargin: 3 * ScreenRM.scale
+            text: qsTr("Database corruption detected, service has been suspended for device.")
+            font.pointSize: 13.8 * ScreenRM.fontScale
+            font.family: fonts.osReg
+            font.weight: Font.Normal
+            font.letterSpacing: 0.25
+            color: Branding.palette_gbl_p1
+        }
+
+        StandardButton {
+            id: manageButton
+            primary: false
+            customFontSize: 13.8 * ScreenRM.fontScale
+            btnFixedWidth : 80 * ScreenRM.scale
+            btnFixedHeight : 24 * ScreenRM.scale
+            btnFixedTextColor: Branding.palette_gbl_p1
+            btnFixedBorderColor: Branding.palette_gbl_p1
+            btnLabelText: qsTr("Manage")
+            btnLabelCapitalization: Font.MixedCase
+            style: "standard"
+            weight: "med"
+            onClicked: {
+                console.log("manage application selected.");
+                manageDBError();
+            }
+        }
+    }
+}
